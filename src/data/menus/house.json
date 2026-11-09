@@ -8,7 +8,8 @@
       "names": {
         "en": { "order": "the bruschetta", "plain": "bruschetta" },
         "es": { "order": "la bruschetta", "plain": "bruschetta" },
-        "ru": { "order": "брускетту", "plain": "брускетта" }
+        "ru": { "order": "брускетту", "plain": "брускетта" },
+        "fr": { "order": "la bruschetta", "plain": "bruschetta" }
       }
     },
     {
@@ -17,7 +18,8 @@
       "names": {
         "en": { "order": "the Caesar salad", "plain": "Caesar salad" },
         "es": { "order": "la ensalada César", "plain": "ensalada César" },
-        "ru": { "order": "салат «Цезарь»", "plain": "салат «Цезарь»" }
+        "ru": { "order": "салат «Цезарь»", "plain": "салат «Цезарь»" },
+        "fr": { "order": "la salade César", "plain": "salade César" }
       }
     },
     {
@@ -26,7 +28,8 @@
       "names": {
         "en": { "order": "the shrimp tacos", "plain": "shrimp tacos" },
         "es": { "order": "los tacos de gambas", "plain": "tacos de gambas" },
-        "ru": { "order": "тако с креветками", "plain": "тако с креветками" }
+        "ru": { "order": "тако с креветками", "plain": "тако с креветками" },
+        "fr": { "order": "les tacos aux crevettes", "plain": "tacos aux crevettes" }
       }
     },
     {
@@ -35,7 +38,8 @@
       "names": {
         "en": { "order": "the mushroom risotto", "plain": "mushroom risotto" },
         "es": { "order": "el risotto de setas", "plain": "risotto de setas" },
-        "ru": { "order": "ризотто с грибами", "plain": "ризотто с грибами" }
+        "ru": { "order": "ризотто с грибами", "plain": "ризотто с грибами" },
+        "fr": { "order": "le risotto aux champignons", "plain": "risotto aux champignons" }
       }
     },
     {
@@ -44,7 +48,8 @@
       "names": {
         "en": { "order": "the grilled salmon", "plain": "grilled salmon" },
         "es": { "order": "el salmón a la parrilla", "plain": "salmón a la parrilla" },
-        "ru": { "order": "лосося на гриле", "plain": "лосось на гриле" }
+        "ru": { "order": "лосося на гриле", "plain": "лосось на гриле" },
+        "fr": { "order": "le saumon grillé", "plain": "saumon grillé" }
       }
     },
     {
@@ -53,7 +58,8 @@
       "names": {
         "en": { "order": "the chicken pad thai", "plain": "chicken pad thai" },
         "es": { "order": "el pad thai de pollo", "plain": "pad thai de pollo" },
-        "ru": { "order": "пад-тай с курицей", "plain": "пад-тай с курицей" }
+        "ru": { "order": "пад-тай с курицей", "plain": "пад-тай с курицей" },
+        "fr": { "order": "le pad thaï au poulet", "plain": "pad thaï au poulet" }
       }
     },
     {
@@ -62,7 +68,8 @@
       "names": {
         "en": { "order": "the steak frites", "plain": "steak frites" },
         "es": { "order": "el filete con patatas fritas", "plain": "filete con patatas fritas" },
-        "ru": { "order": "стейк с картофелем фри", "plain": "стейк с картофелем фри" }
+        "ru": { "order": "стейк с картофелем фри", "plain": "стейк с картофелем фри" },
+        "fr": { "order": "le steak-frites", "plain": "steak-frites" }
       }
     },
     {
@@ -71,7 +78,8 @@
       "names": {
         "en": { "order": "the chocolate torte", "plain": "chocolate torte" },
         "es": { "order": "la tarta de chocolate", "plain": "tarta de chocolate" },
-        "ru": { "order": "шоколадный торт", "plain": "шоколадный торт" }
+        "ru": { "order": "шоколадный торт", "plain": "шоколадный торт" },
+        "fr": { "order": "le fondant au chocolat", "plain": "fondant au chocolat" }
       }
     },
     {
@@ -80,7 +88,8 @@
       "names": {
         "en": { "order": "a lemonade", "plain": "lemonade" },
         "es": { "order": "una limonada", "plain": "limonada" },
-        "ru": { "order": "лимонад", "plain": "лимонад" }
+        "ru": { "order": "лимонад", "plain": "лимонад" },
+        "fr": { "order": "une limonade", "plain": "limonade" }
       }
     },
     {
@@ -89,7 +98,8 @@
       "names": {
         "en": { "order": "an iced tea", "plain": "iced tea" },
         "es": { "order": "un té helado", "plain": "té helado" },
-        "ru": { "order": "холодный чай", "plain": "холодный чай" }
+        "ru": { "order": "холодный чай", "plain": "холодный чай" },
+        "fr": { "order": "un thé glacé", "plain": "thé glacé" }
       }
     },
     {
@@ -98,7 +108,8 @@
       "names": {
         "en": { "order": "a sparkling water", "plain": "sparkling water" },
         "es": { "order": "un agua con gas", "plain": "agua con gas" },
-        "ru": { "order": "газированную воду", "plain": "газированная вода" }
+        "ru": { "order": "газированную воду", "plain": "газированная вода" },
+        "fr": { "order": "une eau gazeuse", "plain": "eau gazeuse" }
       }
     },
     {
@@ -107,7 +118,8 @@
       "names": {
         "en": { "order": "a coffee", "plain": "coffee" },
         "es": { "order": "un café", "plain": "café" },
-        "ru": { "order": "кофе", "plain": "кофе" }
+        "ru": { "order": "кофе", "plain": "кофе" },
+        "fr": { "order": "un café", "plain": "café" }
       }
     },
     {
@@ -116,7 +128,8 @@
       "names": {
         "en": { "order": "an orange juice", "plain": "orange juice" },
         "es": { "order": "un zumo de naranja", "plain": "zumo de naranja" },
-        "ru": { "order": "апельсиновый сок", "plain": "апельсиновый сок" }
+        "ru": { "order": "апельсиновый сок", "plain": "апельсиновый сок" },
+        "fr": { "order": "un jus d'orange", "plain": "jus d'orange" }
       }
     }
   ]

@@ -1,0 +1,375 @@
+{
+  "code": "fr",
+  "label": "French",
+  "speechLang": "fr-FR",
+  "listAnd": " et ",
+  "testLine": "Bonsoir ! Bienvenue.",
+  "partyWords": { "2": "deux", "3": "trois", "4": "quatre" },
+  "allergens": {
+    "gluten": { "phrase": "au gluten", "noun": "du gluten" },
+    "dairy": { "phrase": "aux produits laitiers", "noun": "des produits laitiers" },
+    "eggs": { "phrase": "aux œufs", "noun": "des œufs" },
+    "tree nuts": { "phrase": "aux fruits à coque", "noun": "des fruits à coque" },
+    "peanuts": { "phrase": "aux cacahuètes", "noun": "des cacahuètes" },
+    "shellfish": { "phrase": "aux fruits de mer", "noun": "des fruits de mer" },
+    "fish": { "phrase": "au poisson", "noun": "du poisson" },
+    "soy": { "phrase": "au soja", "noun": "du soja" },
+    "sesame": { "phrase": "au sésame", "noun": "du sésame" }
+  },
+  "nodes": {
+    "door": {
+      "lines": {
+        "polite": [
+          { "id": "door.polite.1", "guest": "Bonsoir. Vous avez une table pour une personne ?", "guestEn": "Good evening. Do you have a table for one?", "reply": "Bonsoir ! Oui, bien sûr. Suivez-moi, s'il vous plaît.", "replyEn": "Good evening! Yes, of course. Follow me, please." },
+          { "id": "door.polite.2", "guest": "Bonsoir. Une table pour une personne, s'il vous plaît.", "guestEn": "Good evening. A table for one, please.", "reply": "Très bien, une table pour une personne. Par ici, s'il vous plaît.", "replyEn": "Very good, a table for one. This way, please." },
+          { "id": "door.polite.3", "guest": "Bonsoir. Je peux m'asseoir où je veux ?", "guestEn": "Good evening. Can I sit wherever I like?", "reply": "Bien sûr, où vous préférez. Suivez-moi, je vous accompagne.", "replyEn": "Of course, wherever you prefer. Follow me, I'll walk you over." }
+        ],
+        "warm": [
+          { "id": "door.warm.1", "guest": "Bonsoir ! Ça sent très bon ici ! Il y a une table pour une personne ?", "guestEn": "Good evening! It smells great in here! Is there a table for one?", "reply": "Bonsoir, merci ! Oui, il y a une table. Suivez-moi, s'il vous plaît.", "replyEn": "Good evening, thank you! Yes, there's a table. Follow me, please." }
+        ],
+        "rushed": [
+          { "id": "door.rushed.1", "guest": "Une table pour une personne, s'il vous plaît. J'ai peu de temps.", "guestEn": "A table for one, please. I don't have much time.", "reply": "Bien sûr, tout de suite. Suivez-moi, s'il vous plaît.", "replyEn": "Of course, right away. Follow me, please.",
+            "wrong": [{ "id": "door.rushed.1.wrong.1", "text": "Pas de panique, ici personne n'est pressé.", "en": "Don't panic, nobody's in a hurry here.", "why": "They told you they're short on time. Brushing that off sounds rude, so show them you'll be quick." }] }
+        ],
+        "rude": [
+          { "id": "door.rude.1", "guest": "Il y a une table, oui ou non ? J'attends depuis un moment.", "guestEn": "Is there a table, yes or no? I've been waiting a while.", "reply": "Pardon pour l'attente. Oui, nous avons une table. Suivez-moi, s'il vous plaît.", "replyEn": "Sorry for the wait. Yes, we have a table. Follow me, please." },
+          { "id": "door.rude.2", "guest": "Une table pour une personne. Et pas à côté de la porte.", "guestEn": "A table for one. And not next to the door.", "reply": "Bien sûr, je vous installe loin de la porte. Suivez-moi.", "replyEn": "Of course, I'll seat you away from the door. Follow me." }
+        ],
+        "indecisive": [
+          { "id": "door.indecisive.1", "guest": "Bonsoir... euh, vous avez une table ? Si ça ne dérange pas.", "guestEn": "Good evening... uh, do you have a table? If it's no trouble.", "reply": "Ça ne dérange pas du tout. Oui, nous avons une table. Suivez-moi, s'il vous plaît.", "replyEn": "It's no trouble at all. Yes, we have a table. Follow me, please." }
+        ],
+        "tourist": [
+          { "id": "door.tourist.1", "guest": "Bonsoir... pardon, je parle mal français. Une table pour une personne ?", "guestEn": "Good evening... sorry, I speak French badly. A table for one?", "reply": "Pas de souci, vous parlez très bien ! Oui, une table pour une personne. Suivez-moi.", "replyEn": "No problem, you speak very well! Yes, a table for one. Follow me." },
+          { "id": "door.tourist.2", "guest": "Bonsoir. C'est ma première fois en France. Je peux dîner ici ?", "guestEn": "Good evening. It's my first time in France. Can I have dinner here?", "reply": "Bien sûr ! Suivez-moi, je vous accompagne à une table.", "replyEn": "Of course! Follow me, I'll take you to a table." }
+        ],
+        "impatient": [
+          { "id": "door.impatient.1", "guest": "Enfin. Ça fait un bon moment que j'attends ici.", "guestEn": "Finally. I've been waiting here quite a while.", "reply": "Toutes mes excuses pour l'attente. Suivez-moi, s'il vous plaît.", "replyEn": "My apologies for the wait. Follow me, please.",
+            "wrong": [{ "id": "door.impatient.1.wrong.1", "text": "De rien. Suivez-moi, s'il vous plaît.", "en": "You're welcome. Follow me, please.", "why": "“Enfin” (finally) is a complaint, not a thank-you. Apologize for the wait." }] },
+          { "id": "door.impatient.2", "guest": "Quelqu'un va s'occuper de moi, oui ou non ?", "guestEn": "Is someone going to look after me or not?", "reply": "Pardon, je suis à vous. Suivez-moi, s'il vous plaît.", "replyEn": "Sorry, I'm with you now. Follow me, please." }
+        ],
+        "party": [
+          { "id": "door.party.1", "guest": "Bonsoir. Vous avez une table pour {party} ?", "guestEn": "Good evening. Do you have a table for {party}?", "reply": "Bonsoir ! Oui, une table pour {party}. Suivez-moi, s'il vous plaît.", "replyEn": "Good evening! Yes, a table for {party}. Follow me, please." },
+          { "id": "door.party.2", "guest": "Bonsoir, nous sommes {party}. Il y a de la place ?", "guestEn": "Good evening, there are {party} of us. Is there room?", "reply": "Oui, bien sûr. Entrez et suivez-moi, s'il vous plaît.", "replyEn": "Yes, of course. Come in and follow me, please.",
+            "wrong": [{ "id": "door.party.2.wrong.1", "text": "Désolé, nous n'avons que des tables pour une personne.", "en": "Sorry, we only have tables for one.", "why": "Your tables seat four. Don't turn a group away." }] }
+        ]
+      },
+      "wrong": [
+        { "id": "door.wrong.1", "text": "Désolé, c'est fermé.", "en": "Sorry, we're closed.", "why": "You're open and have free tables, so this turns away a paying guest." },
+        { "id": "door.wrong.2", "text": "Suis-moi, vite.", "en": "Follow me (informal), quick.", "why": "“Suis-moi” uses tu. With a guest, use vous: “Suivez-moi, s'il vous plaît”." },
+        { "id": "door.wrong.3", "text": "Bonjour ! Entrez.", "en": "Good day! Come in.", "why": "It's evening. After dark, say “Bonsoir”." },
+        { "id": "door.wrong.4", "text": "Les tables sont là-bas. Choisissez-en une.", "en": "The tables are over there. Pick one.", "why": "Leaving a guest to find their own table is rude. Lead them." }
+      ]
+    },
+
+    "hello": {
+      "lines": {
+        "polite": [
+          { "id": "hello.polite.1", "guest": "Merci. Quel joli restaurant !", "guestEn": "Thanks. What a lovely restaurant!", "reply": "Merci, ça me fait plaisir ! Je m'appelle Alex et c'est moi qui m'occupe de vous ce soir.", "replyEn": "Thank you, that's nice to hear! My name is Alex and I'll be looking after you tonight." },
+          { "id": "hello.polite.2", "guest": "Merci beaucoup.", "guestEn": "Thank you very much.", "reply": "Je vous en prie. Je m'appelle Alex et c'est moi qui m'occupe de vous ce soir.", "replyEn": "You're welcome. My name is Alex and I'll be looking after you tonight." },
+          { "id": "hello.polite.3", "guest": "Merci. C'est vous mon serveur ?", "guestEn": "Thanks. Are you my waiter?", "reply": "Oui, je m'appelle Alex. C'est moi qui m'occupe de vous ce soir.", "replyEn": "Yes, my name is Alex. I'll be looking after you tonight." }
+        ],
+        "rushed": [
+          { "id": "hello.rushed.1", "guest": "Merci. Je dois dîner en une heure environ.", "guestEn": "Thanks. I need to have dinner within about an hour.", "reply": "C'est noté, on fera vite. Je m'appelle Alex et je m'occupe de vous.", "replyEn": "Noted, we'll be quick. My name is Alex and I'll be serving you." }
+        ],
+        "rude": [
+          { "id": "hello.rude.1", "guest": "Bon. On va voir si le service est rapide.", "guestEn": "Well. Let's see if the service is fast.", "reply": "Je vais faire de mon mieux. Je m'appelle Alex et c'est moi qui m'occupe de vous ce soir.", "replyEn": "I'll do my best. My name is Alex and I'll be looking after you tonight." },
+          { "id": "hello.rude.2", "guest": "Cette chaise est bancale.", "guestEn": "This chair is wobbly.", "reply": "Pardon, je vous change la chaise tout de suite. Je m'appelle Alex et je m'occupe de vous.", "replyEn": "Sorry, I'll swap your chair right away. My name is Alex and I'll be serving you.",
+            "wrong": [{ "id": "hello.rude.2.wrong.1", "text": "Les chaises vont très bien. Je m'appelle Alex.", "en": "The chairs are fine. My name is Alex.", "why": "Arguing with a complaint makes it worse. Apologize and offer to fix it." }] }
+        ],
+        "tourist": [
+          { "id": "hello.tourist.1", "guest": "Merci. Pardon, comment vous appelez-vous ?", "guestEn": "Thanks. Sorry, what's your name?", "reply": "Je m'appelle Alex. C'est moi qui m'occupe de vous ce soir.", "replyEn": "My name is Alex. I'll be looking after you tonight." }
+        ],
+        "impatient": [
+          { "id": "hello.impatient.1", "guest": "Enfin quelqu'un.", "guestEn": "Finally, someone.", "reply": "Pardon pour l'attente. Je m'appelle Alex et c'est moi qui m'occupe de vous ce soir.", "replyEn": "Sorry for the wait. My name is Alex and I'll be looking after you tonight.",
+            "wrong": [{ "id": "hello.impatient.1.wrong.1", "text": "Oui, me voilà ! Je m'appelle Alex.", "en": "Yes, here I am! My name is Alex.", "why": "“Enfin” means they've been waiting too long. Apologize for the wait." }] }
+        ],
+        "party": [
+          { "id": "hello.party.1", "guest": "Merci. Quelle jolie table !", "guestEn": "Thanks. What a lovely table!", "reply": "Merci ! Je m'appelle Alex et c'est moi qui m'occupe de vous ce soir.", "replyEn": "Thank you! My name is Alex and I'll be looking after you tonight." },
+          { "id": "hello.party.2", "guest": "Merci. C'est vous notre serveur ?", "guestEn": "Thanks. Are you our waiter?", "reply": "Oui, je m'appelle Alex. C'est moi qui m'occupe de vous ce soir.", "replyEn": "Yes, my name is Alex. I'll be looking after you tonight." }
+        ]
+      },
+      "wrong": [
+        { "id": "hello.wrong.1", "text": "Bonsoir ! Je m'appelle Alex et ce soir je m'occupe de toi.", "en": "Good evening! My name is Alex and tonight I'll look after you (informal).", "why": "“Toi” is informal. With a guest, say “de vous”." },
+        { "id": "hello.wrong.2", "text": "Qu'est-ce que vous prenez comme dessert ?", "en": "What will you have for dessert?", "why": "Dessert comes at the end. Start by introducing yourself." },
+        { "id": "hello.wrong.3", "text": "Bonsoir. Vous partez déjà ?", "en": "Good evening. Are you leaving already?", "why": "They just sat down. This sounds like you want them gone." }
+      ]
+    },
+
+    "askDrink": {
+      "lines": {
+        "polite": [
+          { "id": "askDrink.polite.1", "guest": "Très bien, merci Alex.", "guestEn": "Very good, thanks Alex.", "reply": "Qu'est-ce que je vous sers à boire ?", "replyEn": "What can I get you to drink?" },
+          { "id": "askDrink.polite.2", "guest": "Parfait, merci.", "guestEn": "Perfect, thanks.", "reply": "Je vous apporte quelque chose à boire pour commencer ?", "replyEn": "Can I bring you something to drink to start?" },
+          { "id": "askDrink.polite.3", "guest": "Très bien. Qu'est-ce que vous avez comme boissons ?", "guestEn": "Very good. What drinks do you have?", "reply": "Nous avons {drinkList}. Qu'est-ce qui vous ferait plaisir ?", "replyEn": "We have {drinkList}. What would you like?",
+            "wrong": [{ "id": "askDrink.polite.3.wrong.1", "text": "Oui, nous avons des boissons.", "en": "Yes, we have drinks.", "why": "They asked which drinks you have. List them." }] }
+        ],
+        "rude": [
+          { "id": "askDrink.rude.1", "guest": "Oui, oui. J'ai soif.", "guestEn": "Yeah, yeah. I'm thirsty.", "reply": "Alors commençons par la boisson. Qu'est-ce que je vous sers ?", "replyEn": "Then let's start with a drink. What can I get you?" }
+        ],
+        "tourist": [
+          { "id": "askDrink.tourist.1", "guest": "Merci. Qu'est-ce qu'on boit ici, d'habitude ?", "guestEn": "Thanks. What do people usually drink here?", "reply": "Nous avons {drinkList}. Qu'est-ce que vous voulez goûter ?", "replyEn": "We have {drinkList}. What would you like to try?" }
+        ],
+        "party": [
+          { "id": "askDrink.party.1", "guest": "Très bien, merci Alex.", "guestEn": "Very good, thanks Alex.", "reply": "Qu'est-ce que je vous sers à boire ?", "replyEn": "What can I get you all to drink?" },
+          { "id": "askDrink.party.2", "guest": "Qu'est-ce que vous avez comme boissons ?", "guestEn": "What drinks do you have?", "reply": "Nous avons {drinkList}. Qu'est-ce qui vous ferait plaisir ?", "replyEn": "We have {drinkList}. What would you like?" }
+        ]
+      },
+      "wrong": [
+        { "id": "askDrink.wrong.1", "text": "Qu'est-ce que tu veux boire ?", "en": "What do you (informal) want to drink?", "why": "“Tu veux” is informal. With a guest, say “Qu'est-ce que je vous sers ?”." },
+        { "id": "askDrink.wrong.2", "text": "Vous voulez déjà l'addition ?", "en": "Do you want the check already?", "why": "Offering the check before they've ordered tells them to leave." },
+        { "id": "askDrink.wrong.3", "text": "Les boissons sont là-bas. Servez-vous.", "en": "The drinks are over there. Help yourself.", "why": "Guests don't serve themselves here. Offer to bring the drink." }
+      ]
+    },
+
+    "drinkOrder": {
+      "lines": {
+        "polite": [
+          { "id": "drinkOrder.polite.1", "guest": "Pour moi, {drink}, s'il vous plaît.", "guestEn": "For me, {drink}, please.", "reply": "Très bien, {drink}. Je reviens tout de suite.", "replyEn": "Very good, {drink}. I'll be right back." },
+          { "id": "drinkOrder.polite.2", "guest": "Je vais prendre {drink}, s'il vous plaît.", "guestEn": "I'll have {drink}, please.", "reply": "Parfait, je vous apporte {drink} tout de suite.", "replyEn": "Perfect, I'll bring you {drink} right away." }
+        ],
+        "rushed": [
+          { "id": "drinkOrder.rushed.1", "guest": "{Drink}, s'il vous plaît. Et vite, si possible.", "guestEn": "{Drink}, please. And quickly, if possible.", "reply": "Bien sûr. Je vous apporte {drink} tout de suite.", "replyEn": "Of course. I'll bring you {drink} right away." }
+        ],
+        "rude": [
+          { "id": "drinkOrder.rude.1", "guest": "Apportez-moi {drink}. Vite.", "guestEn": "Bring me {drink}. Quickly.", "reply": "Tout de suite. Je reviens dans une minute avec {drink}.", "replyEn": "Right away. I'll be back in a minute with {drink}." }
+        ],
+        "indecisive": [
+          { "id": "drinkOrder.indecisive.1", "guest": "Hmm... je ne sais pas... Bon, {drink}. Oui, {drink}.", "guestEn": "Hmm... I don't know... Okay, {drink}. Yes, {drink}.", "reply": "Très bon choix. Je vous apporte {drink} tout de suite.", "replyEn": "Great choice. I'll bring you {drink} right away." }
+        ],
+        "party": [
+          { "id": "drinkOrder.party.1", "guest": "Pour nous, {drink}, s'il vous plaît.", "guestEn": "For us, {drink}, please.", "reply": "Très bien : {drink}. Je reviens tout de suite.", "replyEn": "Very good: {drink}. I'll be right back." }
+        ]
+      },
+      "wrong": [
+        { "id": "drinkOrder.wrong.1", "text": "Très bien, je vous apporte {otherDrink} tout de suite.", "en": "Very good, I'll bring you {otherDrink} right away.", "why": "They asked for {drink}, not {otherDrink}. Listen closely." },
+        { "id": "drinkOrder.wrong.2", "text": "Parfait, je reviens avec l'addition.", "en": "Perfect, I'll be back with the check.", "why": "They ordered a drink. The check comes at the end." },
+        { "id": "drinkOrder.wrong.3", "text": "D'accord, attends.", "en": "Okay, wait (informal).", "why": "Too blunt, and “attends” uses tu. Tell them you'll be right back." }
+      ]
+    },
+
+    "drinkThanks": {
+      "lines": {
+        "polite": [
+          { "id": "drinkThanks.polite.1", "guest": "Merci beaucoup.", "guestEn": "Thank you very much.", "reply": "Je vous en prie. Vous avez choisi ce que vous voulez manger ?", "replyEn": "You're welcome. Have you chosen what you'd like to eat?" },
+          { "id": "drinkThanks.polite.2", "guest": "Merci, c'était rapide !", "guestEn": "Thanks, that was quick!", "reply": "Avec plaisir ! Vous avez choisi ce que vous voulez manger ?", "replyEn": "My pleasure! Have you chosen what you'd like to eat?" }
+        ],
+        "rude": [
+          { "id": "drinkThanks.rude.1", "guest": "Enfin.", "guestEn": "Finally.", "reply": "Pardon pour l'attente. Vous avez choisi ce que vous voulez manger ?", "replyEn": "Sorry for the wait. Have you chosen what you'd like to eat?",
+            "wrong": [{ "id": "drinkThanks.rude.1.wrong.1", "text": "De rien ! Vous avez choisi ce que vous voulez manger ?", "en": "You're welcome! Have you chosen what you'd like to eat?", "why": "“Enfin” (finally) is a complaint, not a thank-you. Apologize for the wait." }] }
+        ],
+        "impatient": [
+          { "id": "drinkThanks.impatient.1", "guest": "Enfin. J'ai cru que vous m'aviez oublié.", "guestEn": "Finally. I thought you'd forgotten me.", "reply": "Pardon pour l'attente, je ne vous avais pas oublié. Vous avez choisi ce que vous voulez manger ?", "replyEn": "Sorry for the wait, I hadn't forgotten you. Have you chosen what you'd like to eat?" }
+        ],
+        "party": [
+          { "id": "drinkThanks.party.1", "guest": "Merci beaucoup.", "guestEn": "Thank you very much.", "reply": "Je vous en prie. Vous avez choisi ce que vous voulez manger ?", "replyEn": "You're welcome. Have you all chosen what you'd like to eat?" }
+        ]
+      },
+      "wrong": [
+        { "id": "drinkThanks.wrong.1", "text": "Je vous en prie. Vous avez choisi ce que vous voulez nourriture ?", "en": "You're welcome. Have you chosen what you want food?", "why": "“Nourriture” is a noun. After “vous voulez” you need the verb “manger”." },
+        { "id": "drinkThanks.wrong.2", "text": "Qu'est-ce que je vous sers à boire ?", "en": "What can I get you to drink?", "why": "You just brought their drink. Now ask about food." },
+        { "id": "drinkThanks.wrong.3", "text": "De rien. Tu as choisi ce que tu veux manger ?", "en": "You're welcome. Have you (informal) chosen what you want to eat?", "why": "“Tu as” and “tu veux” are informal. With a guest, use “vous avez” and “vous voulez”." }
+      ]
+    },
+
+    "orderDirect": {
+      "lines": {
+        "polite": [
+          { "id": "orderDirect.polite.1", "guest": "Oui. Pour moi, {dishes}, s'il vous plaît.", "guestEn": "Yes. For me, {dishes}, please.", "reply": "Excellent choix. Vous avez des allergies ?", "replyEn": "Excellent choice. Do you have any allergies?" },
+          { "id": "orderDirect.polite.2", "guest": "Oui, je vais prendre {dishes}.", "guestEn": "Yes, I'll have {dishes}.", "reply": "Très bien, {dishes}. Avant de passer la commande, vous avez des allergies ?", "replyEn": "Very good, {dishes}. Before I put the order in, do you have any allergies?" }
+        ],
+        "rude": [
+          { "id": "orderDirect.rude.1", "guest": "Oui, depuis un moment. Je veux {dishes}.", "guestEn": "Yes, for a while now. I want {dishes}.", "reply": "Pardon pour l'attente. Je note {dishes}. Des allergies ?", "replyEn": "Sorry for the wait. I'm noting {dishes}. Any allergies?" }
+        ],
+        "party": [
+          { "id": "orderDirect.party.1", "guest": "Oui. Pour nous, {dishes}, s'il vous plaît.", "guestEn": "Yes. For us, {dishes}, please.", "reply": "Excellent choix. Est-ce que l'un de vous a une allergie ?", "replyEn": "Excellent choice. Does one of you have an allergy?" }
+        ]
+      },
+      "wrong": [
+        { "id": "orderDirect.wrong.1", "text": "Désolé, nous n'en avons plus ce soir.", "en": "Sorry, we don't have any left tonight.", "why": "It's on tonight's menu. Don't tell a guest it's gone when it isn't." },
+        { "id": "orderDirect.wrong.2", "text": "Excellent choix. Tu as des allergies ?", "en": "Excellent choice. Do you (informal) have any allergies?", "why": "“Tu as” is informal. With a guest, say “vous avez”." },
+        { "id": "orderDirect.wrong.3", "text": "Parfait, voici l'addition.", "en": "Perfect, here's the check.", "why": "They haven't eaten yet. Ask about allergies and send the order." }
+      ]
+    },
+
+    "askRec": {
+      "lines": {
+        "polite": [
+          { "id": "askRec.polite.1", "guest": "Je ne sais pas encore. Qu'est-ce que vous me conseillez ?", "guestEn": "I don't know yet. What do you recommend?", "reply": "Je vous conseille {rec}. C'est un de nos plats les plus populaires.", "replyEn": "I recommend {rec}. It's one of our most popular dishes." },
+          { "id": "askRec.polite.2", "guest": "Quel est votre plat préféré ?", "guestEn": "What's your favorite dish?", "reply": "Je vous recommande {rec}. C'est mon préféré.", "replyEn": "I recommend {rec}. It's my favorite." }
+        ],
+        "indecisive": [
+          { "id": "askRec.indecisive.1", "guest": "Oh là là, tout a l'air bon. Je n'arrive pas à choisir. Vous me conseillez quoi ?", "guestEn": "Oh dear, everything looks good. I can't choose. What do you recommend?", "reply": "Je vous conseille {rec}. C'est un de nos plats les plus populaires.", "replyEn": "I recommend {rec}. It's one of our most popular dishes." }
+        ],
+        "tourist": [
+          { "id": "askRec.tourist.1", "guest": "C'est ma première fois ici. Qu'est-ce que vous me conseillez ?", "guestEn": "It's my first time here. What do you recommend?", "reply": "Pour une première visite, je vous conseille {rec}.", "replyEn": "For a first visit, I recommend {rec}." }
+        ],
+        "rude": [
+          { "id": "askRec.rude.1", "guest": "Je ne sais pas. Qu'est-ce qui est le moins mauvais ici ?", "guestEn": "I don't know. What's the least bad thing here?", "reply": "Je vous assure que {rec} va vous plaire. C'est un de nos plats les plus demandés.", "replyEn": "I promise you'll like {rec}. It's one of our most ordered dishes." }
+        ],
+        "party": [
+          { "id": "askRec.party.1", "guest": "On ne sait pas encore. Qu'est-ce que vous nous conseillez ?", "guestEn": "We don't know yet. What do you recommend for us?", "reply": "Je vous conseille {rec}. C'est un de nos plats les plus populaires.", "replyEn": "I recommend {rec}. It's one of our most popular dishes." }
+        ]
+      },
+      "wrong": [
+        { "id": "askRec.wrong.1", "text": "Bien sûr ! Qu'est-ce que vous voulez commander ?", "en": "Of course! What would you like to order?", "why": "They asked for a recommendation. This ignores the question, so suggest a dish." },
+        { "id": "askRec.wrong.2", "text": "Je ne sais pas, tout est pareil.", "en": "I don't know, it's all the same.", "why": "A server should know the menu. This sounds unhelpful." },
+        { "id": "askRec.wrong.3", "text": "Je vous conseille d'aller dans un autre restaurant.", "en": "I recommend you go to another restaurant.", "why": "That's a joke at the guest's expense. Recommend a dish from your menu." }
+      ]
+    },
+
+    "acceptRec": {
+      "lines": {
+        "polite": [
+          { "id": "acceptRec.polite.1", "guest": "Parfait, alors {dishes}.", "guestEn": "Perfect, then {dishes}.", "reply": "Excellent choix. Vous avez des allergies ?", "replyEn": "Excellent choice. Do you have any allergies?" },
+          { "id": "acceptRec.polite.2", "guest": "Je vous fais confiance : {dishes}, s'il vous plaît.", "guestEn": "I'll trust you: {dishes}, please.", "reply": "Vous ne le regretterez pas ! Vous avez des allergies ?", "replyEn": "You won't regret it! Do you have any allergies?" }
+        ],
+        "rude": [
+          { "id": "acceptRec.rude.1", "guest": "Bon. Apportez-moi {dishes}, alors. J'espère que c'est bon.", "guestEn": "Fine. Bring me {dishes}, then. I hope it's good.", "reply": "Ça va vous plaire. Avant de passer la commande, vous avez des allergies ?", "replyEn": "You'll like it. Before I put the order in, do you have any allergies?" }
+        ],
+        "party": [
+          { "id": "acceptRec.party.1", "guest": "Parfait. Alors {dishes}.", "guestEn": "Perfect. Then {dishes}.", "reply": "Excellent choix. Est-ce que l'un de vous a une allergie ?", "replyEn": "Excellent choice. Does one of you have an allergy?" }
+        ]
+      },
+      "wrong": [
+        { "id": "acceptRec.wrong.1", "text": "Vous êtes sûr ? Ce plat n'est pas terrible.", "en": "Are you sure? That dish isn't great.", "why": "You just recommended it. Don't talk the guest out of it." },
+        { "id": "acceptRec.wrong.2", "text": "Excellent choix. Tu as des allergies ?", "en": "Excellent choice. Do you (informal) have any allergies?", "why": "“Tu as” is informal. With a guest, say “vous avez”." },
+        { "id": "acceptRec.wrong.3", "text": "Parfait, voici l'addition.", "en": "Perfect, here's the check.", "why": "They haven't eaten yet. Ask about allergies and send the order." }
+      ]
+    },
+
+    "allergyNone": {
+      "lines": {
+        "polite": [
+          { "id": "allergyNone.polite.1", "guest": "Non, aucune.", "guestEn": "No, none.", "reply": "Parfait. Votre plat sera prêt dans quelques minutes.", "replyEn": "Perfect. Your food will be ready in a few minutes." },
+          { "id": "allergyNone.polite.2", "guest": "Non, je mange de tout.", "guestEn": "No, I eat everything.", "reply": "Tant mieux ! Je passe la commande en cuisine tout de suite.", "replyEn": "Great! I'll send the order to the kitchen right away." }
+        ],
+        "rushed": [
+          { "id": "allergyNone.rushed.1", "guest": "Non. Ça va être long ?", "guestEn": "No. Will it take long?", "reply": "Quelques minutes seulement. Je passe la commande tout de suite.", "replyEn": "Just a few minutes. I'm putting the order in right now." }
+        ],
+        "party": [
+          { "id": "allergyNone.party.1", "guest": "Non, aucun de nous.", "guestEn": "No, none of us.", "reply": "Parfait. Ce sera prêt dans quelques minutes.", "replyEn": "Perfect. It'll be ready in a few minutes." }
+        ]
+      },
+      "wrong": [
+        { "id": "allergyNone.wrong.1", "text": "Parfait. Votre plat sera prêt dans quelques années.", "en": "Perfect. Your food will be ready in a few years.", "why": "“Années” means years. You meant “minutes”." },
+        { "id": "allergyNone.wrong.2", "text": "Très bien. Et comme boisson ?", "en": "Very good. And to drink?", "why": "They already have a drink." },
+        { "id": "allergyNone.wrong.3", "text": "Parfait, voici l'addition.", "en": "Perfect, here's the check.", "why": "They haven't eaten yet. The check comes at the end." }
+      ]
+    },
+
+    "allergyYes": {
+      "lines": {
+        "polite": [
+          { "id": "allergyYes.polite.1", "guest": "Oui, je suis allergique {allergy}.", "guestEn": "Yes, I'm allergic to {allergy}.", "reply": "C'est noté. Je préviens la cuisine pour qu'elle fasse attention.", "replyEn": "Noted. I'll warn the kitchen so they're careful." },
+          { "id": "allergyYes.polite.2", "guest": "Oui. Je suis allergique {allergy}. C'est important.", "guestEn": "Yes. I'm allergic to {allergy}. It's important.", "reply": "Merci de me le dire. Je le note et la cuisine fera très attention.", "replyEn": "Thanks for telling me. I'll note it and the kitchen will be very careful." }
+        ],
+        "party": [
+          { "id": "allergyYes.party.1", "guest": "Oui, l'un de nous est allergique {allergy}.", "guestEn": "Yes, one of us is allergic to {allergy}.", "reply": "C'est noté. Je préviens la cuisine pour qu'elle fasse attention.", "replyEn": "Noted. I'll warn the kitchen so they're careful." }
+        ]
+      },
+      "wrong": [
+        { "id": "allergyYes.wrong.1", "text": "Ce n'est pas grave, un petit peu, ça va.", "en": "It's no big deal, a little is fine.", "why": "Never brush off an allergy. Even a small amount can be dangerous." },
+        { "id": "allergyYes.wrong.2", "text": "C'est noté. Je préviens l'addition.", "en": "Noted. I'll warn the check.", "why": "“L'addition” is the bill. You meant “la cuisine”, the kitchen." },
+        { "id": "allergyYes.wrong.3", "text": "Une allergie ? Ce n'est pas mon problème.", "en": "An allergy? That's not my problem.", "why": "It is your problem. Note it and tell the kitchen." }
+      ]
+    },
+
+    "allergyConflict": {
+      "lines": {
+        "polite": [
+          { "id": "allergyConflict.polite.1", "guest": "Oui, je suis allergique {allergy}.", "guestEn": "Yes, I'm allergic to {allergy}.", "reply": "C'est noté. Attention : il y a {allergyNoun} dans {conflict}. Je vous propose {safe} à la place ?", "replyEn": "Noted. Careful: there's {allergyNoun} in {conflict}. Shall I bring you {safe} instead?" },
+          { "id": "allergyConflict.polite.2", "guest": "Oui. Je suis allergique {allergy}. C'est important.", "guestEn": "Yes. I'm allergic to {allergy}. It's important.", "reply": "Merci de me le dire, car il y a {allergyNoun} dans {conflict}. Vous préférez {safe} ?", "replyEn": "Thanks for telling me, because there's {allergyNoun} in {conflict}. Would you prefer {safe}?" }
+        ],
+        "party": [
+          { "id": "allergyConflict.party.1", "guest": "Oui, l'un de nous est allergique {allergy}.", "guestEn": "Yes, one of us is allergic to {allergy}.", "reply": "C'est noté. Attention : il y a {allergyNoun} dans {conflict}. Je vous propose {safe} à la place ?", "replyEn": "Noted. Careful: there's {allergyNoun} in {conflict}. Shall I bring {safe} instead?" }
+        ]
+      },
+      "wrong": [
+        { "id": "allergyConflict.wrong.1", "text": "C'est noté. Je préviens la cuisine pour qu'elle fasse attention.", "en": "Noted. I'll warn the kitchen so they're careful.", "why": "What they ordered, {conflict}, contains {allergyNoun}. Warn the guest so they can pick something safe." },
+        { "id": "allergyConflict.wrong.2", "text": "Ce n'est pas grave, un petit peu, ça va.", "en": "It's no big deal, a little is fine.", "why": "Never brush off an allergy. Even a small amount can be dangerous." },
+        { "id": "allergyConflict.wrong.3", "text": "Attention : il y a {allergyNoun} dans {safe}.", "en": "Careful: there's {allergyNoun} in {safe}.", "why": "Wrong dish. It's {conflict} that contains {allergyNoun}, not {safe}." }
+      ]
+    },
+
+    "conflictAccept": {
+      "lines": {
+        "polite": [
+          { "id": "conflictAccept.polite.1", "guest": "Oh, merci de me prévenir ! Oui, {safe}, s'il vous plaît.", "guestEn": "Oh, thanks for warning me! Yes, {safe}, please.", "reply": "Parfait, {safe}. Je préviens la cuisine de votre allergie.", "replyEn": "Perfect, {safe}. I'll tell the kitchen about your allergy." },
+          { "id": "conflictAccept.polite.2", "guest": "Heureusement que vous l'avez dit. Alors {safe}.", "guestEn": "Good thing you said so. Then {safe}.", "reply": "Très bien. Et je préviens la cuisine de votre allergie.", "replyEn": "Very good. And I'll tell the kitchen about your allergy." }
+        ],
+        "party": [
+          { "id": "conflictAccept.party.1", "guest": "Merci de nous prévenir ! Oui, {safe}, s'il vous plaît.", "guestEn": "Thanks for warning us! Yes, {safe}, please.", "reply": "Parfait, {safe}. Je préviens la cuisine de l'allergie.", "replyEn": "Perfect, {safe}. I'll tell the kitchen about the allergy." }
+        ]
+      },
+      "wrong": [
+        { "id": "conflictAccept.wrong.1", "text": "Parfait, voici l'addition.", "en": "Perfect, here's the check.", "why": "They haven't eaten yet. The check comes at the end." },
+        { "id": "conflictAccept.wrong.2", "text": "Vous êtes sûr ? Ce plat n'est pas terrible.", "en": "Are you sure? That dish isn't great.", "why": "You just suggested it. Don't talk the guest out of it." },
+        { "id": "conflictAccept.wrong.3", "text": "C'est noté. Je préviens l'addition.", "en": "Noted. I'll warn the check.", "why": "“L'addition” is the bill. You meant “la cuisine”, the kitchen." }
+      ]
+    },
+
+    "checkin": {
+      "lines": {
+        "polite": [
+          { "id": "checkin.polite.1", "guest": "Tout est délicieux !", "guestEn": "Everything is delicious!", "reply": "Ça me fait très plaisir ! Si vous avez besoin de quelque chose, je suis là.", "replyEn": "I'm so glad! If you need anything, I'm here." },
+          { "id": "checkin.polite.2", "guest": "C'est très bon, mais un peu salé.", "guestEn": "It's very good, but a bit salty.", "reply": "Merci de me le dire. Je le signale au chef.", "replyEn": "Thanks for telling me. I'll mention it to the chef." }
+        ],
+        "rude": [
+          { "id": "checkin.rude.1", "guest": "Ça va. Rien de spécial.", "guestEn": "It's fine. Nothing special.", "reply": "Dommage que ça ne vous plaise pas plus. Je peux vous apporter autre chose ?", "replyEn": "Shame you don't like it more. Can I bring you something else?" }
+        ],
+        "party": [
+          { "id": "checkin.party.1", "guest": "Tout est délicieux !", "guestEn": "Everything is delicious!", "reply": "Ça me fait très plaisir ! Si vous avez besoin de quelque chose, je suis là.", "replyEn": "I'm so glad! If you need anything, I'm here." }
+        ]
+      },
+      "wrong": [
+        { "id": "checkin.wrong.1", "text": "Vous avez déjà fini ? Je débarrasse.", "en": "Done already? I'll clear the plate.", "why": "They're still eating. Don't rush them." },
+        { "id": "checkin.wrong.2", "text": "Ça me fait plaisir que tu aimes.", "en": "I'm glad you (informal) like it.", "why": "“Tu aimes” is informal. With a guest, say “que ça vous plaise”." },
+        { "id": "checkin.wrong.3", "text": "Bon, il n'y a rien d'autre.", "en": "Well, there's nothing else.", "why": "That's dismissive. Thank them and offer help." }
+      ]
+    },
+
+    "check": {
+      "lines": {
+        "polite": [
+          { "id": "check.polite.1", "guest": "L'addition, s'il vous plaît.", "guestEn": "The check, please.", "reply": "Bien sûr, voici. Merci beaucoup de votre visite !", "replyEn": "Of course, here you go. Thank you so much for coming!" },
+          { "id": "check.polite.2", "guest": "Vous pouvez m'apporter l'addition, s'il vous plaît ?", "guestEn": "Could you bring me the check, please?", "reply": "Bien sûr, voici l'addition.", "replyEn": "Of course, here's the check." }
+        ],
+        "rude": [
+          { "id": "check.rude.1", "guest": "L'addition. Maintenant.", "guestEn": "The check. Now.", "reply": "Voici. Merci de votre visite.", "replyEn": "Here you go. Thank you for coming." }
+        ],
+        "impatient": [
+          { "id": "check.impatient.1", "guest": "L'addition. Et vite, j'attends depuis un moment.", "guestEn": "The check. And quickly, I've been waiting a while.", "reply": "Pardon pour l'attente. Voici l'addition.", "replyEn": "Sorry for the wait. Here's the check." }
+        ],
+        "party": [
+          { "id": "check.party.1", "guest": "L'addition, s'il vous plaît.", "guestEn": "The check, please.", "reply": "Bien sûr, voici. Merci beaucoup de votre visite !", "replyEn": "Of course, here you go. Thank you all for coming!" }
+        ]
+      },
+      "wrong": [
+        { "id": "check.wrong.1", "text": "Bien sûr. Ce soir, le dîner est gratuit.", "en": "Of course. Dinner is free tonight.", "why": "Wrong information. Don't promise a free meal." },
+        { "id": "check.wrong.2", "text": "Encore ? Je vous l'ai déjà donnée.", "en": "Again? I already gave it to you.", "why": "You haven't brought it yet, and the tone is rude." },
+        { "id": "check.wrong.3", "text": "Voici ton addition.", "en": "Here's your (informal) check.", "why": "“Ton” is informal. With a guest, say “votre addition”." }
+      ]
+    },
+
+    "pay": {
+      "lines": {
+        "polite": [
+          { "id": "pay.polite.1", "guest": "Voilà. Merci pour tout.", "guestEn": "Here you go. Thanks for everything.", "reply": "Merci à vous ! Bonne soirée.", "replyEn": "Thank you! Have a good evening." },
+          { "id": "pay.polite.2", "guest": "Tenez, gardez la monnaie.", "guestEn": "Here, keep the change.", "reply": "Merci beaucoup, c'est très gentil ! À bientôt.", "replyEn": "Thank you so much, that's very kind! See you soon." }
+        ],
+        "rude": [
+          { "id": "pay.rude.1", "guest": "Tenez. Au revoir.", "guestEn": "Here. Goodbye.", "reply": "Merci de votre visite. Bonne soirée.", "replyEn": "Thank you for coming. Have a good evening." }
+        ],
+        "party": [
+          { "id": "pay.party.1", "guest": "Voilà. Merci pour tout.", "guestEn": "Here you go. Thanks for everything.", "reply": "Merci à vous ! Bonne soirée à tous.", "replyEn": "Thank you! Have a good evening, everyone." }
+        ]
+      },
+      "wrong": [
+        { "id": "pay.wrong.1", "text": "De rien. Qu'est-ce que je vous sers à boire ?", "en": "You're welcome. What can I get you to drink?", "why": "They're leaving. Thank them and say goodbye." },
+        { "id": "pay.wrong.2", "text": "Merci ! Bonne matinée.", "en": "Thanks! Have a good morning.", "why": "It's evening. Say “Bonne soirée”." },
+        { "id": "pay.wrong.3", "text": "C'est tout, comme pourboire ?", "en": "That's all, for a tip?", "why": "Never comment on the tip. Thank the guest." },
+        { "id": "pay.wrong.4", "text": "Merci, bonne soirée à toi.", "en": "Thanks, have a good evening (informal).", "why": "“À toi” is informal. With a guest, say “Bonne soirée” or “à vous”." }
+      ]
+    }
+  }
+}
