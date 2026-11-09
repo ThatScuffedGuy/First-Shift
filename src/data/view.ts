@@ -12,7 +12,9 @@ export const VIEW = {
    * than this many times the distance that fits the depth, the camera instead
    * zooms in and slides sideways to follow the waiter.
    */
-  maxZoomOutForWidth: 1.3,
+  followWhenWidthNeeds: 1.3,
+  /** When following, how far back the camera sits, relative to the distance that just fits the depth. */
+  followZoomOut: 1.15,
   /** How quickly the camera catches up when following (higher is snappier). */
   followRate: 5,
   /** Gap kept between the room and the screen edges, in pixels. */

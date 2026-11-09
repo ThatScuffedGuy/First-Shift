@@ -1,0 +1,42 @@
+/* Top bar and the context action button. */
+.hud {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 5; pointer-events: none;
+  padding: calc(10px + env(safe-area-inset-top, 0px)) calc(12px + env(safe-area-inset-right, 0px)) 10px calc(12px + env(safe-area-inset-left, 0px));
+  display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap;
+}
+.hud > * { pointer-events: auto; }
+.brand {
+  background: var(--hud); color: var(--hud-ink); padding: 6px 12px 6px 10px; border-radius: 999px;
+  box-shadow: var(--shadow); display: flex; align-items: baseline; gap: 8px;
+}
+.brand b { font-family: var(--hand); font-size: 1.3rem; line-height: 1; }
+.brand span { font-size: .85rem; color: var(--muted); }
+.stats { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.stat {
+  background: var(--hud); color: var(--hud-ink); border-radius: 999px; padding: 6px 12px;
+  font-size: .9rem; box-shadow: var(--shadow); border: 0; white-space: nowrap;
+}
+.stat strong { font-weight: 800; font-variant-numeric: tabular-nums; }
+button.stat { font-weight: 600; }
+
+.action {
+  position: fixed; left: 50%; bottom: 0; transform: translateX(-50%); z-index: 5;
+  padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+}
+.action button {
+  background: var(--ink); color: var(--paper); border: 0; border-radius: 14px; padding: 14px 22px;
+  font-weight: 700; font-size: 1.05rem; box-shadow: var(--shadow); min-width: 220px;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.action button[aria-disabled="true"] {
+  /* Information only: paper-coloured so it doesn't look like a broken button. */
+  cursor: default; background: var(--hud); color: var(--hud-ink);
+}
+.action .what { display: flex; align-items: center; gap: 8px; }
+.action .hint { font-size: .8rem; font-weight: 500; opacity: .75; }
+
+@media (max-width: 520px) {
+  .stat { padding: 5px 9px; font-size: .8rem; }
+  .brand span { display: none; }
+  .action button { min-width: 0; max-width: calc(100vw - 32px); }
+}

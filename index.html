@@ -3,10 +3,47 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
   <title>First Shift</title>
 </head>
 <body>
   <canvas id="scene" aria-label="The restaurant floor. Tap the floor to walk there."></canvas>
+
+  <header class="hud" id="hud">
+    <div class="brand"><b>First Shift</b><span id="hudLang">Spanish</span></div>
+    <div class="stats">
+      <div class="stat"><span class="sr-only">Time </span><strong id="hudClock">6:00 PM</strong></div>
+      <div class="stat">Guests <strong id="hudGuests">0/5</strong></div>
+      <div class="stat">Tips <strong id="hudTips">$0.00</strong></div>
+      <button class="stat" id="themeBtn" type="button">Theme: Auto</button>
+    </div>
+  </header>
+
+  <div class="action" id="action" hidden>
+    <button id="actionBtn" type="button" aria-disabled="true">
+      <span class="what"><span id="actionLabel"></span><kbd id="actionKey" hidden>E</kbd></span>
+      <span class="hint" id="actionHint"></span>
+    </button>
+  </div>
+
+  <div class="overlay" id="startWrap">
+    <section class="pad" role="dialog" aria-modal="true" aria-labelledby="startTitle">
+      <div class="scroll">
+        <h1 id="startTitle">First Shift</h1>
+        <p class="lead">Work a dinner shift in another language. Seat guests at the door, take drink orders, run drinks and food, and handle allergies, spills and difficult guests.</p>
+        <p class="field">This build</p>
+        <p>The restaurant is open but no guests have arrived yet. Walk around to get a feel for the floor.</p>
+        <p class="field">Controls</p>
+        <ul class="controls">
+          <li>Move with <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd>, the arrow keys, or by tapping the floor.</li>
+          <li>Press <kbd>E</kbd> or the button at the bottom to act.</li>
+          <li>The clock runs 5 times faster than real life, so one game minute is 12 real seconds.</li>
+        </ul>
+      </div>
+      <div class="foot"><span></span><button class="ink" id="startBtn" type="button">Start shift</button></div>
+    </section>
+  </div>
+
   <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

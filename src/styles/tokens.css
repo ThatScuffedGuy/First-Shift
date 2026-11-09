@@ -1,0 +1,26 @@
+/* Colours and fonts for the interface. Light is the default; dark follows the
+   device setting unless the player picks one with the theme button. */
+:root {
+  --ink: #1d2a44; --muted: #5b6476; --paper: #fbf7ea; --rule: #d6e1f0; --margin: #e7a8a3;
+  --carbon: #2545a3; --tomato: #c23b2e; --basil: #2f7a5f; --amber: #b9800f;
+  --hud: rgba(251, 247, 234, .95); --hud-ink: #1d2a44; --scene-bg: #22343c; --scrim: rgba(14, 24, 30, .45);
+  --chip: #efe7d2; --chip-on: #1d2a44; --chip-on-ink: #fbf7ea;
+  --shadow: 0 12px 34px rgba(8, 16, 24, .32);
+  --ui: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --hand: "Kalam", "Comic Sans MS", "Segoe Print", cursive;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #ece5d3; --muted: #a9afbb; --paper: #26292a; --rule: #343d4a; --margin: #6e3b38;
+    --carbon: #9db3f5; --tomato: #ef7a6c; --basil: #6cc79f; --amber: #e6b54a;
+    --hud: rgba(31, 35, 37, .95); --hud-ink: #ece5d3; --scene-bg: #121c20; --scrim: rgba(0, 0, 0, .55);
+    --chip: #353a3c; --chip-on: #ece5d3; --chip-on-ink: #1f2325; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ink: #ece5d3; --muted: #a9afbb; --paper: #26292a; --rule: #343d4a; --margin: #6e3b38;
+  --carbon: #9db3f5; --tomato: #ef7a6c; --basil: #6cc79f; --amber: #e6b54a;
+  --hud: rgba(31, 35, 37, .95); --hud-ink: #ece5d3; --scene-bg: #121c20; --scrim: rgba(0, 0, 0, .55);
+  --chip: #353a3c; --chip-on: #ece5d3; --chip-on-ink: #1f2325; color-scheme: dark;
+}

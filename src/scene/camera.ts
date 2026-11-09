@@ -72,8 +72,8 @@ export class CameraRig {
 
     let distance = fitAll;
     this.follow = null;
-    if (fitAll > fitDepth * VIEW.maxZoomOutForWidth) {
-      distance = fitDepth * VIEW.maxZoomOutForWidth;
+    if (fitAll > fitDepth * VIEW.followWhenWidthNeeds) {
+      distance = fitDepth * VIEW.followZoomOut;
       const b = this.measure(distance, 0);
       // How far the camera may slide before showing empty space past the walls.
       const max = searchUp(0, 30, (p) => this.measure(distance, p).x1 >= safe.x1);

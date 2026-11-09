@@ -1,0 +1,39 @@
+/* Panels look like a waiter's order pad: lined paper, red margin, torn top edge. */
+.overlay {
+  position: fixed; inset: 0; z-index: 10; background: var(--scrim); overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  padding: calc(12px + env(safe-area-inset-top, 0px)) 16px calc(12px + env(safe-area-inset-bottom, 0px));
+}
+.pad {
+  position: relative; width: min(100%, 580px); max-height: 100%; min-height: 0;
+  display: flex; flex-direction: column; color: var(--ink); background-color: var(--paper);
+  background-image:
+    linear-gradient(90deg, transparent 34px, var(--margin) 34px, var(--margin) 35px, transparent 35px),
+    repeating-linear-gradient(to bottom, transparent 0 29px, var(--rule) 29px 30px);
+  border-radius: 3px 3px 16px 16px; box-shadow: var(--shadow); padding: 30px 18px 16px 48px;
+}
+.pad::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 16px; border-radius: 3px 3px 0 0;
+  background: var(--tomato);
+  -webkit-mask: radial-gradient(circle at 10px 16px, transparent 5px, #000 5.5px) 0 0 / 20px 16px repeat-x;
+  mask: radial-gradient(circle at 10px 16px, transparent 5px, #000 5.5px) 0 0 / 20px 16px repeat-x;
+}
+.pad h1, .pad h2 { margin: 0; letter-spacing: -.01em; }
+.pad h1 { font-family: var(--hand); font-weight: 700; font-size: clamp(2rem, 6vw, 2.8rem); line-height: 1.05; }
+.pad p { margin: .4em 0; line-height: 1.45; max-width: 62ch; }
+.pad .lead { color: var(--muted); }
+.pad .scroll { overflow-y: auto; min-height: 0; flex: 1 1 auto; overscroll-behavior: contain; padding-right: 4px; }
+.pad .field { margin: 14px 0 6px; font-weight: 700; font-size: .95rem; }
+.pad .foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.pad ul.controls { margin: 4px 0 0; padding-left: 1.1em; color: var(--muted); font-size: .92rem; line-height: 1.5; }
+.ink { background: var(--ink); color: var(--paper); border: 0; border-radius: 10px; padding: 10px 16px; font-weight: 700; }
+.ghost { background: transparent; color: var(--ink); border: 1.5px solid currentColor; border-radius: 10px; padding: 8px 13px; font-weight: 600; }
+
+@media (max-width: 520px) {
+  .pad {
+    padding: 28px 12px 14px 40px;
+    background-image:
+      linear-gradient(90deg, transparent 28px, var(--margin) 28px, var(--margin) 29px, transparent 29px),
+      repeating-linear-gradient(to bottom, transparent 0 29px, var(--rule) 29px 30px);
+  }
+}
