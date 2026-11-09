@@ -13,6 +13,8 @@
  */
 import { checkCredentials, hashPassword, newToken, randomHex, safeEqual, sha256 } from './auth';
 import { MENU_SCHEMA, menuPrompt, normalizeMenu } from './menuImport';
+// The single-file game (built by `npm run build:file`).
+import GAME_HTML from '../../play/First-Shift.html';
 
 export interface Env {
   DB: D1Database;
@@ -44,7 +46,11 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
     if (!url.pathname.startsWith('/api/')) {
-      return env.ASSETS ? env.ASSETS.fetch(request) : new Response('Not found', { status: 404 });
+      if (env.ASSETS) return env.ASSETS.fetch(request);
+      if (url.pathname === '/' || url.pathname === '/index.html') {
+        return new Response(GAME_HTML, { headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-cache' } });
+      }
+      return new Response('Not found', { status: 404 });
     }
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS });
     try {

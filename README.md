@@ -44,6 +44,8 @@ Then open the link it prints (usually http://localhost:5173). To try it on your 
 
 ## Online version (accounts, saved progress, menu import)
 
+**Live at https://first-shift.first-shift-game.workers.dev**
+
 The `server/` folder is a small Cloudflare Worker that hosts the game as a website and adds:
 
 - **Accounts**: username + password, no email. Passwords are stored only as salted PBKDF2 hashes. 10 wrong passwords lock an account for 15 minutes.
@@ -64,7 +66,7 @@ npm run db:setup
 npm run deploy
 ```
 
-`npm run deploy` prints the game's web address. To let the double-click file sign in too, build it with that address: `VITE_SERVER_URL=https://<your-address> npm run build:file`.
+`npm run deploy` builds the single-file game, bundles it into the Worker and prints the web address. The address in `.env.production` is built into every copy, so the double-click file can sign in too.
 
 To try the server on your own computer: `npm run server:local` (menu import needs the real Cloudflare AI, so it only works once deployed).
 

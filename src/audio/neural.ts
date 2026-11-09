@@ -7,8 +7,13 @@ import { NEURAL_VOICES } from '../data/neuralVoices';
  */
 type Piper = typeof import('@mintplex-labs/piper-tts-web');
 
+/**
+ * Loaded from a public CDN only when someone downloads a voice. Bundling it
+ * would add about 40 MB (its speech engine) to every copy of the game.
+ */
+const PIPER_URL = 'https://cdn.jsdelivr.net/npm/@mintplex-labs/piper-tts-web@1.0.5/dist/piper-tts-web.js';
 let lib: Promise<Piper> | null = null;
-const load = () => (lib ??= import('@mintplex-labs/piper-tts-web'));
+const load = () => (lib ??= import(/* @vite-ignore */ PIPER_URL) as Promise<Piper>);
 
 export class NeuralVoices {
   private ready = new Set<string>();

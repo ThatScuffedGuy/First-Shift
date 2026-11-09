@@ -14,12 +14,13 @@
     "audio:manifest": "tsx scripts/audio-script.ts --manifest",
     "predev": "npm run audio:manifest",
     "prebuild": "npm run audio:manifest",
-    "deploy": "npm run build && cd server && wrangler deploy",
+    "deploy": "npm run build:file && cd server && wrangler deploy",
     "db:setup": "cd server && wrangler d1 execute first-shift --remote --file=schema.sql",
-    "server:local": "npm run build && cd server && wrangler d1 execute first-shift --local --file=schema.sql && wrangler dev"
+    "server:local": "npm run build:file && cd server && wrangler d1 execute first-shift --local --file=schema.sql && wrangler dev"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20261109.1",
+    "@mintplex-labs/piper-tts-web": "^1.0.5",
     "@types/node": "^26.6.6",
     "@types/three": "^0.187.0",
     "tsx": "^4.23.15",
@@ -33,7 +34,6 @@
     "@fontsource-variable/bricolage-grotesque": "^5.3.0",
     "@fontsource/kalam": "^5.3.0",
     "@fontsource/nunito": "^5.3.0",
-    "@mintplex-labs/piper-tts-web": "^1.0.5",
     "three": "^0.187.0"
   },
   "private": true,

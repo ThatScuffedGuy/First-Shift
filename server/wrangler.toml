@@ -4,16 +4,18 @@ name = "first-shift"
 main = "src/index.ts"
 compatibility_date = "2025-06-01"
 
-# The built game (npm run build) is served as static files.
-[assets]
-directory = "../dist"
-binding = "ASSETS"
+# The whole game is one HTML file (npm run build:file) bundled into the
+# Worker itself, so there are no separate files to upload.
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = false
 
 # Accounts and saves. database_id is filled in when the database is created.
 [[d1_databases]]
 binding = "DB"
 database_name = "first-shift"
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "25ecf07b-cca7-498f-b750-c47440fd7cb8"
 
 # AI that reads imported menus (Workers AI, free daily allowance).
 [ai]
