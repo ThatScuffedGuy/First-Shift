@@ -109,3 +109,7 @@
 .menu-pad .lead { margin: 4px auto 10px; }
 .menu-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
 .menu-buttons button { padding: 12px 16px; font-size: 1.05rem; }
+
+/* Russian lines use Nunito: a little smaller than the handwriting and a touch bolder reads best. */
+.said:lang(ru), .opt:lang(ru), .phrase .better:lang(ru), .item b:lang(ru), .menu-list .name:lang(ru) { font-family: "Nunito", var(--ui); font-weight: 600; }
+.said:lang(ru), .opt:lang(ru) { font-size: 1.1rem; line-height: 1.4; }

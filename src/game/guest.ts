@@ -65,7 +65,10 @@ export interface Guest {
   readyAt: number;
   doneAt: number;
   ticket: { dishIds: string[]; flags: Allergen[] } | null;
+  /** True once everyone at the table has the drink they ordered. */
   hasDrink: boolean;
+  /** Drinks already on the table (right ones only; wrong ones get sent back). */
+  servedDrinks: string[];
   checkedIn: boolean;
   talk: Conversation | null;
   talkStage: Stage | null;
@@ -110,6 +113,7 @@ export function createGuest(id: number, persona: Persona, menu: Menu, rng: Rng, 
     doneAt: 0,
     ticket: null,
     hasDrink: false,
+    servedDrinks: [],
     checkedIn: false,
     talk: null,
     talkStage: null,

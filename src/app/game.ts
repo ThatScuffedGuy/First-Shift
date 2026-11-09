@@ -484,7 +484,7 @@ export class Game {
         if (g) this.openTicket(g);
         break;
       case 'bar': {
-        const waiting = shift.guests.filter((x) => x.state === 'drinks' && x.table).map((x) => ({ guestId: x.id, table: x.table!, size: x.size }));
+        const waiting = shift.guests.filter((x) => x.state === 'drinks' && x.table).map((x) => ({ guestId: x.id, table: x.table!, size: x.size, missing: shift.drinksMissing(x).length }));
         if (!waiting.length) return;
         this.bar.open(waiting, shift.menu, shift.pack.code, (guestId, drinkIds) => {
           const guest = shift.guest(guestId);
@@ -537,7 +537,7 @@ export class Game {
       subtitle: `${g.persona.label} · looks ${MOODS[g.mood].word}`,
       log: g.log,
       options: !over && t && !t.done ? t.turn!.options : null,
-      nextLabel: over ? 'Let them go' : t?.done && g.talkStage ? STAGE_END[g.talkStage] : null,
+      nextLabel: over ? 'Let them go' : t?.done && g.talkStage ? (g.size > 1 ? STAGE_END[g.talkStage].replace('the guest', 'the group').replace('the drink', 'the drinks') : STAGE_END[g.talkStage]) : null,
       langCode: this.shift!.pack.code,
       showEnglish: settings.showEnglish,
       hasRecording: hasClip,

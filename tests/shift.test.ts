@@ -103,13 +103,17 @@ describe('mistakes', () => {
     return { s, g };
   }
 
-  it('a wrong drink costs mood', () => {
+  it('a wrong drink costs mood, is sent back, and the right one can still be served', () => {
     const { s, g } = toDrinks();
     const before = g.mood;
     s.pour(g, [g.order.otherDrinkId]);
-    s.serve();
+    expect(s.serve()).toBe(false);
     expect(g.mood).toBe(before - TIMING.wrongDrinkPenalty);
     expect(s.stats.wrongDrinks).toBe(1);
+    expect(g.state).toBe('drinks'); // still waiting, so the drink station offers to pour again
+    s.pour(g, g.order.drinkIds);
+    expect(s.serve()).toBe(true);
+    expect(g.state).toBe('ordering');
   });
 
   it('a wrong line costs 1 mood and is saved for practice', () => {
@@ -180,10 +184,14 @@ describe('groups', () => {
       talkThrough(s, g, 'door');
       s.seat(g, 2);
       talkThrough(s, g, 'greet');
-      // Only some of the drinks: wrong.
+      // Only some of the drinks: they keep those and wait for the rest.
       s.pour(g, g.order.drinkIds.slice(1));
+      expect(s.serve()).toBe(false);
+      expect(s.drinksMissing(g)).toEqual([g.order.drinkIds[0]]);
+      // One right drink plus a wrong one: the wrong one goes back, mood drops.
       const before = g.mood;
-      s.serve();
+      s.pour(g, [g.order.drinkIds[0], g.order.otherDrinkId]);
+      expect(s.serve()).toBe(true);
       expect(g.mood).toBe(before - TIMING.wrongDrinkPenalty);
       talkThrough(s, g, 'order');
       expect(g.order.dishIds.filter((id) => byId(HOUSE_MENU, id).category === 'main').length).toBe(g.size);

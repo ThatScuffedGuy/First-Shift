@@ -358,18 +358,27 @@ export class Shift {
     this.carrying = null;
     const n = g.table;
     if (carry.kind === 'drink') {
-      g.hasDrink = true;
-      const ok = [...carry.drinkIds].sort().join() === [...g.order.drinkIds].sort().join();
-      this.emit({ type: 'served', guest: g, kind: 'drink', ok });
-      if (!ok) {
+      // Right drinks stay on the table; wrong ones are sent back to be replaced.
+      const still = this.drinksMissing(g);
+      const right = carry.drinkIds.filter((id) => still.includes(id));
+      const wrong = carry.drinkIds.filter((id) => !still.includes(id));
+      g.servedDrinks.push(...right);
+      const missing = this.drinksMissing(g);
+      this.emit({ type: 'served', guest: g, kind: 'drink', ok: wrong.length === 0 });
+      if (wrong.length) {
         this.stats.wrongDrinks++;
-        this.incidents.push(`Table ${n} got the wrong drink.`);
-        this.toast(g.size > 1 ? `Table ${n}: those aren't the drinks they ordered. They keep them, but they're not happy.` : `Table ${n}: that's not the drink they ordered. They keep it, but they're not happy.`, 'bad');
+        this.incidents.push(`Table ${n} got the wrong drink and sent it back.`);
         this.changeMood(g, -TIMING.wrongDrinkPenalty);
         if (g.mood === 0) return false;
-      } else {
-        this.toast(g.size > 1 ? `Drinks served to Table ${n}.` : `Drink served to Table ${n}.`, 'good');
       }
+      if (missing.length) {
+        // Same wait continues: they still want their drink.
+        const what = g.size > 1 ? `${missing.length} more drink${missing.length > 1 ? 's' : ''}` : 'the drink they ordered';
+        this.toast(`Table ${n}: ${wrong.length ? `that's not right, they sent ${wrong.length > 1 ? 'those' : 'it'} back. ` : ''}They still need ${what}. Go back to the drink station.`, 'bad');
+        return false;
+      }
+      g.hasDrink = true;
+      this.toast(g.size > 1 ? `Drinks served to Table ${n}.` : `Drink served to Table ${n}.`, 'good');
       this.setState(g, 'ordering');
       return true;
     }
@@ -412,6 +421,17 @@ export class Shift {
     this.setState(g, 'eating');
     g.doneAt = this.time + between(this.rng, TIMING.eatTime);
     return false;
+  }
+
+  /** Drinks this table ordered that haven't reached them yet. */
+  drinksMissing(g: Guest): string[] {
+    const left = [...g.servedDrinks];
+    return g.order.drinkIds.filter((id) => {
+      const i = left.indexOf(id);
+      if (i === -1) return true;
+      left.splice(i, 1);
+      return false;
+    });
   }
 
   /** Call as the waiter walks while carrying. Returns true when an accident should start. */

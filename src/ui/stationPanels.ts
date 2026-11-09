@@ -16,7 +16,7 @@ export class BarPanel {
   private drinksEl: HTMLElement;
   private hintEl: HTMLElement;
   private pourBtn: HTMLButtonElement;
-  private waiting: { guestId: number; table: number; size: number }[] = [];
+  private waiting: { guestId: number; table: number; size: number; missing: number }[] = [];
   private chosen = 0;
   private onPour: (guestId: number, drinkIds: string[]) => void = () => {};
 
@@ -43,7 +43,7 @@ export class BarPanel {
     });
     this.drinksEl.addEventListener('change', () => {
       // On your own, ticking a drink pours it straight away.
-      if (this.current.size === 1 && this.picked().length === 1) return this.pour();
+      if (this.current.missing === 1 && this.picked().length === 1) return this.pour();
       this.pourBtn.disabled = this.picked().length === 0;
     });
     this.pourBtn.addEventListener('click', () => this.pour());
@@ -58,8 +58,10 @@ export class BarPanel {
   }
 
   private syncHint(): void {
-    const n = this.current.size;
-    this.hintEl.textContent = n > 1 ? `Table ${this.current.table} is a group of ${n}: tick all ${n} drinks, then pour.` : `Tick the drink Table ${this.current.table} ordered.`;
+    const n = this.current.missing;
+    const t = this.current.table;
+    this.hintEl.textContent =
+      this.current.size === 1 ? `Tick the drink Table ${t} ordered.` : n < this.current.size ? `Table ${t} still needs ${n} drink${n > 1 ? 's' : ''}: tick ${n > 1 ? 'them' : 'it'}, then pour.` : `Table ${t} is a group of ${n}: tick all ${n} drinks, then pour.`;
     this.pourBtn.textContent = n > 1 ? `Pour ${n} drinks` : 'Pour';
   }
 
@@ -70,7 +72,7 @@ export class BarPanel {
     this.onPour(this.current.guestId, ids);
   }
 
-  open(waiting: { guestId: number; table: number; size: number }[], menu: Menu, lang: string, onPour: (guestId: number, drinkIds: string[]) => void): void {
+  open(waiting: { guestId: number; table: number; size: number; missing: number }[], menu: Menu, lang: string, onPour: (guestId: number, drinkIds: string[]) => void): void {
     this.onPour = onPour;
     this.waiting = waiting;
     this.chosen = waiting[0].guestId;

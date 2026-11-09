@@ -306,8 +306,8 @@ export class FloorView {
     const dishes = this.dishColours(g, shift);
     p.members.forEach((m, i) => {
       const seat = table.seats[i];
-      if (g.hasDrink && !m.glass) {
-        const drinkId = g.order.drinkIds[i] ?? g.order.drinkIds[0];
+      const drinkId = g.order.drinkIds[i] ?? g.order.drinkIds[0];
+      if (g.servedDrinks.includes(drinkId) && !m.glass) {
         m.glass = makeGlass(byId(shift.menu, drinkId).color);
         m.glass.position.copy(seat.glass);
         this.scene.add(m.glass);
