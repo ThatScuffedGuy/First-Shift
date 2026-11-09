@@ -43,6 +43,8 @@ import { QuickReaction } from '../ui/qte';
 import { SummaryPanel } from '../ui/summary';
 import { ShiftSetup } from '../ui/shiftSetup';
 import { ChoiceMenu, HowToPanel } from '../ui/menus';
+import { PracticePanel, ProgressPanel } from '../ui/progressPanels';
+import { progress } from '../progress';
 import { SettingsPanel } from '../ui/settingsPanel';
 import { Coachmark } from '../ui/coachmark';
 
@@ -101,6 +103,8 @@ export class Game {
   private mainMenu: ChoiceMenu;
   private pauseMenu: ChoiceMenu;
   private howTo: HowToPanel;
+  private practice: PracticePanel;
+  private progressPanel: ProgressPanel;
   private settingsPanel: SettingsPanel;
   private coachmark: Coachmark;
   private keyboard: Keyboard;
@@ -132,6 +136,15 @@ export class Game {
       voiceStatus: () => this.voiceStatus(),
     });
     this.howTo = new HowToPanel(this.panels);
+    this.progressPanel = new ProgressPanel(this.panels);
+    this.practice = new PracticePanel(this.panels, {
+      say: (text, clipId, who, lang) => {
+        const pack = languageByCode(lang);
+        void this.voice.say([{ text, clipId, who, voiceSeed: 7 }], { tag: pack.speechLang, label: pack.label, enabled: settings.voice, volume: settings.voiceVolume, slow: settings.slow });
+      },
+      sfx: (name) => this.sfx.play(name),
+      showEnglish: () => settings.showEnglish,
+    });
     this.mainMenu = new ChoiceMenu(this.panels, 'First Shift', (id) => this.onMainMenu(id), { big: true });
     this.pauseMenu = new ChoiceMenu(this.panels, 'Paused', (id) => this.onPauseMenu(id), { onEscape: () => this.resume() });
     this.settingsPanel = new SettingsPanel(this.panels, this.theme, (report) => this.testSound(report));
@@ -280,10 +293,12 @@ export class Game {
     this.mainMenu.open(
       [
         { id: 'play', label: 'Start a shift', primary: true },
+        { id: 'practice', label: `Practice phrases (${progress.toPractice().length})`, hidden: progress.toPractice().length === 0 },
+        { id: 'progress', label: 'Your progress', hidden: progress.shifts().length === 0 },
         { id: 'howto', label: 'How to play' },
         { id: 'settings', label: 'Settings' },
       ],
-      'Learn a language by working a dinner shift.',
+      progress.shifts().length ? `${progress.rank().title} · ${progress.rank().served} guest${progress.rank().served === 1 ? '' : 's'} served` : 'Learn a language by working a dinner shift.',
     );
   }
 
@@ -292,6 +307,8 @@ export class Game {
     if (id === 'play') this.setup.open();
     else if (id === 'howto') this.howTo.open(() => this.openMainMenu());
     else if (id === 'settings') this.settingsPanel.open(() => this.openMainMenu());
+    else if (id === 'practice') this.practice.open(progress.toPractice(), () => this.openMainMenu());
+    else if (id === 'progress') this.progressPanel.open(() => this.openMainMenu());
   }
 
   /** Opens the pause menu if a shift is running. Returns true if it did. */
@@ -372,6 +389,10 @@ export class Game {
         break;
       case 'answer':
         this.sfx.play(e.correct ? 'right' : 'wrong');
+        if (this.shift) {
+          if (!e.correct) progress.recordMiss(this.shift.pack.code, e.turn.guest, e.turn.options);
+          else if (e.firstTry) progress.recordFirstTry(this.shift.pack.code, e.turn.guest.text);
+        }
         break;
       case 'mood': {
         const at = this.floor.positionOf(e.guest.id);
@@ -398,9 +419,22 @@ export class Game {
         break;
       case 'moodDrop':
         break;
-      case 'over':
+      case 'over': {
+        const s = this.shift!;
+        progress.recordShift({
+          date: new Date().toISOString(),
+          lang: s.pack.code,
+          difficulty: s.difficulty.id,
+          served: s.records.filter((r) => r.outcome === 'served').length,
+          total: s.total,
+          tips: s.tips,
+          rating: s.records.reduce((a, r) => a + r.stars, 0) / Math.max(1, s.records.length),
+          firstTry: s.stats.firstTry,
+          turns: s.stats.turns,
+        });
         setTimeout(() => this.showSummary(), 1400);
         break;
+      }
     }
   }
 

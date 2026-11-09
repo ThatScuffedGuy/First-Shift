@@ -3,7 +3,7 @@ import { PERSONAS } from '../data/personas';
 import { TIMING } from '../data/timing';
 import { DIFFICULTIES, type Difficulty } from '../data/difficulty';
 import { buildContext } from '../dialogue/context';
-import { Conversation, nodesForStage, selectPool, type ChooseResult, type Stage } from '../dialogue/conversation';
+import { Conversation, nodesForStage, selectPool, type ChooseResult, type Stage, type Turn } from '../dialogue/conversation';
 import type { LanguagePack } from '../dialogue/types';
 import { type Guest, type GuestState, PHASE_OF, byId, createGuest, patienceLimit, planOrder } from './guest';
 import { type Rng, between, weighted } from './random';
@@ -21,7 +21,7 @@ export type ShiftEvent =
   | { type: 'saved' }
   | { type: 'moodDrop'; guest: Guest }
   | { type: 'mood'; guest: Guest; delta: number }
-  | { type: 'answer'; guest: Guest; correct: boolean }
+  | { type: 'answer'; guest: Guest; correct: boolean; firstTry: boolean; turn: Turn }
   | { type: 'over' };
 
 export type Carry =
@@ -247,7 +247,8 @@ export class Shift {
   /** The player picks option i. A right answer moves the clock by one line. */
   answer(g: Guest, i: number): ChooseResult {
     const talk = g.talk;
-    if (!talk) return { kind: 'ignored' };
+    if (!talk || !talk.turn) return { kind: 'ignored' };
+    const turn = talk.turn;
     const res = talk.choose(i);
     if (res.kind === 'wrong') {
       this.stats.wrongPicks++;
@@ -257,7 +258,7 @@ export class Shift {
       }
       this.changeMood(g, -TIMING.wrongLinePenalty);
       if (g.mood === 0) g.log.push({ who: 'coach', ok: false, note: "That's it, they've had enough and are leaving." });
-      this.emit({ type: 'answer', guest: g, correct: false });
+      this.emit({ type: 'answer', guest: g, correct: false, firstTry: false, turn });
     } else if (res.kind === 'right') {
       this.stats.turns++;
       if (res.firstTry) {
@@ -267,7 +268,7 @@ export class Shift {
       g.log.push({ who: 'you', text: res.option.text, en: res.option.en, clipId: res.option.clipId });
       if (res.next) g.log.push({ who: 'guest', text: res.next.guest.text, en: res.next.guest.en, clipId: res.next.guest.clipId });
       this.tick(TIMING.lineSeconds);
-      this.emit({ type: 'answer', guest: g, correct: true });
+      this.emit({ type: 'answer', guest: g, correct: true, firstTry: res.firstTry, turn });
     }
     return res;
   }
