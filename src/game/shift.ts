@@ -19,6 +19,7 @@ export type ShiftEvent =
   | { type: 'spill'; kind: 'drink' | 'food'; drinkId?: string }
   | { type: 'saved' }
   | { type: 'moodDrop'; guest: Guest }
+  | { type: 'mood'; guest: Guest; delta: number }
   | { type: 'answer'; guest: Guest; correct: boolean }
   | { type: 'over' };
 
@@ -205,6 +206,7 @@ export class Shift {
   private changeMood(g: Guest, delta: number): void {
     const before = g.mood;
     g.mood = clamp(g.mood + delta, 0, TIMING.maxMood);
+    if (g.mood !== before) this.emit({ type: 'mood', guest: g, delta: g.mood - before });
     if (delta < 0 && g.mood === 1 && before > 1) this.toast(`${where(g)} is losing patience.`, 'bad');
     if (g.mood === 0 && g.id !== this.activeGuestId) this.walkout(g);
   }

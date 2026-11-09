@@ -15,6 +15,7 @@ import { CameraRig } from '../scene/camera';
 import { TapMarker } from '../scene/tapMarker';
 import { FloorView } from '../scene/floorView';
 import { Pointer } from '../scene/pointer';
+import { Floaters } from '../scene/floaters';
 import { createWaiter, obstaclesOf, stepWaiter, tapDestination } from '../game/waiter';
 import { placeAt } from '../game/zones';
 import { formatClock } from '../game/clock';
@@ -66,6 +67,7 @@ export class Game {
   private marker = new TapMarker();
   private pointer = new Pointer();
   private floor: FloorView;
+  private floaters = new Floaters(this.scene);
   private reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   // State
@@ -235,6 +237,7 @@ export class Game {
     animatePerson(m, { dt, speed: this.waiter.moving ? (shift?.carrying ? 4.2 : 5.2) : 0, carrying: !!shift?.carrying, reducedMotion: reduced });
     if (shift) this.floor.update(shift, this.waiter, dt, now, reduced);
     this.marker.update(dt, this.waiter.target !== null);
+    this.floaters.update(dt);
     this.rig.update(dt, this.waiter.x);
     this.renderer.render(this.scene, this.rig.camera);
   }
@@ -289,11 +292,20 @@ export class Game {
       case 'answer':
         this.sfx.play(e.correct ? 'right' : 'wrong');
         break;
-      case 'left':
+      case 'mood': {
+        const at = this.floor.positionOf(e.guest.id);
+        const face = MOODS[e.guest.mood].face;
+        if (at) this.floaters.show(e.delta > 0 ? `+${e.delta} ${face}` : `−${-e.delta} ${face}`, e.delta > 0 ? '#6cc79f' : '#ef7a6c', at.x, at.z);
+        break;
+      }
+      case 'left': {
+        const at = this.floor.positionOf(e.guest.id);
+        if (at && e.record.tip > 0) this.floaters.show(`+$${e.record.tip.toFixed(2)}`, '#e6b54a', at.x, at.z, 3.8);
         this.floor.guestLeft(e.guest);
         this.sfx.play(e.record.tip > 0 ? 'coins' : 'walkout');
         if (this.talking === e.guest) this.closeTalkPanel();
         break;
+      }
       case 'spill': {
         const colour = e.drinkId ? HOUSE_MENU.items.find((m) => m.id === e.drinkId)?.color ?? '#d94f6b' : '#d9822b';
         this.floor.spill(e.kind, colour, this.waiter);

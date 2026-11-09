@@ -40,3 +40,8 @@ button.stat { font-weight: 600; }
   .brand span { display: none; }
   .action button { min-width: 0; max-width: calc(100vw - 32px); }
 }
+
+/* Touch screens have no keyboard, so hide key hints. */
+@media (hover: none) and (pointer: coarse) {
+  kbd, .opt .n { display: none; }
+}

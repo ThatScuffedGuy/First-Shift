@@ -86,7 +86,7 @@
 .qte .bar { height: 8px; margin-top: 12px; }
 
 /* Tutorial banner */
-.coachmark { position: fixed; left: 50%; transform: translateX(-50%); top: var(--hud-bottom, 62px); z-index: 6; max-width: min(92vw, 520px); background: var(--ink); color: var(--paper); border-radius: 14px; padding: 10px 14px; box-shadow: var(--shadow); font-size: .95rem; line-height: 1.35; display: flex; gap: 10px; align-items: flex-start; }
+.coachmark { position: fixed; left: 50%; transform: translateX(-50%); top: var(--hud-bottom, 62px); z-index: 6; width: max-content; max-width: min(92vw, 520px); background: var(--ink); color: var(--paper); border-radius: 14px; padding: 10px 14px; box-shadow: var(--shadow); font-size: .95rem; line-height: 1.35; display: flex; gap: 10px; align-items: flex-start; }
 .coachmark b { color: var(--amber); font-weight: 800; white-space: nowrap; }
 .coachmark button { background: none; border: 0; color: inherit; opacity: .7; font-size: .8rem; text-decoration: underline; margin-left: auto; white-space: nowrap; }
 
@@ -94,8 +94,10 @@
   .guests { width: min(190px, 46vw); }
   .gl { font-size: .72rem; padding: 5px 8px; }
   .gl b { font-size: .8rem; }
-  .toasts { top: auto; bottom: calc(96px + env(safe-area-inset-bottom, 0px)); right: 8px; left: 8px; width: auto; align-items: center; }
-  .coachmark { font-size: .86rem; }
+  .toasts { right: 8px; width: min(50vw, 260px); }
+  .toast { font-size: .8rem; padding: 6px 9px; }
+  /* On phones the tip sits just above the action button, clear of the guest list. */
+  .coachmark { top: auto; bottom: calc(92px + env(safe-area-inset-bottom, 0px)); font-size: .84rem; padding: 8px 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .toast, .qte-card { animation: none; }

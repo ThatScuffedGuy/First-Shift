@@ -317,6 +317,12 @@ export class FloorView {
     this.tray.add(item);
   }
 
+  /** Where a guest (or a guest walking out) is standing. */
+  positionOf(guestId: number): Point | undefined {
+    const f = this.figures.get(guestId) ?? this.exiting.find((x) => x.id === guestId);
+    return f ? { x: f.x, z: f.z } : undefined;
+  }
+
   /** World position above a table, the door or a station, for the tutorial pointer. */
   tablePoint(n: number): Point | undefined {
     const t = this.tables.find((x) => x.spot.number === n);
