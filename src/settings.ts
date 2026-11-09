@@ -21,11 +21,13 @@ export interface Settings {
   shiftLength: string;
   /** Whether groups of 2 to 4 can arrive. */
   groups: boolean;
+  /** Which menu tonight: "house" or an imported menu's id. */
+  menuId: string;
 }
 
 const KEY = 'first-shift.settings';
 
-const DEFAULTS: Settings = { lang: 'es', slow: true, showEnglish: true, voice: true, voiceVolume: 1, sfx: true, sfxVolume: 0.6, tutorial: true, difficulty: 'normal', shiftLength: 'short', groups: true };
+const DEFAULTS: Settings = { lang: 'es', slow: true, showEnglish: true, voice: true, voiceVolume: 1, sfx: true, sfxVolume: 0.6, tutorial: true, difficulty: 'normal', shiftLength: 'short', groups: true, menuId: 'house' };
 
 function load(): Settings {
   try {

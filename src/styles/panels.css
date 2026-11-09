@@ -113,3 +113,11 @@
 /* Russian lines use Nunito: a little smaller than the handwriting and a touch bolder reads best. */
 .said:lang(ru), .opt:lang(ru), .phrase .better:lang(ru), .item b:lang(ru), .menu-list .name:lang(ru) { font-family: "Nunito", var(--ui); font-weight: 600; }
 .said:lang(ru), .opt:lang(ru) { font-size: 1.1rem; line-height: 1.4; }
+
+/* Text fields (account, menu import) */
+.pad input[type="text"], .pad input:not([type]), .pad input[type="password"], .pad textarea {
+  font: inherit; color: var(--ink); background: color-mix(in srgb, var(--paper) 80%, #fff 20%);
+  border: 1.5px solid var(--rule); border-radius: 10px; padding: 9px 12px; width: 100%;
+}
+.pad input:focus-visible, .pad textarea:focus-visible { outline: 3px solid var(--carbon); outline-offset: 1px; }
+.account-form .field { display: block; margin-top: 10px; }

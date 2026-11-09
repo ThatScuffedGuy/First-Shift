@@ -1,5 +1,6 @@
 import { LANGUAGES, languageByCode } from '../data/languages';
-import { HOUSE_MENU } from '../data/menus';
+import { availableMenus, currentMenu } from '../menuChoice';
+import { progress } from '../progress';
 import { DIFFICULTIES, SHIFT_LENGTHS, difficultyById } from '../data/difficulty';
 import { settings, updateSettings } from '../settings';
 import { createPanel, el, esc } from './dom';
@@ -10,6 +11,7 @@ export interface SetupHandlers {
   start(): void;
   back(): void;
   testSound(report: (text: string, ok: boolean) => void): void;
+  importMenu(): void;
   voiceStatus(): { text: string; ok: boolean };
 }
 
@@ -42,7 +44,10 @@ export class ShiftSetup {
         <label class="check"><input type="checkbox" data-k="tutorial"> Guide me through the first guest</label>
         <div class="row" style="margin-top:10px"><button class="ghost" type="button" data-test>Test sound</button></div>
         <p class="status" data-status aria-live="polite"></p>
-        <details style="margin-top:10px"><summary class="field" style="cursor:pointer">Tonight’s menu</summary><ul class="menu-list" data-menu></ul></details>
+        <p class="field" id="menuLabel">Menu</p>
+        <div class="chips" role="group" aria-labelledby="menuLabel" data-group="menu" data-menus></div>
+        <div class="row" style="margin-top:6px"><button class="ghost" type="button" data-import>Import a real menu…</button><button class="ghost" type="button" data-delmenu hidden>Delete this menu</button></div>
+        <details style="margin-top:10px"><summary class="field" style="cursor:pointer">Tonight’s menu</summary><ul class="menu-list" data-preview></ul></details>
       </div>`),
       el('<div class="foot"><button class="ghost" type="button" data-back>Main menu</button><button class="ink" type="button" data-start>Start shift</button></div>'),
     );
@@ -55,6 +60,7 @@ export class ShiftSetup {
       // HTML lowercases data-attribute names, so the length group is called "length" here.
       if (group === 'slow') updateSettings({ slow: value === '1' });
       else if (group === 'length') updateSettings({ shiftLength: value });
+      else if (group === 'menu') updateSettings({ menuId: value });
       else updateSettings({ [group]: value });
       this.sync();
     });
@@ -64,6 +70,12 @@ export class ShiftSetup {
     });
     pad.querySelector('[data-test]')!.addEventListener('click', () => this.h.testSound((t, ok) => this.setStatus(t, ok)));
     pad.querySelector('[data-back]')!.addEventListener('click', () => this.h.back());
+    pad.querySelector('[data-import]')!.addEventListener('click', () => this.h.importMenu());
+    pad.querySelector('[data-delmenu]')!.addEventListener('click', () => {
+      progress.removeMenu(settings.menuId);
+      updateSettings({ menuId: 'house' });
+      this.sync();
+    });
     pad.querySelector('[data-start]')!.addEventListener('click', () => this.h.start());
     overlay.addEventListener('keydown', (e) => e.key === 'Escape' && this.h.back());
   }
@@ -86,6 +98,11 @@ export class ShiftSetup {
     const pad = this.pad;
     const pressed = (group: string, current: string) =>
       pad.querySelectorAll<HTMLElement>(`[data-group="${group}"] .chip`).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset[group] === current)));
+    const menus = availableMenus();
+    if (!menus.some((m) => m.id === settings.menuId)) updateSettings({ menuId: 'house' });
+    pad.querySelector('[data-menus]')!.innerHTML = menus.map((m) => `<button class="chip" type="button" data-menu="${esc(m.id)}">${esc(m.name)}</button>`).join('');
+    pad.querySelector<HTMLElement>('[data-delmenu]')!.hidden = settings.menuId === 'house';
+    pressed('menu', settings.menuId);
     pressed('lang', settings.lang);
     pressed('difficulty', settings.difficulty);
     pressed('length', settings.shiftLength);
@@ -94,7 +111,7 @@ export class ShiftSetup {
     pad.querySelector('[data-diffdesc]')!.textContent = difficultyById(settings.difficulty).description;
     const pack = languageByCode(settings.lang);
     pad.querySelector('[data-start]')!.textContent = `Start shift in ${pack.label}`;
-    pad.querySelector('[data-menu]')!.innerHTML = renderMenu(HOUSE_MENU, pack.code);
+    pad.querySelector("[data-preview]")!.innerHTML = renderMenu(currentMenu(), pack.code);
     const s = this.h.voiceStatus();
     this.setStatus(s.text, s.ok);
   }

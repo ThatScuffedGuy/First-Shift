@@ -1,4 +1,5 @@
 import { RANKS, MASTERY_STREAK } from './data/ranks';
+import type { Menu } from './data/types';
 
 /**
  * Progress saved on this device between shifts: results of past shifts and
@@ -38,10 +39,12 @@ export interface ShiftLog {
   turns: number;
 }
 
-interface Progress {
+export interface Progress {
   version: 1;
   shifts: ShiftLog[];
   cards: Record<string, PracticeCard>;
+  /** Real restaurant menus you've imported. */
+  menus?: Menu[];
 }
 
 const KEY = 'first-shift.progress';
@@ -60,6 +63,7 @@ function load(): Progress {
 }
 
 const data: Progress = load();
+const listeners: (() => void)[] = [];
 
 function save(): void {
   try {
@@ -67,11 +71,67 @@ function save(): void {
   } catch {
     // Not saved (private window or storage full); still works for this visit.
   }
+  for (const fn of listeners) fn();
+}
+
+/** Combines two saves without losing anything: all shifts, every practice line, every menu. */
+export function mergeProgress(a: Progress, b: Progress): Progress {
+  const shifts = new Map<string, ShiftLog>();
+  for (const s of [...a.shifts, ...b.shifts]) shifts.set(`${s.date}|${s.lang}`, s);
+  const cards: Record<string, PracticeCard> = { ...a.cards };
+  for (const [key, card] of Object.entries(b.cards)) {
+    const mine = cards[key];
+    if (!mine) cards[key] = card;
+    else {
+      const newer = card.lastMissed > mine.lastMissed ? card : mine;
+      cards[key] = { ...newer, misses: Math.max(mine.misses, card.misses), streak: card.lastMissed === mine.lastMissed ? Math.max(mine.streak, card.streak) : newer.streak };
+    }
+  }
+  const menus = new Map<string, Menu>();
+  for (const m of [...(a.menus ?? []), ...(b.menus ?? [])]) menus.set(m.id, m);
+  return {
+    version: 1,
+    shifts: [...shifts.values()].sort((x, y) => x.date.localeCompare(y.date)).slice(-200),
+    cards,
+    menus: [...menus.values()],
+  };
 }
 
 const cardKey = (lang: string, guest: string) => `${lang}|${guest}`;
 
 export const progress = {
+  /** Called after every change (used to sync with your account). */
+  onChange(fn: () => void): void {
+    listeners.push(fn);
+  },
+
+  /** A copy of everything, for saving online. */
+  export(): Progress {
+    return JSON.parse(JSON.stringify(data));
+  },
+
+  /** Merges a save from your account into this device's progress. */
+  mergeIn(other: unknown): void {
+    const o = other as Progress | null;
+    if (!o || o.version !== 1 || !Array.isArray(o.shifts) || typeof o.cards !== 'object') return;
+    Object.assign(data, mergeProgress(data, o));
+    save();
+  },
+
+  menus(): Menu[] {
+    return data.menus ?? [];
+  },
+
+  addMenu(menu: Menu): void {
+    data.menus = [...(data.menus ?? []).filter((m) => m.id !== menu.id), menu];
+    save();
+  },
+
+  removeMenu(id: string): void {
+    data.menus = (data.menus ?? []).filter((m) => m.id !== id);
+    save();
+  },
+
   shifts(): ShiftLog[] {
     return data.shifts;
   },

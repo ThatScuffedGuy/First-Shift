@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { HOUSE_LAYOUT as LAYOUT } from '../data/layout';
-import { HOUSE_MENU } from '../data/menus';
 import { languageByCode } from '../data/languages';
 import { TIMING } from '../data/timing';
 import { ACCIDENTS } from '../data/events';
@@ -46,6 +45,11 @@ import { ShiftSetup } from '../ui/shiftSetup';
 import { ChoiceMenu, HowToPanel } from '../ui/menus';
 import { PracticePanel, ProgressPanel } from '../ui/progressPanels';
 import { progress } from '../progress';
+import { currentMenu } from '../menuChoice';
+import { api } from '../online/api';
+import { Sync } from '../online/sync';
+import { AccountPanel } from '../ui/accountPanel';
+import { MenuImportPanel } from '../ui/menuImportPanel';
 import { SettingsPanel } from '../ui/settingsPanel';
 import { Coachmark } from '../ui/coachmark';
 
@@ -107,6 +111,9 @@ export class Game {
   private howTo: HowToPanel;
   private practice: PracticePanel;
   private progressPanel: ProgressPanel;
+  private sync = new Sync();
+  private account: AccountPanel;
+  private menuImport: MenuImportPanel;
   private settingsPanel: SettingsPanel;
   private coachmark: Coachmark;
   private keyboard: Keyboard;
@@ -137,7 +144,16 @@ export class Game {
       },
       testSound: (report) => this.testSound(report),
       voiceStatus: () => this.voiceStatus(),
+      importMenu: () => {
+        this.setup.close();
+        this.menuImport.open(settings.lang, (menu) => {
+          if (menu) updateSettings({ menuId: menu.id });
+          this.setup.open();
+        });
+      },
     });
+    this.account = new AccountPanel(this.panels, this.sync);
+    this.menuImport = new MenuImportPanel(this.panels);
     this.howTo = new HowToPanel(this.panels);
     this.progressPanel = new ProgressPanel(this.panels);
     this.practice = new PracticePanel(this.panels, {
@@ -181,7 +197,7 @@ export class Game {
       const on = settings.voice || settings.sfx;
       updateSettings({ voice: !on, sfx: !on });
     });
-    $('menuBtn').addEventListener('click', () => this.menuPanel.open(this.shift?.menu ?? HOUSE_MENU, settings.lang));
+    $('menuBtn').addEventListener('click', () => this.menuPanel.open(this.shift?.menu ?? currentMenu(), this.shift?.pack.code ?? settings.lang));
     $('pauseBtn').addEventListener('click', () => this.pause());
 
     // Input
@@ -298,6 +314,7 @@ export class Game {
         { id: 'play', label: 'Start a shift', primary: true },
         { id: 'practice', label: `Practice phrases (${progress.toPractice().length})`, hidden: progress.toPractice().length === 0 },
         { id: 'progress', label: 'Your progress', hidden: progress.shifts().length === 0 },
+        { id: 'account', label: api.session ? `Your account (${api.session.username})` : 'Sign in / create account', hidden: !api.available },
         { id: 'howto', label: 'How to play' },
         { id: 'settings', label: 'Settings' },
       ],
@@ -312,6 +329,7 @@ export class Game {
     else if (id === 'settings') this.settingsPanel.open(() => this.openMainMenu());
     else if (id === 'practice') this.practice.open(progress.toPractice(), () => this.openMainMenu());
     else if (id === 'progress') this.progressPanel.open(() => this.openMainMenu());
+    else if (id === 'account') this.account.open(() => this.openMainMenu());
   }
 
   /** Opens the pause menu if a shift is running. Returns true if it did. */
@@ -366,7 +384,7 @@ export class Game {
     this.placeWaiterAtStart();
     this.talking = null;
     this.tutorial = { on: settings.tutorial, guestId: null };
-    const shift = new Shift({ pack, menu: HOUSE_MENU, tables: LAYOUT.tables.map((t) => t.number), difficulty: difficultyById(settings.difficulty), guests: lengthById(settings.shiftLength).guests, groups: settings.groups });
+    const shift = new Shift({ pack, menu: currentMenu(), tables: LAYOUT.tables.map((t) => t.number), difficulty: difficultyById(settings.difficulty), guests: lengthById(settings.shiftLength).guests, groups: settings.groups });
     shift.on((e) => this.onShiftEvent(e));
     this.shift = shift;
     this.hud.setLanguage(pack.label);
@@ -412,7 +430,7 @@ export class Game {
         break;
       }
       case 'spill': {
-        const colour = e.drinkIds ? HOUSE_MENU.items.find((m) => m.id === e.drinkIds![0])?.color ?? '#d94f6b' : '#d9822b';
+        const colour = e.drinkIds ? this.shift?.menu.items.find((m) => m.id === e.drinkIds![0])?.color ?? '#d94f6b' : '#d9822b';
         this.floor.spill(e.kind, colour, this.waiter);
         this.sfx.play('spill');
         break;

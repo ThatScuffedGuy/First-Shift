@@ -6,23 +6,28 @@
     "dev": "vite",
     "build": "npm run typecheck && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p server",
     "test": "vitest run",
     "check": "npm run typecheck && npm test && vite build",
     "build:file": "npm run audio:manifest && vite build --config vite.single.config.ts && node scripts/rename-single.mjs",
     "audio": "tsx scripts/audio-script.ts",
     "audio:manifest": "tsx scripts/audio-script.ts --manifest",
     "predev": "npm run audio:manifest",
-    "prebuild": "npm run audio:manifest"
+    "prebuild": "npm run audio:manifest",
+    "deploy": "npm run build && cd server && wrangler deploy",
+    "db:setup": "cd server && wrangler d1 execute first-shift --remote --file=schema.sql",
+    "server:local": "npm run build && cd server && wrangler d1 execute first-shift --local --file=schema.sql && wrangler dev"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261109.1",
     "@types/node": "^26.6.6",
     "@types/three": "^0.187.0",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "vite": "^8.3.6",
     "vite-plugin-singlefile": "^2.3.4",
-    "vitest": "^5.1.0"
+    "vitest": "^5.1.0",
+    "wrangler": "^4.158.0"
   },
   "dependencies": {
     "@fontsource-variable/bricolage-grotesque": "^5.3.0",

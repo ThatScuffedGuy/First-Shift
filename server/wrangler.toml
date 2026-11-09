@@ -1,0 +1,23 @@
+# Cloudflare Worker that hosts First Shift online: the game, accounts, saves
+# and menu import. Everything here fits Cloudflare's free tier.
+name = "first-shift"
+main = "src/index.ts"
+compatibility_date = "2025-06-01"
+
+# The built game (npm run build) is served as static files.
+[assets]
+directory = "../dist"
+binding = "ASSETS"
+
+# Accounts and saves. database_id is filled in when the database is created.
+[[d1_databases]]
+binding = "DB"
+database_name = "first-shift"
+database_id = "00000000-0000-0000-0000-000000000000"
+
+# AI that reads imported menus (Workers AI, free daily allowance).
+[ai]
+binding = "AI"
+
+[vars]
+DAILY_IMPORTS = "10"
