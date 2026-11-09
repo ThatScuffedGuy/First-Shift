@@ -8,7 +8,7 @@ Open the `play` folder and double-click **First-Shift.html**. It opens in your w
 
 ## How a shift works
 
-Five guests arrive between 6 and about 7:30 PM. For each one: greet them at the door, seat them at a free table, greet them there and take a drink order, pour the drink from memory at the drink station, serve it, take the food order (watch for allergies!), write the ticket from memory, pick up the plate when the bell rings, serve it, optionally check on them, then bring the check.
+Guests (5, 8 or 12, depending on shift length) arrive from 6 PM, some on their own and some in groups. For each one: greet them at the door, seat them at a free table, greet them there and take a drink order, pour the drink from memory at the drink station, serve it, take the food order (watch for allergies!), write the ticket from memory, pick up the plate when the bell rings, serve it, optionally check on them, then bring the check.
 
 In every conversation, pick the reply that answers exactly what the guest said. A wrong pick is crossed out, explains why, and costs a little mood. Guests get impatient if they wait too long, and leave at mood 0. Happy guests tip more. The summary at the end lists what went wrong and the phrases to practice.
 
@@ -34,6 +34,13 @@ Then open the link it prints (usually http://localhost:5173). To try it on your 
 | `npm run audio` | Writes the voice-recording checklists (see below). |
 | `npm run build:file` | Makes the double-click version in `play/First-Shift.html`. |
 | `npm run preview` | Serves the built `dist/` folder so you can test it. |
+
+## What's in the game
+
+- **Main menu:** start a shift, practice phrases you missed, see your progress, read how to play, change settings.
+- **Shift setup:** language (Spanish, Russian, French), difficulty (Relaxed, Normal, Busy night), shift length (5, 8 or 12 guests), speech speed, groups of 2 to 4 on or off, translations, tutorial.
+- **Pause:** press Escape or the Pause button for Resume, How to play, Settings, Restart shift, or Quit to main menu. The clock stops while paused.
+- **Progress** is saved in your browser on this device: past shifts, your rank (Trainee to Maître d'), and a practice deck of lines you got wrong. A line counts as learned after two first-try answers in a row.
 
 ## Recording voice lines
 

@@ -34,7 +34,7 @@ export class ShiftSetup {
         <div class="chips" role="group" aria-labelledby="diffLabel" data-group="difficulty">${chips('difficulty', DIFFICULTIES.map((d) => ({ value: d.id, label: d.label })))}</div>
         <p class="status" data-diffdesc></p>
         <p class="field" id="lenLabel">Shift length</p>
-        <div class="chips" role="group" aria-labelledby="lenLabel" data-group="shiftLength">${chips('shiftLength', SHIFT_LENGTHS.map((l) => ({ value: l.id, label: l.label })))}</div>
+        <div class="chips" role="group" aria-labelledby="lenLabel" data-group="length">${chips('length', SHIFT_LENGTHS.map((l) => ({ value: l.id, label: l.label })))}</div>
         <p class="field" id="speedLabel">How guests talk</p>
         <div class="chips" role="group" aria-labelledby="speedLabel" data-group="slow">${chips('slow', [{ value: '1', label: 'Slowly' }, { value: '0', label: 'Natural speed' }])}</div>
         <label class="check"><input type="checkbox" data-k="groups"> Groups of 2 to 4 guests can come in</label>
@@ -52,7 +52,10 @@ export class ShiftSetup {
       const group = b?.closest<HTMLElement>('[data-group]')?.dataset.group;
       if (!b || !group) return;
       const value = b.dataset[group]!;
-      updateSettings(group === 'slow' ? { slow: value === '1' } : { [group]: value });
+      // HTML lowercases data-attribute names, so the length group is called "length" here.
+      if (group === 'slow') updateSettings({ slow: value === '1' });
+      else if (group === 'length') updateSettings({ shiftLength: value });
+      else updateSettings({ [group]: value });
       this.sync();
     });
     pad.addEventListener('change', (e) => {
@@ -85,7 +88,7 @@ export class ShiftSetup {
       pad.querySelectorAll<HTMLElement>(`[data-group="${group}"] .chip`).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset[group] === current)));
     pressed('lang', settings.lang);
     pressed('difficulty', settings.difficulty);
-    pressed('shiftLength', settings.shiftLength);
+    pressed('length', settings.shiftLength);
     pressed('slow', settings.slow ? '1' : '0');
     pad.querySelectorAll<HTMLInputElement>('input[data-k]').forEach((i) => (i.checked = Boolean(settings[i.dataset.k as 'groups'])));
     pad.querySelector('[data-diffdesc]')!.textContent = difficultyById(settings.difficulty).description;
