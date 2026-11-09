@@ -15,7 +15,9 @@
       <div class="stat"><span class="sr-only">Time </span><strong id="hudClock">6:00 PM</strong></div>
       <div class="stat">Guests <strong id="hudGuests">0/5</strong></div>
       <div class="stat">Tips <strong id="hudTips">$0.00</strong></div>
-      <button class="stat" id="themeBtn" type="button">Theme: Auto</button>
+      <button class="stat" id="soundBtn" type="button" aria-pressed="true">Sound on</button>
+      <button class="stat" id="menuBtn" type="button">Menu</button>
+      <button class="stat" id="settingsBtn" type="button">Settings</button>
     </div>
   </header>
 
@@ -24,24 +26,6 @@
       <span class="what"><span id="actionLabel"></span><kbd id="actionKey" hidden>E</kbd></span>
       <span class="hint" id="actionHint"></span>
     </button>
-  </div>
-
-  <div class="overlay" id="startWrap">
-    <section class="pad" role="dialog" aria-modal="true" aria-labelledby="startTitle">
-      <div class="scroll">
-        <h1 id="startTitle">First Shift</h1>
-        <p class="lead">Work a dinner shift in another language. Seat guests at the door, take drink orders, run drinks and food, and handle allergies, spills and difficult guests.</p>
-        <p class="field">This build</p>
-        <p>The restaurant is open but no guests have arrived yet. Walk around to get a feel for the floor.</p>
-        <p class="field">Controls</p>
-        <ul class="controls">
-          <li>Move with <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd>, the arrow keys, or by tapping the floor.</li>
-          <li>Press <kbd>E</kbd> or the button at the bottom to act.</li>
-          <li>The clock runs 5 times faster than real life, so one game minute is 12 real seconds.</li>
-        </ul>
-      </div>
-      <div class="foot"><span></span><button class="ink" id="startBtn" type="button">Start shift</button></div>
-    </section>
   </div>
 
   <script type="module" src="/src/main.ts"></script>

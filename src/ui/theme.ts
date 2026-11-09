@@ -1,28 +1,38 @@
 export type ThemeChoice = 'auto' | 'light' | 'dark';
 
 const KEY = 'first-shift.theme';
-const ORDER: ThemeChoice[] = ['auto', 'light', 'dark'];
-const NAMES: Record<ThemeChoice, string> = { auto: 'Auto', light: 'Light', dark: 'Dark' };
+export const THEME_CHOICES: { value: ThemeChoice; label: string }[] = [
+  { value: 'auto', label: 'Match device' },
+  { value: 'light', label: 'Light' },
+  { value: 'dark', label: 'Dark' },
+];
 
 /**
  * Light/dark mode. "Auto" follows the device. The choice is remembered on this
  * device when the browser allows it (private windows may not).
  */
 export class Theme {
-  private choice: ThemeChoice = 'auto';
+  private current: ThemeChoice = 'auto';
   private listeners: (() => void)[] = [];
   private media = window.matchMedia('(prefers-color-scheme: dark)');
 
-  constructor(private button: HTMLButtonElement) {
+  constructor() {
     try {
       const saved = localStorage.getItem(KEY) as ThemeChoice | null;
-      if (saved && ORDER.includes(saved)) this.choice = saved;
+      if (saved && THEME_CHOICES.some((c) => c.value === saved)) this.current = saved;
     } catch {
-      // Storage is blocked (e.g. a private window): stay on auto.
+      // Storage blocked (e.g. a private window): stay on auto.
     }
-    button.addEventListener('click', () => this.set(ORDER[(ORDER.indexOf(this.choice) + 1) % ORDER.length]));
     this.media.addEventListener('change', () => this.notify());
     this.apply();
+  }
+
+  get choice(): ThemeChoice {
+    return this.current;
+  }
+
+  get isDark(): boolean {
+    return this.current === 'dark' || (this.current === 'auto' && this.media.matches);
   }
 
   /** Called whenever the effective theme changes. */
@@ -30,12 +40,8 @@ export class Theme {
     this.listeners.push(fn);
   }
 
-  get isDark(): boolean {
-    return this.choice === 'dark' || (this.choice === 'auto' && this.media.matches);
-  }
-
-  private set(choice: ThemeChoice): void {
-    this.choice = choice;
+  set(choice: ThemeChoice): void {
+    this.current = choice;
     try {
       localStorage.setItem(KEY, choice);
     } catch {
@@ -46,10 +52,8 @@ export class Theme {
 
   private apply(): void {
     const root = document.documentElement;
-    if (this.choice === 'auto') root.removeAttribute('data-theme');
-    else root.setAttribute('data-theme', this.choice);
-    this.button.textContent = `Theme: ${NAMES[this.choice]}`;
-    this.button.setAttribute('aria-label', `Colour theme: ${NAMES[this.choice]}. Press to change.`);
+    if (this.current === 'auto') root.removeAttribute('data-theme');
+    else root.setAttribute('data-theme', this.current);
     this.notify();
   }
 

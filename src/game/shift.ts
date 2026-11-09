@@ -152,10 +152,11 @@ export class Shift {
       if (g.state === 'eating' && this.time >= g.doneAt) {
         this.setState(g, 'check');
         this.toast(`Table ${g.table} is done eating and wants the check.`);
+        continue; // a new wait starts now; don't count this step against it
       }
       if (g.id === this.activeGuestId || !g.phase) continue;
       g.waited += dt;
-      if (g.waited >= g.nextDropAt) {
+      while (g.phase && g.waited >= g.nextDropAt && this.guests.includes(g)) {
         g.drops++;
         g.prevDropAt = g.nextDropAt;
         g.nextDropAt += between(this.rng, TIMING.repeatDrop) * (g.phase === 'food' ? 1 : g.persona.patience);
