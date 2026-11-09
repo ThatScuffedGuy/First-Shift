@@ -1,5 +1,6 @@
 import manifest from '../data/audio-manifest.json';
 import type { Speech } from './speech';
+import type { NeuralVoices } from './neural';
 
 /**
  * Plays spoken lines in order: your recorded clip if one exists for the
@@ -14,6 +15,8 @@ export interface SpokenLine {
 }
 
 export interface VoiceOptions {
+  /** Language code, e.g. "ru" (for downloaded voices). */
+  lang: string;
   tag: string;
   /** Language name for messages, e.g. "Russian". */
   label: string;
@@ -33,7 +36,7 @@ export class VoicePlayer {
   private warned = false;
   private noVoiceWarned = '';
 
-  constructor(private speech: Speech, private onProblem: (message: string) => void) {}
+  constructor(private speech: Speech, private neural: NeuralVoices, private onProblem: (message: string) => void) {}
 
   stop(): void {
     this.generation++;
@@ -51,8 +54,21 @@ export class VoicePlayer {
     const gen = this.generation;
     for (const line of lines) {
       if (gen !== this.generation) return;
-      const played = hasClip(line.clipId) && (await this.playClip(CLIPS[line.clipId!], opts, gen));
+      // 1. Your recording, 2. a downloaded voice, 3. the device's own voice.
+      let played = hasClip(line.clipId) && (await this.playClip(`audio/${CLIPS[line.clipId!]}`, opts, gen));
       if (gen !== this.generation) return;
+      if (!played && this.neural.isReady(opts.lang)) {
+        try {
+          const blob = await this.neural.synth(opts.lang, line.text);
+          if (gen !== this.generation) return;
+          const url = URL.createObjectURL(blob);
+          played = await this.playClip(url, opts, gen);
+          URL.revokeObjectURL(url);
+        } catch {
+          played = false;
+        }
+        if (gen !== this.generation) return;
+      }
       if (!played) {
         const res = await this.speech.speak(line.text, {
           tag: opts.tag,
@@ -63,7 +79,11 @@ export class VoicePlayer {
         });
         if (res === 'novoice' && this.noVoiceWarned !== opts.tag) {
           this.noVoiceWarned = opts.tag;
-          this.onProblem(`This device has no ${opts.label} voice, so unrecorded lines are shown but not read aloud. You can add a ${opts.label} voice in your system's speech settings.`);
+          this.onProblem(
+            this.neural.languages.includes(opts.lang)
+              ? `This device has no ${opts.label} voice. Download a free ${opts.label} voice in Settings → Voices, or add one in your system's speech settings.`
+              : `This device has no ${opts.label} voice, so unrecorded lines are shown but not read aloud. You can add one in your system's speech settings.`,
+          );
         }
         if (res === 'error' && !this.warned) {
           this.warned = true;
@@ -73,9 +93,9 @@ export class VoicePlayer {
     }
   }
 
-  private playClip(file: string, opts: VoiceOptions, gen: number): Promise<boolean> {
+  private playClip(src: string, opts: VoiceOptions, gen: number): Promise<boolean> {
     return new Promise((resolve) => {
-      const a = new Audio(`audio/${file}`);
+      const a = new Audio(src);
       a.volume = opts.volume;
       a.playbackRate = opts.slow ? 0.85 : 1;
       a.preservesPitch = true;
@@ -86,7 +106,7 @@ export class VoicePlayer {
       // Safety net if the clip stalls.
       setTimeout(() => {
         if (gen === this.generation && this.audio === a && !a.ended && a.paused) resolve(false);
-      }, 8000);
+      }, 15000);
     });
   }
 }

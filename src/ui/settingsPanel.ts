@@ -2,6 +2,8 @@ import { settings, updateSettings } from '../settings';
 import { createPanel, el } from './dom';
 import type { Panels } from './panels';
 import { THEME_CHOICES, type Theme } from './theme';
+import type { NeuralVoices } from '../audio/neural';
+import { languageByCode } from '../data/languages';
 
 /** Settings, reachable from the start screen and the top bar. Opening it pauses the game. */
 export class SettingsPanel {
@@ -9,7 +11,11 @@ export class SettingsPanel {
   private pad: HTMLElement;
   private statusEl: HTMLElement;
 
-  constructor(private panels: Panels, private theme: Theme, private testSound: (report: (text: string, ok: boolean) => void) => void) {
+  private voicesEl: HTMLElement;
+  /** Latest message per language (kept so redraws don't lose it). */
+  private notes: Record<string, { text: string; bad?: boolean }> = {};
+
+  constructor(private panels: Panels, private theme: Theme, private testSound: (report: (text: string, ok: boolean) => void) => void, private neural: NeuralVoices) {
     const { overlay, pad, titleId } = createPanel();
     this.overlay = overlay;
     this.pad = pad;
@@ -23,6 +29,9 @@ export class SettingsPanel {
         <label class="slider"><span>Effects volume</span><input type="range" min="0" max="1" step="0.05" data-k="sfxVolume"></label>
         <div class="row" style="margin-top:8px"><button class="ghost" type="button" data-test>Test sound</button></div>
         <p class="status" data-status aria-live="polite"></p>
+        <p class="field">Voices</p>
+        <p class="status">If your device has no voice for a language (or it sounds poor), download a free one. It's stored in this browser and works offline afterwards.</p>
+        <div data-voices></div>
         <p class="field">Learning</p>
         <label class="check"><input type="checkbox" data-k="slow"> Guests speak slowly</label>
         <label class="check"><input type="checkbox" data-k="showEnglish"> Show English under what guests say</label>
@@ -33,6 +42,23 @@ export class SettingsPanel {
       el('<div class="foot"><span></span><button class="ink" type="button" data-close>Done</button></div>'),
     );
     this.statusEl = pad.querySelector('[data-status]')!;
+    this.voicesEl = pad.querySelector('[data-voices]')!;
+    this.neural.onChange(() => this.isOpen && this.renderVoices());
+    this.voicesEl.addEventListener('click', (e) => {
+      const b = (e.target as HTMLElement).closest<HTMLElement>('[data-voice]');
+      if (!b) return;
+      const lang = b.dataset.voice!;
+      if (b.dataset.action === 'remove') return void this.neural.remove(lang);
+      const note = (text: string, bad = false) => {
+        this.notes[lang] = { text, bad };
+        this.renderVoices();
+      };
+      note('Starting download…');
+      this.neural
+        .download(lang, (f) => note(`Downloading… ${Math.round(f * 100)}%`))
+        .then(() => note('Ready. Lines without a recording now use this voice.'))
+        .catch((err: Error) => note(err.message, true));
+    });
     pad.addEventListener('change', (e) => {
       const input = e.target as HTMLInputElement;
       const k = input.dataset.k as keyof typeof settings | undefined;
@@ -78,12 +104,29 @@ export class SettingsPanel {
     this.onClose();
   }
 
+  private renderVoices(): void {
+    this.voicesEl.innerHTML = this.neural.languages
+      .map((lang) => {
+        const label = languageByCode(lang).label;
+        const ready = this.neural.isReady(lang);
+        const busy = this.neural.isDownloading(lang);
+        const button = ready
+          ? `<button class="ghost" type="button" data-voice="${lang}" data-action="remove">Remove</button>`
+          : `<button class="ghost" type="button" data-voice="${lang}" ${busy ? 'disabled' : ''}>Download (${this.neural.sizeMb(lang)} MB)</button>`;
+        const n = this.notes[lang];
+        const text = n?.text ?? (ready ? '✓ Downloaded' : '');
+        return `<div class="row" style="margin-top:6px"><span style="min-width:6rem">${label} voice</span>${button}<span class="status${n?.bad ? ' bad' : ''}" style="margin:0" data-note="${lang}">${text}</span></div>`;
+      })
+      .join('');
+  }
+
   private sync(): void {
     this.pad.querySelectorAll<HTMLInputElement>('input[data-k]').forEach((i) => {
       const v = settings[i.dataset.k as keyof typeof settings];
       if (i.type === 'checkbox') i.checked = Boolean(v);
       else i.value = String(v);
     });
+    this.renderVoices();
     this.pad.querySelectorAll<HTMLElement>('[data-theme] [data-v]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === this.theme.choice)));
   }
 }

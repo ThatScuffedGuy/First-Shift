@@ -31,6 +31,7 @@ import { onFloorTap } from '../input/pointer';
 import { Speech } from '../audio/speech';
 import { VoicePlayer, hasClip, type SpokenLine } from '../audio/voice';
 import { Sfx } from '../audio/sfx';
+import { NeuralVoices } from '../audio/neural';
 import { Hud } from '../ui/hud';
 import { ActionButton } from '../ui/actionButton';
 import { Panels } from '../ui/panels';
@@ -84,6 +85,7 @@ export class Game {
   // Audio
   private speech = new Speech();
   private sfx = new Sfx();
+  private neural = new NeuralVoices();
   private voice: VoicePlayer;
 
   // Interface
@@ -118,7 +120,8 @@ export class Game {
     this.floor = new FloorView(this.scene, LAYOUT, restaurant.tables, this.obstacles, this.waiterModel);
     this.placeWaiterAtStart();
 
-    this.voice = new VoicePlayer(this.speech, (msg) => this.toasts.show(msg, 'bad'));
+    this.voice = new VoicePlayer(this.speech, this.neural, (msg) => this.toasts.show(msg, 'bad'));
+    void this.neural.refresh();
     this.talk = new TalkPanel(this.panels, {
       choose: (i) => this.choose(i),
       stepAway: () => this.stepAway(),
@@ -140,14 +143,14 @@ export class Game {
     this.practice = new PracticePanel(this.panels, {
       say: (text, clipId, who, lang) => {
         const pack = languageByCode(lang);
-        void this.voice.say([{ text, clipId, who, voiceSeed: 7 }], { tag: pack.speechLang, label: pack.label, enabled: settings.voice, volume: settings.voiceVolume, slow: settings.slow });
+        void this.voice.say([{ text, clipId, who, voiceSeed: 7 }], { lang: pack.code, tag: pack.speechLang, label: pack.label, enabled: settings.voice, volume: settings.voiceVolume, slow: settings.slow });
       },
       sfx: (name) => this.sfx.play(name),
       showEnglish: () => settings.showEnglish,
     });
     this.mainMenu = new ChoiceMenu(this.panels, 'First Shift', (id) => this.onMainMenu(id), { big: true });
     this.pauseMenu = new ChoiceMenu(this.panels, 'Paused', (id) => this.onPauseMenu(id), { onEscape: () => this.resume() });
-    this.settingsPanel = new SettingsPanel(this.panels, this.theme, (report) => this.testSound(report));
+    this.settingsPanel = new SettingsPanel(this.panels, this.theme, (report) => this.testSound(report), this.neural);
     this.coachmark = new Coachmark(() => {
       this.tutorial.on = false;
       updateSettings({ tutorial: false });
@@ -600,7 +603,7 @@ export class Game {
 
   private voiceOptions() {
     const pack = this.shift?.pack ?? languageByCode(settings.lang);
-    return { tag: pack.speechLang, label: pack.label, enabled: settings.voice, volume: settings.voiceVolume, slow: settings.slow };
+    return { lang: pack.code, tag: pack.speechLang, label: pack.label, enabled: settings.voice, volume: settings.voiceVolume, slow: settings.slow };
   }
 
   private say(lines: SpokenLine[]): void {
@@ -609,7 +612,10 @@ export class Game {
 
   private voiceStatus(): { text: string; ok: boolean } {
     const pack = languageByCode(settings.lang);
-    return this.speech.describe(pack.speechLang, pack.label);
+    if (this.neural.isReady(pack.code)) return { ok: true, text: `Lines without a recording use the downloaded ${pack.label} voice.` };
+    const s = this.speech.describe(pack.speechLang, pack.label);
+    if (!s.ok && this.neural.languages.includes(pack.code)) s.text += ` Or download a free ${pack.label} voice in Settings → Voices.`;
+    return s;
   }
 
   /** Plays a test line and explains what happened in plain language. */
