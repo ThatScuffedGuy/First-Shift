@@ -363,7 +363,7 @@ export class Game {
     this.placeWaiterAtStart();
     this.talking = null;
     this.tutorial = { on: settings.tutorial, guestId: null };
-    const shift = new Shift({ pack, menu: HOUSE_MENU, tables: LAYOUT.tables.map((t) => t.number), difficulty: difficultyById(settings.difficulty), guests: lengthById(settings.shiftLength).guests });
+    const shift = new Shift({ pack, menu: HOUSE_MENU, tables: LAYOUT.tables.map((t) => t.number), difficulty: difficultyById(settings.difficulty), guests: lengthById(settings.shiftLength).guests, groups: settings.groups });
     shift.on((e) => this.onShiftEvent(e));
     this.shift = shift;
     this.hud.setLanguage(pack.label);
@@ -409,7 +409,7 @@ export class Game {
         break;
       }
       case 'spill': {
-        const colour = e.drinkId ? HOUSE_MENU.items.find((m) => m.id === e.drinkId)?.color ?? '#d94f6b' : '#d9822b';
+        const colour = e.drinkIds ? HOUSE_MENU.items.find((m) => m.id === e.drinkIds![0])?.color ?? '#d94f6b' : '#d9822b';
         this.floor.spill(e.kind, colour, this.waiter);
         this.sfx.play('spill');
         break;
@@ -484,12 +484,12 @@ export class Game {
         if (g) this.openTicket(g);
         break;
       case 'bar': {
-        const waiting = shift.guests.filter((x) => x.state === 'drinks' && x.table).map((x) => ({ guestId: x.id, table: x.table! }));
+        const waiting = shift.guests.filter((x) => x.state === 'drinks' && x.table).map((x) => ({ guestId: x.id, table: x.table!, size: x.size }));
         if (!waiting.length) return;
-        this.bar.open(waiting, shift.menu, shift.pack.code, (guestId, drinkId) => {
+        this.bar.open(waiting, shift.menu, shift.pack.code, (guestId, drinkIds) => {
           const guest = shift.guest(guestId);
           if (!guest) return;
-          shift.pour(guest, drinkId);
+          shift.pour(guest, drinkIds);
           this.sfx.play('pour');
         });
         break;
@@ -533,7 +533,7 @@ export class Game {
     const t = g.talk;
     const over = g.mood === 0;
     return {
-      title: g.table ? `Table ${g.table}` : 'At the door',
+      title: (g.table ? `Table ${g.table}` : 'At the door') + (g.size > 1 ? ` · group of ${g.size}` : ''),
       subtitle: `${g.persona.label} · looks ${MOODS[g.mood].word}`,
       log: g.log,
       options: !over && t && !t.done ? t.turn!.options : null,

@@ -20,7 +20,7 @@ export class GuestList {
       const timer = g.phase ? ` · waiting ${mmss(g.waited)}` : '';
       const bar = g.phase ? `<div class="bar" aria-hidden="true"><i style="width:${Math.round(left * 100)}%;background:${moodColour(g.mood)}"></i></div>` : '';
       return {
-        html: `<div class="gl"><b>${MOODS[g.mood].face} ${esc(where)}</b> <span class="t">· ${esc(g.persona.label)}</span><div class="t">${esc(STATUS[g.state].text)}${timer}</div>${bar}</div>`,
+        html: `<div class="gl"><b>${MOODS[g.mood].face} ${esc(where)}</b> <span class="t">· ${g.size > 1 ? `group of ${g.size}` : esc(g.persona.label)}</span><div class="t">${esc(STATUS[g.state].text)}${timer}</div>${bar}</div>`,
         key: `${g.id}${g.state}${g.mood}${Math.round(left * 20)}${Math.floor(g.waited / 5)}`,
       };
     });

@@ -6,24 +6,32 @@ import type { Panels } from './panels';
 const itemLabel = (m: MenuItem, lang: string) =>
   `<span><b lang="${esc(lang)}">${esc(m.names[lang]?.plain ?? m.names.en.plain)}</b><small>${esc(m.names.en.plain)}</small></span>`;
 
-/** The drink station: pick the table, then pour what they ordered (from memory). */
+/**
+ * The drink station: pick the table, tick every drink they ordered (from
+ * memory: one per person), then pour. A single guest's drink pours in one tap.
+ */
 export class BarPanel {
   private overlay: HTMLElement;
   private tablesEl: HTMLElement;
   private drinksEl: HTMLElement;
+  private hintEl: HTMLElement;
+  private pourBtn: HTMLButtonElement;
+  private waiting: { guestId: number; table: number; size: number }[] = [];
   private chosen = 0;
-  private onPour: (guestId: number, drinkId: string) => void = () => {};
+  private onPour: (guestId: number, drinkIds: string[]) => void = () => {};
 
   constructor(private panels: Panels) {
     const { overlay, pad, titleId } = createPanel();
     this.overlay = overlay;
     pad.append(
       el(`<h2 id="${titleId}">Drink station</h2>`),
-      el('<div class="scroll"><p class="field">Which table?</p><div class="chips" data-tables></div><p class="field">What did they order?</p><div class="items" data-drinks></div></div>'),
-      el('<div class="foot"><button class="ghost" type="button" data-close>Back to the floor</button></div>'),
+      el('<div class="scroll"><p class="field">Which table?</p><div class="chips" data-tables></div><p class="field">What did they order?</p><p class="status" data-hint></p><div class="items" data-drinks></div></div>'),
+      el('<div class="foot"><button class="ghost" type="button" data-close>Back to the floor</button><button class="ink" type="button" data-pour disabled>Pour</button></div>'),
     );
     this.tablesEl = pad.querySelector('[data-tables]')!;
     this.drinksEl = pad.querySelector('[data-drinks]')!;
+    this.hintEl = pad.querySelector('[data-hint]')!;
+    this.pourBtn = pad.querySelector('[data-pour]')!;
     pad.querySelector('[data-close]')!.addEventListener('click', () => this.close());
     overlay.addEventListener('keydown', (e) => e.key === 'Escape' && this.close());
     this.tablesEl.addEventListener('click', (e) => {
@@ -31,24 +39,49 @@ export class BarPanel {
       if (!b) return;
       this.chosen = Number(b.dataset.g);
       this.tablesEl.querySelectorAll('[data-g]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      this.syncHint();
     });
-    this.drinksEl.addEventListener('click', (e) => {
-      const b = (e.target as HTMLElement).closest<HTMLElement>('[data-d]');
-      if (!b) return;
-      this.close();
-      this.onPour(this.chosen, b.dataset.d!);
+    this.drinksEl.addEventListener('change', () => {
+      // On your own, ticking a drink pours it straight away.
+      if (this.current.size === 1 && this.picked().length === 1) return this.pour();
+      this.pourBtn.disabled = this.picked().length === 0;
     });
+    this.pourBtn.addEventListener('click', () => this.pour());
   }
 
-  open(waiting: { guestId: number; table: number }[], menu: Menu, lang: string, onPour: (guestId: number, drinkId: string) => void): void {
+  private get current() {
+    return this.waiting.find((w) => w.guestId === this.chosen) ?? this.waiting[0];
+  }
+
+  private picked(): string[] {
+    return [...this.drinksEl.querySelectorAll<HTMLInputElement>('input:checked')].map((i) => i.value);
+  }
+
+  private syncHint(): void {
+    const n = this.current.size;
+    this.hintEl.textContent = n > 1 ? `Table ${this.current.table} is a group of ${n}: tick all ${n} drinks, then pour.` : `Tick the drink Table ${this.current.table} ordered.`;
+    this.pourBtn.textContent = n > 1 ? `Pour ${n} drinks` : 'Pour';
+  }
+
+  private pour(): void {
+    const ids = this.picked();
+    if (!ids.length) return;
+    this.close();
+    this.onPour(this.current.guestId, ids);
+  }
+
+  open(waiting: { guestId: number; table: number; size: number }[], menu: Menu, lang: string, onPour: (guestId: number, drinkIds: string[]) => void): void {
     this.onPour = onPour;
+    this.waiting = waiting;
     this.chosen = waiting[0].guestId;
-    this.tablesEl.innerHTML = waiting.map((w, i) => `<button class="chip" type="button" data-g="${w.guestId}" aria-pressed="${i === 0}">Table ${w.table}</button>`).join('');
+    this.tablesEl.innerHTML = waiting.map((w, i) => `<button class="chip" type="button" data-g="${w.guestId}" aria-pressed="${i === 0}">Table ${w.table}${w.size > 1 ? ` (${w.size})` : ''}</button>`).join('');
     this.drinksEl.innerHTML = menu.items
       .filter((m) => m.category === 'drink')
-      .map((d) => `<button class="item" type="button" data-d="${esc(d.id)}"><span class="swatch" style="background:${esc(d.color)}"></span>${itemLabel(d, lang)}</button>`)
+      .map((d) => `<label class="item"><input type="checkbox" value="${esc(d.id)}"><span class="swatch" style="background:${esc(d.color)}"></span>${itemLabel(d, lang)}</label>`)
       .join('');
-    this.panels.show(this.overlay, this.drinksEl.querySelector<HTMLElement>('button')!);
+    this.pourBtn.disabled = true;
+    this.syncHint();
+    this.panels.show(this.overlay, this.drinksEl.querySelector<HTMLElement>('input')!);
   }
 
   close(): void {

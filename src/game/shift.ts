@@ -17,7 +17,7 @@ export type ShiftEvent =
   | { type: 'orderUp'; guest: Guest }
   | { type: 'served'; guest: Guest; kind: 'drink' | 'food'; ok: boolean }
   | { type: 'left'; guest: Guest; record: VisitRecord }
-  | { type: 'spill'; kind: 'drink' | 'food'; drinkId?: string }
+  | { type: 'spill'; kind: 'drink' | 'food'; drinkIds?: string[] }
   | { type: 'saved' }
   | { type: 'moodDrop'; guest: Guest }
   | { type: 'mood'; guest: Guest; delta: number }
@@ -25,7 +25,7 @@ export type ShiftEvent =
   | { type: 'over' };
 
 export type Carry =
-  | { kind: 'drink'; guestId: number; drinkId: string; walked: number; rolled: boolean }
+  | { kind: 'drink'; guestId: number; drinkIds: string[]; walked: number; rolled: boolean }
   | { kind: 'food'; guestId: number; walked: number; rolled: boolean };
 
 export interface VisitRecord {
@@ -68,6 +68,8 @@ export interface ShiftOptions {
   rng?: Rng;
   guests?: number;
   difficulty?: Difficulty;
+  /** Whether groups of 2 to 4 can arrive. */
+  groups?: boolean;
 }
 
 const where = (g: Guest) => (g.table ? `Table ${g.table}` : 'The guest at the door');
@@ -82,6 +84,7 @@ export class Shift {
   readonly total: number;
   readonly tables: number[];
   readonly difficulty: Difficulty;
+  readonly groups: boolean;
   private rng: Rng;
   private listeners: ((e: ShiftEvent) => void)[] = [];
   private nextId = 1;
@@ -108,6 +111,7 @@ export class Shift {
     this.rng = opts.rng ?? Math.random;
     this.total = opts.guests ?? TIMING.guestsPerShift;
     this.difficulty = opts.difficulty ?? DIFFICULTIES[1];
+    this.groups = opts.groups ?? false;
   }
 
   on(fn: (e: ShiftEvent) => void): void {
@@ -187,11 +191,12 @@ export class Shift {
   }
 
   private arrive(): void {
-    const g = createGuest(this.nextId++, weighted(this.rng, PERSONAS), this.menu, this.rng);
+    const size = this.groups ? weighted(this.rng, TIMING.groupSizes).size : 1;
+    const g = createGuest(this.nextId++, weighted(this.rng, PERSONAS), this.menu, this.rng, size);
     g.nextDropAt *= this.difficulty.patience;
     this.guests.push(g);
     this.spawned++;
-    this.toast('A guest just walked in. Greet them at the door.');
+    this.toast(size > 1 ? `A group of ${size} just walked in. Greet them at the door.` : 'A guest just walked in. Greet them at the door.');
     this.emit({ type: 'arrived', guest: g });
   }
 
@@ -231,7 +236,7 @@ export class Shift {
       pack: this.pack,
       rng: this.rng,
       context: () => buildContext(g.order, this.pack, this.menu),
-      pool: (node) => selectPool(node, g.persona.kind, g.mood),
+      pool: (node) => selectPool(node, g.persona.kind, g.mood, g.size),
       wrongCount: this.difficulty.wrongOptions,
       beforeNode: (node) => {
         if (node === 'conflictAccept' && g.order.conflictId && g.order.safeId) {
@@ -289,10 +294,10 @@ export class Shift {
     g.talkStage = null;
     if (stage === 'door') {
       this.setState(g, 'following');
-      this.toast('The guest is following you. Walk to a free table.');
+      this.toast(g.size > 1 ? 'The group is following you. Walk to a free table.' : 'The guest is following you. Walk to a free table.');
     } else if (stage === 'greet') {
       this.setState(g, 'drinks');
-      this.toast(`Go to the drink station and pour Table ${g.table}'s drink.`);
+      this.toast(`Go to the drink station and pour Table ${g.table}'s drink${g.size > 1 ? 's' : ''}.`);
     } else if (stage === 'order') {
       this.setState(g, 'ticket');
     } else if (stage === 'checkin') {
@@ -322,10 +327,12 @@ export class Shift {
     this.toast(`You let Table ${g.table} know it's coming. That buys you a little time.`);
   }
 
-  pour(g: Guest, drinkId: string): void {
-    if (this.carrying || g.state !== 'drinks') return;
-    this.carrying = { kind: 'drink', guestId: g.id, drinkId, walked: 0, rolled: false };
-    this.toast(`Poured ${byId(this.menu, drinkId).names.en.order} for Table ${g.table}.`);
+  /** Pours drinks for a table (one per person). */
+  pour(g: Guest, drinkIds: string[]): void {
+    if (this.carrying || g.state !== 'drinks' || !drinkIds.length) return;
+    this.carrying = { kind: 'drink', guestId: g.id, drinkIds, walked: 0, rolled: false };
+    const names = drinkIds.map((id) => byId(this.menu, id).names.en.plain);
+    this.toast(`Poured ${names.join(', ')} for Table ${g.table}.`);
   }
 
   pickUp(g: Guest): void {
@@ -352,16 +359,16 @@ export class Shift {
     const n = g.table;
     if (carry.kind === 'drink') {
       g.hasDrink = true;
-      const ok = carry.drinkId === g.order.drinkId;
+      const ok = [...carry.drinkIds].sort().join() === [...g.order.drinkIds].sort().join();
       this.emit({ type: 'served', guest: g, kind: 'drink', ok });
       if (!ok) {
         this.stats.wrongDrinks++;
         this.incidents.push(`Table ${n} got the wrong drink.`);
-        this.toast(`Table ${n}: that's not the drink they ordered. They keep it, but they're not happy.`, 'bad');
+        this.toast(g.size > 1 ? `Table ${n}: those aren't the drinks they ordered. They keep them, but they're not happy.` : `Table ${n}: that's not the drink they ordered. They keep it, but they're not happy.`, 'bad');
         this.changeMood(g, -TIMING.wrongDrinkPenalty);
         if (g.mood === 0) return false;
       } else {
-        this.toast(`Drink served to Table ${n}.`, 'good');
+        this.toast(g.size > 1 ? `Drinks served to Table ${n}.` : `Drink served to Table ${n}.`, 'good');
       }
       this.setState(g, 'ordering');
       return true;
@@ -430,7 +437,7 @@ export class Shift {
     this.carrying = null;
     this.stats.spills++;
     const g = this.guest(c.guestId);
-    this.emit({ type: 'spill', kind: c.kind, drinkId: c.kind === 'drink' ? c.drinkId : undefined });
+    this.emit({ type: 'spill', kind: c.kind, drinkIds: c.kind === 'drink' ? c.drinkIds : undefined });
     if (!g) return;
     this.incidents.push(`You spilled Table ${g.table}'s ${c.kind}.`);
     if (c.kind === 'food') {
@@ -446,7 +453,7 @@ export class Shift {
   // ------------------------------------------------------------- Leaving
 
   bill(g: Guest): number {
-    return g.order.dishIds.reduce((s, id) => s + byId(this.menu, id).price, 0) + byId(this.menu, g.order.drinkId).price;
+    return [...g.order.dishIds, ...g.order.drinkIds].reduce((s, id) => s + byId(this.menu, id).price, 0);
   }
 
   private payAndLeave(g: Guest): void {

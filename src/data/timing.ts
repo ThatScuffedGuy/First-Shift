@@ -52,6 +52,14 @@ export const TIMING = {
   checkinBonus: 1,
   allergyFlaggedBonus: 1,
 
+  /** How often each group size arrives when groups are on (relative weights). */
+  groupSizes: [
+    { size: 1, weight: 6 },
+    { size: 2, weight: 3 },
+    { size: 3, weight: 1.5 },
+    { size: 4, weight: 1 },
+  ],
+
   // What guests order
   allergyChance: 0.4,
   starterChance: 0.35,

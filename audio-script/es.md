@@ -2,8 +2,8 @@
 
 Save recordings in `public/audio/es/` using the file name in the table (mp3, m4a, ogg, wav or webm all work, just keep the name before the dot exactly the same). Then run `npm run audio` to tick them off here. Lines without a recording are read by the device's speech voice, so you can record as many or as few as you like.
 
-**Part 1, fixed lines:** 0 of 156 recorded. These never change, so one recording covers every shift. Start here.
-**Part 2, lines with dish and drink names:** 0 of 677 recorded. One recording per menu combination. Optional: the device voice reads any you skip.
+**Part 1, fixed lines:** 0 of 190 recorded. These never change, so one recording covers every shift. Start here.
+**Part 2, lines with dish and drink names:** 0 of 777 recorded. One recording per menu combination. Optional: the device voice reads any you skip.
 
 Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kind of guest is talking, so you can act the mood.
 
@@ -21,6 +21,7 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 | ☐ | `door.indecisive.1.reply.mp3` | Waiter (Alex) | No es ninguna molestia. Sí, tenemos mesa. Sígame, por favor. | It's no trouble at all. Yes, we have a table. Follow me, please. |
 | ☐ | `door.indecisive.2.guest.mp3` | Indecisive guest: hesitant, lots of “um” | Buenas noches. ¿Mesa para uno? ¿O mejor espero? No sé... | Good evening. A table for one? Or should I wait? I don't know... |
 | ☐ | `door.indecisive.2.reply.mp3` | Waiter (Alex) | No hace falta esperar, tenemos mesa ahora. Sígame, por favor. | No need to wait, we have a table now. Follow me, please. |
+| ☐ | `door.party.2.reply.mp3` | Waiter (Alex) | Sí, claro. Pasen y síganme, por favor. | Yes, of course. Come in and follow me, please. |
 | ☐ | `door.polite.1.guest.mp3` | Polite, everyday guest | Hola, buenas noches. ¿Tienen mesa para uno? | Hi, good evening. Do you have a table for one? |
 | ☐ | `door.polite.1.reply.mp3` | Waiter (Alex) | ¡Buenas noches! Sí, tenemos mesa. Sígame, por favor. | Good evening! Yes, we have a table. Follow me, please. |
 | ☐ | `door.polite.2.guest.mp3` | Polite, everyday guest | Buenas noches. Una mesa para uno, por favor. | Good evening. A table for one, please. |
@@ -54,6 +55,10 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 | ☐ | `hello.impatient.2.reply.mp3` | Waiter (Alex) | Disculpe la espera. Me llamo Alex y esta noche le atiendo yo. | Sorry for the wait. My name is Alex and I'll be looking after you tonight. |
 | ☐ | `hello.indecisive.1.guest.mp3` | Indecisive guest: hesitant, lots of “um” | Gracias... ¿o mejor me siento en la otra silla? No, aquí está bien. | Thanks... or should I sit in the other chair? No, here is fine. |
 | ☐ | `hello.indecisive.1.reply.mp3` | Waiter (Alex) | Aquí está perfecto. Me llamo Alex y esta noche le atiendo yo. | Here is perfect. My name is Alex and I'll be looking after you tonight. |
+| ☐ | `hello.party.1.guest.mp3` | party | Gracias. ¡Qué mesa tan bonita! | Thanks. What a lovely table! |
+| ☐ | `hello.party.1.reply.mp3` | Waiter (Alex) | ¡Me alegro de que les guste! Me llamo Alex y esta noche les atiendo yo. | I'm glad you like it! My name is Alex and I'll be looking after you tonight. |
+| ☐ | `hello.party.2.guest.mp3` | party | Muchas gracias. ¿Usted es nuestro camarero? | Thank you. Are you our waiter? |
+| ☐ | `hello.party.2.reply.mp3` | Waiter (Alex) | Sí, me llamo Alex y esta noche les atiendo yo. | Yes, my name is Alex and I'll be looking after you tonight. |
 | ☐ | `hello.polite.1.guest.mp3` | Polite, everyday guest | Gracias. ¡Qué restaurante tan bonito! | Thanks. What a nice restaurant! |
 | ☐ | `hello.polite.1.reply.mp3` | Waiter (Alex) | ¡Gracias, me alegro de que le guste! Me llamo Alex y esta noche le atiendo yo. | Thanks, I'm glad you like it! My name is Alex and I'll be looking after you tonight. |
 | ☐ | `hello.polite.2.guest.mp3` | Polite, everyday guest | Muchas gracias. | Thank you very much. |
@@ -82,6 +87,9 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
 | ☐ | `askDrink.indecisive.1.guest.mp3` | Indecisive guest: hesitant, lots of “um” | Mucho gusto... A ver, ¿qué bebidas hay? | Nice to meet you... Let's see, what drinks are there? |
+| ☐ | `askDrink.party.1.guest.mp3` | party | Encantados, Alex. | Nice to meet you, Alex. |
+| ☐ | `askDrink.party.1.reply.mp3` | Waiter (Alex) | Igualmente. ¿Qué les puedo traer de beber? | Likewise. What can I bring you all to drink? |
+| ☐ | `askDrink.party.2.guest.mp3` | party | Perfecto. ¿Qué bebidas tienen? | Perfect. What drinks do you have? |
 | ☐ | `askDrink.polite.1.guest.mp3` | Polite, everyday guest | Mucho gusto, Alex. | Nice to meet you, Alex. |
 | ☐ | `askDrink.polite.1.reply.mp3` | Waiter (Alex) | Igualmente. ¿Qué le puedo traer de beber? | Likewise. What can I bring you to drink? |
 | ☐ | `askDrink.polite.2.guest.mp3` | Polite, everyday guest | Perfecto, gracias. | Perfect, thanks. |
@@ -103,6 +111,10 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 | --- | --- | --- | --- | --- |
 | ☐ | `drinkThanks.impatient.1.guest.mp3` | Guest who has waited too long: annoyed | Por fin. Pensaba que se había olvidado de mí. | Finally. I thought you'd forgotten about me. |
 | ☐ | `drinkThanks.impatient.1.reply.mp3` | Waiter (Alex) | Perdone la espera, no me había olvidado. ¿Ya sabe qué le gustaría comer? | Sorry for the wait, I hadn't forgotten. Do you know what you'd like to eat? |
+| ☐ | `drinkThanks.party.1.guest.mp3` | party | Muchas gracias. | Thank you very much. |
+| ☐ | `drinkThanks.party.1.reply.mp3` | Waiter (Alex) | De nada. ¿Ya saben qué les gustaría comer? | You're welcome. Do you all know what you'd like to eat? |
+| ☐ | `drinkThanks.party.2.guest.mp3` | party | ¡Qué rápido! Gracias. | That was fast! Thanks. |
+| ☐ | `drinkThanks.party.2.reply.mp3` | Waiter (Alex) | ¡Para eso estamos! ¿Les tomo nota de la comida? | That's what we're here for! Shall I take your food order? |
 | ☐ | `drinkThanks.polite.1.guest.mp3` | Polite, everyday guest | Muchas gracias. | Thank you very much. |
 | ☐ | `drinkThanks.polite.1.reply.mp3` | Waiter (Alex) | De nada. ¿Ya sabe qué le gustaría comer? | You're welcome. Do you know what you'd like to eat? |
 | ☐ | `drinkThanks.polite.2.guest.mp3` | Polite, everyday guest | Gracias, ¡qué rápido! | Thanks, that was fast! |
@@ -122,6 +134,7 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
+| ☐ | `orderDirect.party.1.reply.mp3` | Waiter (Alex) | Excelente elección. ¿Alguno de ustedes tiene alguna alergia? | Excellent choice. Do any of you have an allergy? |
 | ☐ | `orderDirect.polite.1.reply.mp3` | Waiter (Alex) | Excelente elección. ¿Tiene alguna alergia que deba saber? | Excellent choice. Do you have any allergies I should know about? |
 | ☐ | `orderDirect.rushed.1.reply.mp3` | Waiter (Alex) | Se lo digo a la cocina. Antes, ¿tiene alguna alergia? | I'll tell the kitchen. First, do you have any allergies? |
 | ☐ | `orderDirect.warm.1.reply.mp3` | Waiter (Alex) | ¡Pues hoy es su día! ¿Tiene alguna alergia que deba saber? | Well, today's your day! Do you have any allergies I should know about? |
@@ -132,6 +145,8 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 | --- | --- | --- | --- | --- |
 | ☐ | `askRec.indecisive.1.guest.mp3` | Indecisive guest: hesitant, lots of “um” | Uf, todo tiene muy buena pinta. No sé qué elegir. ¿Qué me recomienda? | Ugh, everything looks so good. I can't choose. What do you recommend? |
 | ☐ | `askRec.indecisive.2.guest.mp3` | Indecisive guest: hesitant, lots of “um” | Dudo entre varias cosas... ¿Usted qué pediría? | I'm torn between a few things... What would you order? |
+| ☐ | `askRec.party.1.guest.mp3` | party | Todavía no lo sabemos. ¿Qué nos recomienda? | We don't know yet. What do you recommend for us? |
+| ☐ | `askRec.party.2.guest.mp3` | party | Uno de nosotros no sabe qué pedir. ¿Qué recomienda? | One of us doesn't know what to order. What do you recommend? |
 | ☐ | `askRec.polite.1.guest.mp3` | Polite, everyday guest | Todavía no lo sé. ¿Qué me recomienda? | I don't know yet. What do you recommend? |
 | ☐ | `askRec.polite.2.guest.mp3` | Polite, everyday guest | ¿Cuál es su plato favorito? | What's your favorite dish? |
 | ☐ | `askRec.rude.1.guest.mp3` | Grumpy, sarcastic guest (never abusive) | No sé. ¿Qué es lo menos malo aquí? | I don't know. What's the least bad thing here? |
@@ -144,6 +159,8 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
 | ☐ | `acceptRec.indecisive.1.reply.mp3` | Waiter (Alex) | Es una muy buena elección, de verdad. ¿Tiene alguna alergia? | It's a really good choice, honestly. Do you have any allergies? |
+| ☐ | `acceptRec.party.1.reply.mp3` | Waiter (Alex) | Excelente elección. ¿Alguno de ustedes tiene alguna alergia? | Excellent choice. Do any of you have an allergy? |
+| ☐ | `acceptRec.party.2.reply.mp3` | Waiter (Alex) | ¡No se van a arrepentir! ¿Alguien tiene alguna alergia? | You won't regret it! Does anyone have an allergy? |
 | ☐ | `acceptRec.polite.1.reply.mp3` | Waiter (Alex) | Excelente elección. ¿Tiene alguna alergia que deba saber? | Excellent choice. Do you have any allergies I should know about? |
 | ☐ | `acceptRec.polite.3.reply.mp3` | Waiter (Alex) | ¡No se va a arrepentir! ¿Tiene alguna alergia? | You won't regret it! Do you have any allergies? |
 | ☐ | `acceptRec.rude.1.reply.mp3` | Waiter (Alex) | Le va a encantar. Antes de pasar el pedido, ¿tiene alguna alergia? | You'll love it. Before I put the order in, do you have any allergies? |
@@ -153,6 +170,10 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
+| ☐ | `allergyNone.party.1.guest.mp3` | party | No, ninguno. | No, none of us. |
+| ☐ | `allergyNone.party.1.reply.mp3` | Waiter (Alex) | Perfecto. La comida estará lista en unos minutos. | Perfect. The food will be ready in a few minutes. |
+| ☐ | `allergyNone.party.2.guest.mp3` | party | No, podemos comer de todo. | No, we can eat anything. |
+| ☐ | `allergyNone.party.2.reply.mp3` | Waiter (Alex) | ¡Qué bien! Paso el pedido a la cocina ahora mismo. | Great! I'll send the order to the kitchen right now. |
 | ☐ | `allergyNone.polite.1.guest.mp3` | Polite, everyday guest | No, ninguna. | No, none. |
 | ☐ | `allergyNone.polite.1.reply.mp3` | Waiter (Alex) | Perfecto. Su comida estará lista en unos minutos. | Perfect. Your food will be ready in a few minutes. |
 | ☐ | `allergyNone.polite.2.guest.mp3` | Polite, everyday guest | No, ninguna alergia. Gracias por preguntar. | No, no allergies. Thanks for asking. |
@@ -168,6 +189,7 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
+| ☐ | `allergyYes.party.1.reply.mp3` | Waiter (Alex) | Entendido. Se lo digo a la cocina para que tengan cuidado. | Understood. I'll tell the kitchen so they're careful. |
 | ☐ | `allergyYes.polite.1.reply.mp3` | Waiter (Alex) | Entendido. Se lo digo a la cocina para que tengan cuidado. | Understood. I'll tell the kitchen so they're careful. |
 | ☐ | `allergyYes.polite.2.reply.mp3` | Waiter (Alex) | Gracias por avisar. Lo anoto y la cocina tendrá mucho cuidado. | Thanks for letting me know. I'll note it and the kitchen will be very careful. |
 | ☐ | `allergyYes.rude.1.reply.mp3` | Waiter (Alex) | Por supuesto. Se lo digo a la cocina ahora mismo. | Of course. I'll tell the kitchen right now. |
@@ -183,6 +205,10 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
+| ☐ | `checkin.party.1.guest.mp3` | party | ¡Está todo buenísimo! | Everything is delicious! |
+| ☐ | `checkin.party.1.reply.mp3` | Waiter (Alex) | ¡Me alegro mucho! Si necesitan algo más, aquí estoy. | I'm so glad! If you need anything else, I'm here. |
+| ☐ | `checkin.party.2.guest.mp3` | party | Muy rico, gracias. | Very tasty, thanks. |
+| ☐ | `checkin.party.2.reply.mp3` | Waiter (Alex) | Gracias a ustedes. Avísenme si necesitan algo. | Thank you. Let me know if you need anything. |
 | ☐ | `checkin.polite.1.guest.mp3` | Polite, everyday guest | ¡Está todo delicioso! | Everything is delicious! |
 | ☐ | `checkin.polite.1.reply.mp3` | Waiter (Alex) | ¡Me alegro mucho! Si necesita algo más, aquí estoy. | I'm so glad! If you need anything else, I'm here. |
 | ☐ | `checkin.polite.2.guest.mp3` | Polite, everyday guest | Muy rico, gracias. | Very tasty, thanks. |
@@ -202,6 +228,10 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 | --- | --- | --- | --- | --- |
 | ☐ | `check.impatient.1.guest.mp3` | Guest who has waited too long: annoyed | La cuenta. Y rápido, que llevo un rato esperando. | The check. And quickly, I've been waiting a while. |
 | ☐ | `check.impatient.1.reply.mp3` | Waiter (Alex) | Disculpe la espera. Aquí tiene la cuenta. | Sorry for the wait. Here's the check. |
+| ☐ | `check.party.1.guest.mp3` | party | La cuenta, por favor. | The check, please. |
+| ☐ | `check.party.1.reply.mp3` | Waiter (Alex) | Por supuesto, aquí tienen. ¡Muchas gracias por venir! | Of course, here you go. Thank you all for coming! |
+| ☐ | `check.party.2.guest.mp3` | party | ¿Nos trae la cuenta, por favor? | Could you bring us the check, please? |
+| ☐ | `check.party.2.reply.mp3` | Waiter (Alex) | Claro, aquí tienen la cuenta. | Sure, here's the check. |
 | ☐ | `check.polite.1.guest.mp3` | Polite, everyday guest | La cuenta, por favor. | The check, please. |
 | ☐ | `check.polite.1.reply.mp3` | Waiter (Alex) | Por supuesto, aquí tiene. ¡Muchas gracias por venir! | Of course, here you go. Thank you so much for coming! |
 | ☐ | `check.polite.2.guest.mp3` | Polite, everyday guest | ¿Me trae la cuenta, por favor? | Could you bring me the check, please? |
@@ -219,6 +249,10 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
+| ☐ | `pay.party.1.guest.mp3` | party | Aquí tiene. Muchas gracias por todo. | Here you go. Thank you for everything. |
+| ☐ | `pay.party.1.reply.mp3` | Waiter (Alex) | ¡Gracias a ustedes! Que tengan muy buena noche. | Thank you all! Have a very good night. |
+| ☐ | `pay.party.2.guest.mp3` | party | Tome, quédese con el cambio. | Here, keep the change. |
+| ☐ | `pay.party.2.reply.mp3` | Waiter (Alex) | ¡Muchas gracias, son muy amables! Vuelvan pronto. | Thank you so much, that's very kind of you! Come back soon. |
 | ☐ | `pay.polite.1.guest.mp3` | Polite, everyday guest | Aquí tiene. Muchas gracias por todo. | Here you go. Thank you for everything. |
 | ☐ | `pay.polite.1.reply.mp3` | Waiter (Alex) | ¡Gracias a usted! Que tenga muy buena noche. | Thank you! Have a very good night. |
 | ☐ | `pay.polite.2.guest.mp3` | Polite, everyday guest | Tome, quédese con el cambio. | Here, keep the change. |
@@ -232,11 +266,26 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 ## Part 2: lines with dish and drink names
 
+### door
+
+| Done | File | Who | Line | English |
+| --- | --- | --- | --- | --- |
+| ☐ | `door.party.1.guest~party-2.mp3` | party | Buenas noches. ¿Tienen mesa para dos? | Good evening. Do you have a table for two? |
+| ☐ | `door.party.1.guest~party-3.mp3` | party | Buenas noches. ¿Tienen mesa para tres? | Good evening. Do you have a table for three? |
+| ☐ | `door.party.1.guest~party-4.mp3` | party | Buenas noches. ¿Tienen mesa para cuatro? | Good evening. Do you have a table for four? |
+| ☐ | `door.party.1.reply~party-2.mp3` | Waiter (Alex) | ¡Buenas noches! Sí, mesa para dos. Síganme, por favor. | Good evening! Yes, a table for two. Follow me, please. |
+| ☐ | `door.party.1.reply~party-3.mp3` | Waiter (Alex) | ¡Buenas noches! Sí, mesa para tres. Síganme, por favor. | Good evening! Yes, a table for three. Follow me, please. |
+| ☐ | `door.party.1.reply~party-4.mp3` | Waiter (Alex) | ¡Buenas noches! Sí, mesa para cuatro. Síganme, por favor. | Good evening! Yes, a table for four. Follow me, please. |
+| ☐ | `door.party.2.guest~party-2.mp3` | party | Hola, somos dos. ¿Hay sitio? | Hi, there are two of us. Is there room? |
+| ☐ | `door.party.2.guest~party-3.mp3` | party | Hola, somos tres. ¿Hay sitio? | Hi, there are three of us. Is there room? |
+| ☐ | `door.party.2.guest~party-4.mp3` | party | Hola, somos cuatro. ¿Hay sitio? | Hi, there are four of us. Is there room? |
+
 ### askDrink
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
 | ☐ | `askDrink.indecisive.1.reply~drinkList-house.mp3` | Waiter (Alex) | Tenemos limonada, té helado, agua con gas, café y zumo de naranja. ¿Qué le apetece? | We have lemonade, iced tea, sparkling water, coffee and orange juice. What would you like? |
+| ☐ | `askDrink.party.2.reply~drinkList-house.mp3` | Waiter (Alex) | Tenemos limonada, té helado, agua con gas, café y zumo de naranja. ¿Qué les apetece? | We have lemonade, iced tea, sparkling water, coffee and orange juice. What would you all like? |
 | ☐ | `askDrink.polite.3.reply~drinkList-house.mp3` | Waiter (Alex) | Tenemos limonada, té helado, agua con gas, café y zumo de naranja. ¿Qué le apetece? | We have lemonade, iced tea, sparkling water, coffee and orange juice. What would you like? |
 | ☐ | `askDrink.tourist.1.reply~drinkList-house.mp3` | Waiter (Alex) | Tenemos limonada, té helado, agua con gas, café y zumo de naranja. ¿Qué le apetece probar? | We have lemonade, iced tea, sparkling water, coffee and orange juice. What would you like to try? |
 
@@ -489,6 +538,16 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 | ☐ | `askRec.indecisive.2.reply~rec-mushroom-risotto.mp3` | Waiter (Alex) | Yo pediría el risotto de setas. Le va a encantar. | I'd order the mushroom risotto. You'll love it. |
 | ☐ | `askRec.indecisive.2.reply~rec-shrimp-tacos.mp3` | Waiter (Alex) | Yo pediría los tacos de gambas. Le va a encantar. | I'd order the shrimp tacos. You'll love it. |
 | ☐ | `askRec.indecisive.2.reply~rec-steak-frites.mp3` | Waiter (Alex) | Yo pediría el filete con patatas fritas. Le va a encantar. | I'd order the steak frites. You'll love it. |
+| ☐ | `askRec.party.1.reply~rec-chicken-pad-thai.mp3` | Waiter (Alex) | Les recomiendo el pad thai de pollo. Es uno de nuestros platos más populares. | I recommend the chicken pad thai. It's one of our most popular dishes. |
+| ☐ | `askRec.party.1.reply~rec-grilled-salmon.mp3` | Waiter (Alex) | Les recomiendo el salmón a la parrilla. Es uno de nuestros platos más populares. | I recommend the grilled salmon. It's one of our most popular dishes. |
+| ☐ | `askRec.party.1.reply~rec-mushroom-risotto.mp3` | Waiter (Alex) | Les recomiendo el risotto de setas. Es uno de nuestros platos más populares. | I recommend the mushroom risotto. It's one of our most popular dishes. |
+| ☐ | `askRec.party.1.reply~rec-shrimp-tacos.mp3` | Waiter (Alex) | Les recomiendo los tacos de gambas. Es uno de nuestros platos más populares. | I recommend the shrimp tacos. It's one of our most popular dishes. |
+| ☐ | `askRec.party.1.reply~rec-steak-frites.mp3` | Waiter (Alex) | Les recomiendo el filete con patatas fritas. Es uno de nuestros platos más populares. | I recommend the steak frites. It's one of our most popular dishes. |
+| ☐ | `askRec.party.2.reply~rec-chicken-pad-thai.mp3` | Waiter (Alex) | Le recomiendo el pad thai de pollo. Es de lo más pedido. | I recommend the chicken pad thai. It's one of our most ordered dishes. |
+| ☐ | `askRec.party.2.reply~rec-grilled-salmon.mp3` | Waiter (Alex) | Le recomiendo el salmón a la parrilla. Es de lo más pedido. | I recommend the grilled salmon. It's one of our most ordered dishes. |
+| ☐ | `askRec.party.2.reply~rec-mushroom-risotto.mp3` | Waiter (Alex) | Le recomiendo el risotto de setas. Es de lo más pedido. | I recommend the mushroom risotto. It's one of our most ordered dishes. |
+| ☐ | `askRec.party.2.reply~rec-shrimp-tacos.mp3` | Waiter (Alex) | Le recomiendo los tacos de gambas. Es de lo más pedido. | I recommend the shrimp tacos. It's one of our most ordered dishes. |
+| ☐ | `askRec.party.2.reply~rec-steak-frites.mp3` | Waiter (Alex) | Le recomiendo el filete con patatas fritas. Es de lo más pedido. | I recommend the steak frites. It's one of our most ordered dishes. |
 | ☐ | `askRec.polite.1.reply~rec-chicken-pad-thai.mp3` | Waiter (Alex) | Le recomiendo el pad thai de pollo. Es uno de nuestros platos más populares. | I recommend the chicken pad thai. It's one of our most popular dishes. |
 | ☐ | `askRec.polite.1.reply~rec-grilled-salmon.mp3` | Waiter (Alex) | Le recomiendo el salmón a la parrilla. Es uno de nuestros platos más populares. | I recommend the grilled salmon. It's one of our most popular dishes. |
 | ☐ | `askRec.polite.1.reply~rec-mushroom-risotto.mp3` | Waiter (Alex) | Le recomiendo el risotto de setas. Es uno de nuestros platos más populares. | I recommend the mushroom risotto. It's one of our most popular dishes. |
@@ -634,6 +693,14 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
+| ☐ | `allergyYes.party.1.guest~allergy-dairy.mp3` | party | Sí, uno de nosotros tiene alergia a los lácteos. | Yes, one of us is allergic to dairy. |
+| ☐ | `allergyYes.party.1.guest~allergy-eggs.mp3` | party | Sí, uno de nosotros tiene alergia al huevo. | Yes, one of us is allergic to eggs. |
+| ☐ | `allergyYes.party.1.guest~allergy-fish.mp3` | party | Sí, uno de nosotros tiene alergia al pescado. | Yes, one of us is allergic to fish. |
+| ☐ | `allergyYes.party.1.guest~allergy-gluten.mp3` | party | Sí, uno de nosotros tiene alergia al gluten. | Yes, one of us is allergic to gluten. |
+| ☐ | `allergyYes.party.1.guest~allergy-peanuts.mp3` | party | Sí, uno de nosotros tiene alergia al cacahuete. | Yes, one of us is allergic to peanuts. |
+| ☐ | `allergyYes.party.1.guest~allergy-shellfish.mp3` | party | Sí, uno de nosotros tiene alergia al marisco. | Yes, one of us is allergic to shellfish. |
+| ☐ | `allergyYes.party.1.guest~allergy-soy.mp3` | party | Sí, uno de nosotros tiene alergia a la soja. | Yes, one of us is allergic to soy. |
+| ☐ | `allergyYes.party.1.guest~allergy-tree-nuts.mp3` | party | Sí, uno de nosotros tiene alergia a los frutos secos. | Yes, one of us is allergic to tree nuts. |
 | ☐ | `allergyYes.polite.1.guest~allergy-dairy.mp3` | Polite, everyday guest | Sí, tengo alergia a los lácteos. | Yes, I'm allergic to dairy. |
 | ☐ | `allergyYes.polite.1.guest~allergy-eggs.mp3` | Polite, everyday guest | Sí, tengo alergia al huevo. | Yes, I'm allergic to eggs. |
 | ☐ | `allergyYes.polite.1.guest~allergy-fish.mp3` | Polite, everyday guest | Sí, tengo alergia al pescado. | Yes, I'm allergic to fish. |
@@ -679,6 +746,66 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
+| ☐ | `allergyConflict.party.1.guest~allergy-dairy.mp3` | party | Sí, uno de nosotros tiene alergia a los lácteos. | Yes, one of us is allergic to dairy. |
+| ☐ | `allergyConflict.party.1.guest~allergy-eggs.mp3` | party | Sí, uno de nosotros tiene alergia al huevo. | Yes, one of us is allergic to eggs. |
+| ☐ | `allergyConflict.party.1.guest~allergy-fish.mp3` | party | Sí, uno de nosotros tiene alergia al pescado. | Yes, one of us is allergic to fish. |
+| ☐ | `allergyConflict.party.1.guest~allergy-gluten.mp3` | party | Sí, uno de nosotros tiene alergia al gluten. | Yes, one of us is allergic to gluten. |
+| ☐ | `allergyConflict.party.1.guest~allergy-peanuts.mp3` | party | Sí, uno de nosotros tiene alergia al cacahuete. | Yes, one of us is allergic to peanuts. |
+| ☐ | `allergyConflict.party.1.guest~allergy-shellfish.mp3` | party | Sí, uno de nosotros tiene alergia al marisco. | Yes, one of us is allergic to shellfish. |
+| ☐ | `allergyConflict.party.1.guest~allergy-soy.mp3` | party | Sí, uno de nosotros tiene alergia a la soja. | Yes, one of us is allergic to soy. |
+| ☐ | `allergyConflict.party.1.guest~allergy-tree-nuts.mp3` | party | Sí, uno de nosotros tiene alergia a los frutos secos. | Yes, one of us is allergic to tree nuts. |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-caesar-salad~safe-bruschetta.mp3` | Waiter (Alex) | Entendido. Ojo: en la ensalada César hay lácteos. ¿Les traigo la bruschetta en su lugar? | Understood. Careful: there's dairy in the Caesar salad. Shall I bring the bruschetta instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-chocolate-torte~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Entendido. Ojo: en la tarta de chocolate hay lácteos. ¿Les traigo el pad thai de pollo en su lugar? | Understood. Careful: there's dairy in the chocolate torte. Shall I bring the chicken pad thai instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-chocolate-torte~safe-grilled-salmon.mp3` | Waiter (Alex) | Entendido. Ojo: en la tarta de chocolate hay lácteos. ¿Les traigo el salmón a la parrilla en su lugar? | Understood. Careful: there's dairy in the chocolate torte. Shall I bring the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-mushroom-risotto~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Entendido. Ojo: en el risotto de setas hay lácteos. ¿Les traigo el pad thai de pollo en su lugar? | Understood. Careful: there's dairy in the mushroom risotto. Shall I bring the chicken pad thai instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-mushroom-risotto~safe-grilled-salmon.mp3` | Waiter (Alex) | Entendido. Ojo: en el risotto de setas hay lácteos. ¿Les traigo el salmón a la parrilla en su lugar? | Understood. Careful: there's dairy in the mushroom risotto. Shall I bring the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-shrimp-tacos~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Entendido. Ojo: en los tacos de gambas hay lácteos. ¿Les traigo el pad thai de pollo en su lugar? | Understood. Careful: there's dairy in the shrimp tacos. Shall I bring the chicken pad thai instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-shrimp-tacos~safe-grilled-salmon.mp3` | Waiter (Alex) | Entendido. Ojo: en los tacos de gambas hay lácteos. ¿Les traigo el salmón a la parrilla en su lugar? | Understood. Careful: there's dairy in the shrimp tacos. Shall I bring the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-steak-frites~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Entendido. Ojo: en el filete con patatas fritas hay lácteos. ¿Les traigo el pad thai de pollo en su lugar? | Understood. Careful: there's dairy in the steak frites. Shall I bring the chicken pad thai instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-steak-frites~safe-grilled-salmon.mp3` | Waiter (Alex) | Entendido. Ojo: en el filete con patatas fritas hay lácteos. ¿Les traigo el salmón a la parrilla en su lugar? | Understood. Careful: there's dairy in the steak frites. Shall I bring the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-caesar-salad~safe-bruschetta.mp3` | Waiter (Alex) | Entendido. Ojo: en la ensalada César hay huevo. ¿Les traigo la bruschetta en su lugar? | Understood. Careful: there's eggs in the Caesar salad. Shall I bring the bruschetta instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-chicken-pad-thai~safe-grilled-salmon.mp3` | Waiter (Alex) | Entendido. Ojo: en el pad thai de pollo hay huevo. ¿Les traigo el salmón a la parrilla en su lugar? | Understood. Careful: there's eggs in the chicken pad thai. Shall I bring the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-chicken-pad-thai~safe-mushroom-risotto.mp3` | Waiter (Alex) | Entendido. Ojo: en el pad thai de pollo hay huevo. ¿Les traigo el risotto de setas en su lugar? | Understood. Careful: there's eggs in the chicken pad thai. Shall I bring the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-chicken-pad-thai~safe-shrimp-tacos.mp3` | Waiter (Alex) | Entendido. Ojo: en el pad thai de pollo hay huevo. ¿Les traigo los tacos de gambas en su lugar? | Understood. Careful: there's eggs in the chicken pad thai. Shall I bring the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-chicken-pad-thai~safe-steak-frites.mp3` | Waiter (Alex) | Entendido. Ojo: en el pad thai de pollo hay huevo. ¿Les traigo el filete con patatas fritas en su lugar? | Understood. Careful: there's eggs in the chicken pad thai. Shall I bring the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-chocolate-torte~safe-grilled-salmon.mp3` | Waiter (Alex) | Entendido. Ojo: en la tarta de chocolate hay huevo. ¿Les traigo el salmón a la parrilla en su lugar? | Understood. Careful: there's eggs in the chocolate torte. Shall I bring the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-chocolate-torte~safe-mushroom-risotto.mp3` | Waiter (Alex) | Entendido. Ojo: en la tarta de chocolate hay huevo. ¿Les traigo el risotto de setas en su lugar? | Understood. Careful: there's eggs in the chocolate torte. Shall I bring the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-chocolate-torte~safe-shrimp-tacos.mp3` | Waiter (Alex) | Entendido. Ojo: en la tarta de chocolate hay huevo. ¿Les traigo los tacos de gambas en su lugar? | Understood. Careful: there's eggs in the chocolate torte. Shall I bring the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-chocolate-torte~safe-steak-frites.mp3` | Waiter (Alex) | Entendido. Ojo: en la tarta de chocolate hay huevo. ¿Les traigo el filete con patatas fritas en su lugar? | Understood. Careful: there's eggs in the chocolate torte. Shall I bring the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-fish~conflict-caesar-salad~safe-bruschetta.mp3` | Waiter (Alex) | Entendido. Ojo: en la ensalada César hay pescado. ¿Les traigo la bruschetta en su lugar? | Understood. Careful: there's fish in the Caesar salad. Shall I bring the bruschetta instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-fish~conflict-chicken-pad-thai~safe-mushroom-risotto.mp3` | Waiter (Alex) | Entendido. Ojo: en el pad thai de pollo hay pescado. ¿Les traigo el risotto de setas en su lugar? | Understood. Careful: there's fish in the chicken pad thai. Shall I bring the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-fish~conflict-chicken-pad-thai~safe-shrimp-tacos.mp3` | Waiter (Alex) | Entendido. Ojo: en el pad thai de pollo hay pescado. ¿Les traigo los tacos de gambas en su lugar? | Understood. Careful: there's fish in the chicken pad thai. Shall I bring the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-fish~conflict-chicken-pad-thai~safe-steak-frites.mp3` | Waiter (Alex) | Entendido. Ojo: en el pad thai de pollo hay pescado. ¿Les traigo el filete con patatas fritas en su lugar? | Understood. Careful: there's fish in the chicken pad thai. Shall I bring the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-fish~conflict-grilled-salmon~safe-mushroom-risotto.mp3` | Waiter (Alex) | Entendido. Ojo: en el salmón a la parrilla hay pescado. ¿Les traigo el risotto de setas en su lugar? | Understood. Careful: there's fish in the grilled salmon. Shall I bring the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-fish~conflict-grilled-salmon~safe-shrimp-tacos.mp3` | Waiter (Alex) | Entendido. Ojo: en el salmón a la parrilla hay pescado. ¿Les traigo los tacos de gambas en su lugar? | Understood. Careful: there's fish in the grilled salmon. Shall I bring the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-fish~conflict-grilled-salmon~safe-steak-frites.mp3` | Waiter (Alex) | Entendido. Ojo: en el salmón a la parrilla hay pescado. ¿Les traigo el filete con patatas fritas en su lugar? | Understood. Careful: there's fish in the grilled salmon. Shall I bring the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-bruschetta~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Entendido. Ojo: en la bruschetta hay gluten. ¿Les traigo el pad thai de pollo en su lugar? | Understood. Careful: there's gluten in the bruschetta. Shall I bring the chicken pad thai instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-bruschetta~safe-grilled-salmon.mp3` | Waiter (Alex) | Entendido. Ojo: en la bruschetta hay gluten. ¿Les traigo el salmón a la parrilla en su lugar? | Understood. Careful: there's gluten in the bruschetta. Shall I bring the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-bruschetta~safe-mushroom-risotto.mp3` | Waiter (Alex) | Entendido. Ojo: en la bruschetta hay gluten. ¿Les traigo el risotto de setas en su lugar? | Understood. Careful: there's gluten in the bruschetta. Shall I bring the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-bruschetta~safe-shrimp-tacos.mp3` | Waiter (Alex) | Entendido. Ojo: en la bruschetta hay gluten. ¿Les traigo los tacos de gambas en su lugar? | Understood. Careful: there's gluten in the bruschetta. Shall I bring the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-bruschetta~safe-steak-frites.mp3` | Waiter (Alex) | Entendido. Ojo: en la bruschetta hay gluten. ¿Les traigo el filete con patatas fritas en su lugar? | Understood. Careful: there's gluten in the bruschetta. Shall I bring the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-caesar-salad~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Entendido. Ojo: en la ensalada César hay gluten. ¿Les traigo el pad thai de pollo en su lugar? | Understood. Careful: there's gluten in the Caesar salad. Shall I bring the chicken pad thai instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-caesar-salad~safe-grilled-salmon.mp3` | Waiter (Alex) | Entendido. Ojo: en la ensalada César hay gluten. ¿Les traigo el salmón a la parrilla en su lugar? | Understood. Careful: there's gluten in the Caesar salad. Shall I bring the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-caesar-salad~safe-mushroom-risotto.mp3` | Waiter (Alex) | Entendido. Ojo: en la ensalada César hay gluten. ¿Les traigo el risotto de setas en su lugar? | Understood. Careful: there's gluten in the Caesar salad. Shall I bring the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-caesar-salad~safe-shrimp-tacos.mp3` | Waiter (Alex) | Entendido. Ojo: en la ensalada César hay gluten. ¿Les traigo los tacos de gambas en su lugar? | Understood. Careful: there's gluten in the Caesar salad. Shall I bring the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-caesar-salad~safe-steak-frites.mp3` | Waiter (Alex) | Entendido. Ojo: en la ensalada César hay gluten. ¿Les traigo el filete con patatas fritas en su lugar? | Understood. Careful: there's gluten in the Caesar salad. Shall I bring the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-peanuts~conflict-chicken-pad-thai~safe-grilled-salmon.mp3` | Waiter (Alex) | Entendido. Ojo: en el pad thai de pollo hay cacahuete. ¿Les traigo el salmón a la parrilla en su lugar? | Understood. Careful: there's peanuts in the chicken pad thai. Shall I bring the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-peanuts~conflict-chicken-pad-thai~safe-mushroom-risotto.mp3` | Waiter (Alex) | Entendido. Ojo: en el pad thai de pollo hay cacahuete. ¿Les traigo el risotto de setas en su lugar? | Understood. Careful: there's peanuts in the chicken pad thai. Shall I bring the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-peanuts~conflict-chicken-pad-thai~safe-shrimp-tacos.mp3` | Waiter (Alex) | Entendido. Ojo: en el pad thai de pollo hay cacahuete. ¿Les traigo los tacos de gambas en su lugar? | Understood. Careful: there's peanuts in the chicken pad thai. Shall I bring the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-peanuts~conflict-chicken-pad-thai~safe-steak-frites.mp3` | Waiter (Alex) | Entendido. Ojo: en el pad thai de pollo hay cacahuete. ¿Les traigo el filete con patatas fritas en su lugar? | Understood. Careful: there's peanuts in the chicken pad thai. Shall I bring the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-shellfish~conflict-shrimp-tacos~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Entendido. Ojo: en los tacos de gambas hay marisco. ¿Les traigo el pad thai de pollo en su lugar? | Understood. Careful: there's shellfish in the shrimp tacos. Shall I bring the chicken pad thai instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-shellfish~conflict-shrimp-tacos~safe-grilled-salmon.mp3` | Waiter (Alex) | Entendido. Ojo: en los tacos de gambas hay marisco. ¿Les traigo el salmón a la parrilla en su lugar? | Understood. Careful: there's shellfish in the shrimp tacos. Shall I bring the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-shellfish~conflict-shrimp-tacos~safe-mushroom-risotto.mp3` | Waiter (Alex) | Entendido. Ojo: en los tacos de gambas hay marisco. ¿Les traigo el risotto de setas en su lugar? | Understood. Careful: there's shellfish in the shrimp tacos. Shall I bring the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-shellfish~conflict-shrimp-tacos~safe-steak-frites.mp3` | Waiter (Alex) | Entendido. Ojo: en los tacos de gambas hay marisco. ¿Les traigo el filete con patatas fritas en su lugar? | Understood. Careful: there's shellfish in the shrimp tacos. Shall I bring the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-soy~conflict-chicken-pad-thai~safe-grilled-salmon.mp3` | Waiter (Alex) | Entendido. Ojo: en el pad thai de pollo hay soja. ¿Les traigo el salmón a la parrilla en su lugar? | Understood. Careful: there's soy in the chicken pad thai. Shall I bring the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-soy~conflict-chicken-pad-thai~safe-mushroom-risotto.mp3` | Waiter (Alex) | Entendido. Ojo: en el pad thai de pollo hay soja. ¿Les traigo el risotto de setas en su lugar? | Understood. Careful: there's soy in the chicken pad thai. Shall I bring the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-soy~conflict-chicken-pad-thai~safe-shrimp-tacos.mp3` | Waiter (Alex) | Entendido. Ojo: en el pad thai de pollo hay soja. ¿Les traigo los tacos de gambas en su lugar? | Understood. Careful: there's soy in the chicken pad thai. Shall I bring the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-soy~conflict-chicken-pad-thai~safe-steak-frites.mp3` | Waiter (Alex) | Entendido. Ojo: en el pad thai de pollo hay soja. ¿Les traigo el filete con patatas fritas en su lugar? | Understood. Careful: there's soy in the chicken pad thai. Shall I bring the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-tree-nuts~conflict-chocolate-torte~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Entendido. Ojo: en la tarta de chocolate hay frutos secos. ¿Les traigo el pad thai de pollo en su lugar? | Understood. Careful: there's tree nuts in the chocolate torte. Shall I bring the chicken pad thai instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-tree-nuts~conflict-chocolate-torte~safe-grilled-salmon.mp3` | Waiter (Alex) | Entendido. Ojo: en la tarta de chocolate hay frutos secos. ¿Les traigo el salmón a la parrilla en su lugar? | Understood. Careful: there's tree nuts in the chocolate torte. Shall I bring the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-tree-nuts~conflict-chocolate-torte~safe-mushroom-risotto.mp3` | Waiter (Alex) | Entendido. Ojo: en la tarta de chocolate hay frutos secos. ¿Les traigo el risotto de setas en su lugar? | Understood. Careful: there's tree nuts in the chocolate torte. Shall I bring the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-tree-nuts~conflict-chocolate-torte~safe-shrimp-tacos.mp3` | Waiter (Alex) | Entendido. Ojo: en la tarta de chocolate hay frutos secos. ¿Les traigo los tacos de gambas en su lugar? | Understood. Careful: there's tree nuts in the chocolate torte. Shall I bring the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-tree-nuts~conflict-chocolate-torte~safe-steak-frites.mp3` | Waiter (Alex) | Entendido. Ojo: en la tarta de chocolate hay frutos secos. ¿Les traigo el filete con patatas fritas en su lugar? | Understood. Careful: there's tree nuts in the chocolate torte. Shall I bring the steak frites instead? |
 | ☐ | `allergyConflict.polite.1.guest~allergy-dairy.mp3` | Polite, everyday guest | Sí, tengo alergia a los lácteos. | Yes, I'm allergic to dairy. |
 | ☐ | `allergyConflict.polite.1.guest~allergy-eggs.mp3` | Polite, everyday guest | Sí, tengo alergia al huevo. | Yes, I'm allergic to eggs. |
 | ☐ | `allergyConflict.polite.1.guest~allergy-fish.mp3` | Polite, everyday guest | Sí, tengo alergia al pescado. | Yes, I'm allergic to fish. |
@@ -924,6 +1051,18 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
+| ☐ | `conflictAccept.party.1.guest~safe-bruschetta.mp3` | party | ¡Gracias por avisar! Sí, la bruschetta, por favor. | Thanks for the warning! Yes, the bruschetta, please. |
+| ☐ | `conflictAccept.party.1.guest~safe-chicken-pad-thai.mp3` | party | ¡Gracias por avisar! Sí, el pad thai de pollo, por favor. | Thanks for the warning! Yes, the chicken pad thai, please. |
+| ☐ | `conflictAccept.party.1.guest~safe-grilled-salmon.mp3` | party | ¡Gracias por avisar! Sí, el salmón a la parrilla, por favor. | Thanks for the warning! Yes, the grilled salmon, please. |
+| ☐ | `conflictAccept.party.1.guest~safe-mushroom-risotto.mp3` | party | ¡Gracias por avisar! Sí, el risotto de setas, por favor. | Thanks for the warning! Yes, the mushroom risotto, please. |
+| ☐ | `conflictAccept.party.1.guest~safe-shrimp-tacos.mp3` | party | ¡Gracias por avisar! Sí, los tacos de gambas, por favor. | Thanks for the warning! Yes, the shrimp tacos, please. |
+| ☐ | `conflictAccept.party.1.guest~safe-steak-frites.mp3` | party | ¡Gracias por avisar! Sí, el filete con patatas fritas, por favor. | Thanks for the warning! Yes, the steak frites, please. |
+| ☐ | `conflictAccept.party.1.reply~safe-bruschetta.mp3` | Waiter (Alex) | Perfecto, la bruschetta. Aviso a la cocina de la alergia. | Perfect, the bruschetta. I'll tell the kitchen about the allergy. |
+| ☐ | `conflictAccept.party.1.reply~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Perfecto, el pad thai de pollo. Aviso a la cocina de la alergia. | Perfect, the chicken pad thai. I'll tell the kitchen about the allergy. |
+| ☐ | `conflictAccept.party.1.reply~safe-grilled-salmon.mp3` | Waiter (Alex) | Perfecto, el salmón a la parrilla. Aviso a la cocina de la alergia. | Perfect, the grilled salmon. I'll tell the kitchen about the allergy. |
+| ☐ | `conflictAccept.party.1.reply~safe-mushroom-risotto.mp3` | Waiter (Alex) | Perfecto, el risotto de setas. Aviso a la cocina de la alergia. | Perfect, the mushroom risotto. I'll tell the kitchen about the allergy. |
+| ☐ | `conflictAccept.party.1.reply~safe-shrimp-tacos.mp3` | Waiter (Alex) | Perfecto, los tacos de gambas. Aviso a la cocina de la alergia. | Perfect, the shrimp tacos. I'll tell the kitchen about the allergy. |
+| ☐ | `conflictAccept.party.1.reply~safe-steak-frites.mp3` | Waiter (Alex) | Perfecto, el filete con patatas fritas. Aviso a la cocina de la alergia. | Perfect, the steak frites. I'll tell the kitchen about the allergy. |
 | ☐ | `conflictAccept.polite.1.guest~safe-bruschetta.mp3` | Polite, everyday guest | ¡Uy, gracias por avisar! Sí, la bruschetta, por favor. | Oh, thanks for the warning! Yes, the bruschetta, please. |
 | ☐ | `conflictAccept.polite.1.guest~safe-chicken-pad-thai.mp3` | Polite, everyday guest | ¡Uy, gracias por avisar! Sí, el pad thai de pollo, por favor. | Oh, thanks for the warning! Yes, the chicken pad thai, please. |
 | ☐ | `conflictAccept.polite.1.guest~safe-grilled-salmon.mp3` | Polite, everyday guest | ¡Uy, gracias por avisar! Sí, el salmón a la parrilla, por favor. | Oh, thanks for the warning! Yes, the grilled salmon, please. |

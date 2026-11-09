@@ -6,15 +6,22 @@ import { PALETTE } from './palette';
 
 const HAND_FONT = 'Kalam, "Segoe Print", cursive';
 
+/** One place at a table: where the guest sits, which way they face, and where their plate and glass go. */
+export interface Seat {
+  pos: THREE.Vector3;
+  heading: number;
+  plate: THREE.Vector3;
+  glass: THREE.Vector3;
+}
+
 export interface TableView {
   spot: TableSpot;
-  /** Where a served plate sits on this table. */
-  platePos: THREE.Vector3;
-  /** Where a served drink sits on this table. */
-  glassPos: THREE.Vector3;
-  /** Where the guest sits. */
-  seatPos: THREE.Vector3;
+  /** Four seats: back (the solo guest's seat), left, right, front. */
+  seats: Seat[];
 }
+
+/** Seat directions from the table centre, in the order guests fill them. */
+const SEAT_DIRS: [number, number][] = [[0, -1], [-1, 0], [1, 0], [0, 1]];
 
 export interface RestaurantView {
   tables: TableView[];
@@ -154,27 +161,35 @@ function buildTable(scene: THREE.Scene, L: RestaurantLayout, t: TableSpot): { vi
   place(scene, mesh(new THREE.CylinderGeometry(r, r, 0.09, 24), toon(0xffffff, { map: sharedCloth })), t.x, 0.82, t.z);
   place(scene, mesh(new THREE.CylinderGeometry(r + 0.01, r + 0.07, 0.3, 24, 1, true), toon(PALETTE.clothSkirt, { side: THREE.DoubleSide })), t.x, 0.65, t.z);
   place(scene, mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.8, 8), toon(PALETTE.tableLeg)), t.x, 0.4, t.z);
-  place(scene, mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.22, 8), toon(PALETTE.candle)), t.x + 0.35, 0.98, t.z + 0.3);
-  place(scene, mesh(new THREE.SphereGeometry(0.05, 6, 6), new THREE.MeshBasicMaterial({ color: PALETTE.flame }), false), t.x + 0.35, 1.13, t.z + 0.3);
+  place(scene, mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.22, 8), toon(PALETTE.candle)), t.x, 0.98, t.z);
+  place(scene, mesh(new THREE.SphereGeometry(0.05, 6, 6), new THREE.MeshBasicMaterial({ color: PALETTE.flame }), false), t.x, 1.13, t.z);
 
-  const chair = new THREE.Group();
-  const seat = mesh(new THREE.BoxGeometry(0.7, 0.08, 0.6), toon(PALETTE.chair));
-  seat.position.y = 0.5;
-  const backrest = mesh(new THREE.BoxGeometry(0.7, 0.75, 0.08), toon(PALETTE.chair));
-  backrest.position.set(0, 0.9, -0.28);
-  chair.add(seat, backrest);
-  place(scene, chair, t.x, 0, t.z - L.chairOffset);
+  const seats: Seat[] = SEAT_DIRS.map(([dx, dz]) => {
+    // Guests face the table centre.
+    const heading = Math.atan2(-dx, -dz);
+    const chair = new THREE.Group();
+    const seatMesh = mesh(new THREE.BoxGeometry(0.7, 0.08, 0.6), toon(PALETTE.chair));
+    seatMesh.position.y = 0.5;
+    const backrest = mesh(new THREE.BoxGeometry(0.7, 0.75, 0.08), toon(PALETTE.chair));
+    backrest.position.set(0, 0.9, -0.28);
+    chair.add(seatMesh, backrest);
+    chair.rotation.y = heading;
+    place(scene, chair, t.x + dx * L.chairOffset, 0, t.z + dz * L.chairOffset);
+    // Plate in front of the guest, glass to their right.
+    const rx = -dz, rz = dx;
+    return {
+      pos: new THREE.Vector3(t.x + dx * L.chairOffset, 0.04, t.z + dz * L.chairOffset),
+      heading,
+      plate: new THREE.Vector3(t.x + dx * 0.5, 0.88, t.z + dz * 0.5),
+      glass: new THREE.Vector3(t.x + dx * 0.55 - rx * 0.4, 0.97, t.z + dz * 0.55 - rz * 0.4),
+    };
+  });
 
   const badge = makeNumberBadge(t.number);
   place(scene, badge, t.x + 1.0, 0.25, t.z + 0.9);
 
   return {
     badge,
-    view: {
-      spot: t,
-      platePos: new THREE.Vector3(t.x - 0.1, 0.88, t.z - 0.45),
-      glassPos: new THREE.Vector3(t.x + 0.45, 0.97, t.z - 0.55),
-      seatPos: new THREE.Vector3(t.x, -0.32, t.z - L.chairOffset),
-    },
+    view: { spot: t, seats },
   };
 }

@@ -42,6 +42,11 @@ describe('dialogue files', () => {
         for (const t of Object.keys(pack.tokenForms ?? {})) expect(TOKENS).toContain(t);
       });
 
+      it('has group (party) lines in every node, and says group sizes', () => {
+        for (const node of NODES) expect(pack.nodes[node].lines.party?.length, where(pack.code, `${node}.party is missing`)).toBeGreaterThan(0);
+        for (const n of ['2', '3', '4'] as const) expect(pack.partyWords?.[n], where(pack.code, `partyWords.${n}`)).toBeTruthy();
+      });
+
       it('uses only known line pools, with several polite variants per node', () => {
         for (const node of NODES) {
           for (const pool of Object.keys(pack.nodes[node].lines)) expect(POOLS, where(pack.code, `${node}.${pool}`)).toContain(pool);
@@ -100,6 +105,7 @@ describe('dialogue files', () => {
           for (const t of texts) {
             expect(unknownTokens(t), where(pack.code, `${ref.variant.id}: unknown token in "${t}"`)).toEqual([]);
             for (const tok of usedTokens(t)) {
+              if (tok === 'party') expect(ref.pool, where(pack.code, `${ref.variant.id}: {party} only works in group (party) lines`)).toBe('party');
               const allowed = CONDITIONAL_TOKENS[tok];
               if (allowed) expect(allowed, where(pack.code, `${ref.variant.id}: {${tok}} isn't known during "${ref.node}"`)).toContain(ref.node);
             }
@@ -116,7 +122,7 @@ describe('dialogue files', () => {
               ...wrongs.flatMap((w) => [[w.text, 'text'], [w.en, 'en'], [w.why, 'en']] as [string, 'text' | 'en'][]),
             ];
             const used = new Set<TokenName>(texts.flatMap(([t]) => usedTokens(t)));
-            for (const facts of factsFor(used, menu)) {
+            for (const facts of factsFor(used, menu, ref.pool === 'party')) {
               const ctx = buildContext(facts, pack, menu);
               for (const [t, which] of texts) {
                 const out = fill(t, ctx, which);

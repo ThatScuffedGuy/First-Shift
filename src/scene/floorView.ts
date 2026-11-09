@@ -12,20 +12,26 @@ import { animatePerson, guestLook, makeGlass, makePerson, makePlate, makeTray, s
 import { bubbleTexture, makeBubble } from './bubbles';
 import type { TableView } from './restaurant';
 
-interface Figure {
-  id: number;
+/** One person in a party. */
+interface Member {
   person: Person;
-  bubble: THREE.Sprite;
   x: number;
   z: number;
   heading: number;
   speed: number;
   sitting: boolean;
-  /** Set once the guest has left the shift and is walking out. */
-  exit: { step: number; fade: number } | null;
   glass: THREE.Group | null;
   plate: THREE.Group | null;
   plateEaten: boolean;
+}
+
+/** A guest or a group of guests (member 0 is the host, who talks and wears the bubble). */
+interface Party {
+  id: number;
+  members: Member[];
+  bubble: THREE.Sprite;
+  /** Set once they've left the shift and are walking out. */
+  exit: { step: number } | null;
 }
 
 /** Outside the door, where guests appear and disappear. */
@@ -36,8 +42,8 @@ const OUTSIDE_X = -11.6;
  * in step with the shift. Reads game state; never changes it.
  */
 export class FloorView {
-  private figures = new Map<number, Figure>();
-  private exiting: Figure[] = [];
+  private parties = new Map<number, Party>();
+  private exiting: Party[] = [];
   private trail: Point[] = [];
   private passPlates = new THREE.Group();
   private bell: THREE.Sprite;
@@ -64,8 +70,8 @@ export class FloorView {
 
   /** Removes every guest and prop, for a new shift. */
   reset(): void {
-    for (const f of [...this.figures.values(), ...this.exiting]) this.dispose(f);
-    this.figures.clear();
+    for (const p of [...this.parties.values(), ...this.exiting]) this.dispose(p);
+    this.parties.clear();
     this.exiting = [];
     this.trail = [];
     for (const d of this.debris) this.scene.remove(d.obj);
@@ -78,16 +84,17 @@ export class FloorView {
     this.recordTrail(w);
     const queue = shift.doorQueue;
     for (const g of shift.guests) {
-      let f = this.figures.get(g.id);
-      if (!f) f = this.spawn(g);
-      this.moveGuest(f, g, queue.indexOf(g), w, dt);
-      this.updateTableItems(f, g, shift);
-      setMood(f.person, g.mood);
-      animatePerson(f.person, { dt, speed: f.speed, sitting: f.sitting, reducedMotion });
-      const icon = STATUS[g.state].icon;
-      f.bubble.material.map = bubbleTexture(icon, g.mood, shift.patienceLeft(g));
+      const party = this.parties.get(g.id) ?? this.spawn(g);
+      party.members.forEach((m, i) => {
+        this.moveMember(m, i, g, queue.indexOf(g), w, dt);
+        setMood(m.person, g.mood);
+        animatePerson(m.person, { dt, speed: m.speed, sitting: m.sitting, reducedMotion });
+      });
+      this.updateTableItems(party, g, shift);
+      const host = party.members[0];
+      party.bubble.material.map = bubbleTexture(STATUS[g.state].icon, g.mood, shift.patienceLeft(g));
       const bob = reducedMotion ? 0 : Math.sin(time * 2.4 + g.id) * 0.05;
-      f.bubble.position.set(f.x, (f.sitting ? 2.25 : 2.5) + bob, f.z);
+      party.bubble.position.set(host.x, (host.sitting ? 2.25 : 2.5) + bob, host.z);
     }
     this.updateExits(dt);
     this.updatePass(shift, time, reducedMotion);
@@ -102,19 +109,19 @@ export class FloorView {
     }
   }
 
-  /** A guest left the shift (paid, walked out, or reaction): they stand up and walk out. */
+  /** A guest or group left the shift (paid, walked out, or a reaction): they stand up and walk out. */
   guestLeft(g: Guest): void {
-    const f = this.figures.get(g.id);
-    if (!f) return;
-    this.figures.delete(g.id);
-    f.exit = { step: 0, fade: 1 };
-    f.sitting = false;
-    f.bubble.visible = false;
-    setMood(f.person, g.mood >= 3 ? 5 : 0);
-    if (f.glass) this.scene.remove(f.glass);
-    if (f.plate) this.scene.remove(f.plate);
-    f.glass = f.plate = null;
-    this.exiting.push(f);
+    const p = this.parties.get(g.id);
+    if (!p) return;
+    this.parties.delete(g.id);
+    p.exit = { step: 0 };
+    p.bubble.visible = false;
+    for (const m of p.members) {
+      m.sitting = false;
+      setMood(m.person, g.mood >= 3 ? 5 : 0);
+      this.clearItems(m);
+    }
+    this.exiting.push(p);
   }
 
   /** Shows a spill on the floor where the waiter is. */
@@ -132,29 +139,54 @@ export class FloorView {
     this.debris.push({ obj: g, life: 3 });
   }
 
-  // ------------------------------------------------------------------
-
-  private spawn(g: Guest): Figure {
-    const person = makePerson(guestLook(g.look, g.persona.kind));
-    const bubble = makeBubble();
-    this.scene.add(person.root, bubble);
-    const f: Figure = { id: g.id, person, bubble, x: OUTSIDE_X, z: this.doorZ, heading: Math.PI / 2, speed: 0, sitting: false, exit: null, glass: null, plate: null, plateEaten: false };
-    person.root.position.set(f.x, 0, f.z);
-    this.figures.set(g.id, f);
-    return f;
+  /** Where a guest's host (or a host walking out) is standing. */
+  positionOf(guestId: number): Point | undefined {
+    const p = this.parties.get(guestId) ?? this.exiting.find((x) => x.id === guestId);
+    return p ? { x: p.members[0].x, z: p.members[0].z } : undefined;
   }
 
-  private dispose(f: Figure): void {
-    this.scene.remove(f.person.root, f.bubble);
-    if (f.glass) this.scene.remove(f.glass);
-    if (f.plate) this.scene.remove(f.plate);
+  /** World position of a table centre, for the tutorial pointer. */
+  tablePoint(n: number): Point | undefined {
+    const t = this.tables.find((x) => x.spot.number === n);
+    return t ? { x: t.spot.x, z: t.spot.z } : undefined;
+  }
+
+  // ------------------------------------------------------------------
+
+  private spawn(g: Guest): Party {
+    const members: Member[] = Array.from({ length: g.size }, (_, i) => {
+      const person = makePerson(guestLook(g.look + i * 7919, g.persona.kind));
+      this.scene.add(person.root);
+      const m: Member = { person, x: OUTSIDE_X - i * 0.7, z: this.doorZ, heading: Math.PI / 2, speed: 0, sitting: false, glass: null, plate: null, plateEaten: false };
+      person.root.position.set(m.x, 0, m.z);
+      return m;
+    });
+    const bubble = makeBubble();
+    this.scene.add(bubble);
+    const party: Party = { id: g.id, members, bubble, exit: null };
+    this.parties.set(g.id, party);
+    return party;
+  }
+
+  private clearItems(m: Member): void {
+    if (m.glass) this.scene.remove(m.glass);
+    if (m.plate) this.scene.remove(m.plate);
+    m.glass = m.plate = null;
+  }
+
+  private dispose(p: Party): void {
+    this.scene.remove(p.bubble);
+    for (const m of p.members) {
+      this.scene.remove(m.person.root);
+      this.clearItems(m);
+    }
   }
 
   private recordTrail(w: WaiterState): void {
     const last = this.trail[this.trail.length - 1];
     if (!last || distance(last, w) > 0.2) {
       this.trail.push({ x: w.x, z: w.z });
-      if (this.trail.length > 80) this.trail.shift();
+      if (this.trail.length > 120) this.trail.shift();
     }
   }
 
@@ -171,49 +203,52 @@ export class FloorView {
     return prev;
   }
 
-  private moveGuest(f: Figure, g: Guest, queueIndex: number, w: WaiterState, dt: number): void {
+  private moveMember(m: Member, i: number, g: Guest, queueIndex: number, w: WaiterState, dt: number): void {
     const table = g.table ? this.tables.find((t) => t.spot.number === g.table) : undefined;
+    const seat = table?.seats[i];
     let target: Point;
     let collide = true;
     let speed = MOVEMENT.guestSpeed;
 
     if (g.state === 'door') {
       const spots = this.layout.doorQueue;
-      target = spots[Math.min(queueIndex, spots.length - 1)];
+      const spot = spots[Math.min(queueIndex, spots.length - 1)];
+      // Group members stand in a little cluster around the queue spot.
+      target = { x: spot.x + [0, 0.55, 0.55, 1.1][i], z: spot.z + [0, -0.4, 0.4, 0][i] };
       collide = false;
     } else if (g.state === 'following') {
-      target = this.behindWaiter(w, 1.2);
-      if (distance(f, w) > 2.2) speed *= 1.7;
-    } else if (table) {
-      target = { x: table.seatPos.x, z: table.seatPos.z };
-      if (distance(f, target) < 2.0) collide = false;
+      target = this.behindWaiter(w, 1.2 + i * 0.9);
+      if (distance(m, w) > 2.2 + i * 0.9) speed *= 1.7;
+    } else if (seat) {
+      target = { x: seat.pos.x, z: seat.pos.z };
+      if (distance(m, target) < 2.0) collide = false;
     } else {
-      target = f;
+      target = m;
     }
 
-    if (f.sitting && table) {
-      f.speed = 0;
-      f.person.root.position.set(table.seatPos.x, 0.04, table.seatPos.z);
-      f.person.root.rotation.y = 0;
+    if (m.sitting && seat) {
+      m.speed = 0;
+      m.person.root.position.copy(seat.pos);
+      m.person.root.rotation.y = seat.heading;
       return;
     }
 
-    const d = distance(f, target);
+    const d = distance(m, target);
     if (d > 0.08) {
-      const dir = collide ? steerAround(f, target, this.obstacles) : { x: (target.x - f.x) / d, z: (target.z - f.z) / d };
+      const dir = collide ? steerAround(m, target, this.obstacles) : { x: (target.x - m.x) / d, z: (target.z - m.z) / d };
       const step = Math.min(d, speed * dt);
-      f.x += dir.x * step;
-      f.z += dir.z * step;
-      if (collide) this.pushOut(f);
-      f.speed = step / Math.max(dt, 1e-4);
-      f.heading += wrapAngle(Math.atan2(dir.x, dir.z) - f.heading) * Math.min(1, dt * 10);
+      m.x += dir.x * step;
+      m.z += dir.z * step;
+      if (collide) this.pushOut(m);
+      m.speed = step / Math.max(dt, 1e-4);
+      m.heading += wrapAngle(Math.atan2(dir.x, dir.z) - m.heading) * Math.min(1, dt * 10);
     } else {
-      f.speed = 0;
-      if (table && g.state !== 'following') f.sitting = true;
-      else if (g.state === 'door') f.heading += wrapAngle(Math.PI / 2 - f.heading) * Math.min(1, dt * 6);
+      m.speed = 0;
+      if (seat && g.state !== 'following') m.sitting = true;
+      else if (g.state === 'door') m.heading += wrapAngle(Math.PI / 2 - m.heading) * Math.min(1, dt * 6);
     }
-    f.person.root.position.set(f.x, 0, f.z);
-    f.person.root.rotation.y = f.heading;
+    m.person.root.position.set(m.x, 0, m.z);
+    m.person.root.rotation.y = m.heading;
   }
 
   private pushOut(p: Point): void {
@@ -229,60 +264,73 @@ export class FloorView {
   }
 
   private updateExits(dt: number): void {
+    const waypoints: Point[] = [{ x: -8.6, z: this.doorZ }, { x: OUTSIDE_X - 1, z: this.doorZ }];
     for (let i = this.exiting.length - 1; i >= 0; i--) {
-      const f = this.exiting[i];
-      const ex = f.exit!;
-      const waypoints: Point[] = [{ x: -8.6, z: this.doorZ }, { x: OUTSIDE_X, z: this.doorZ }];
-      const target = waypoints[ex.step];
-      const d = distance(f, target);
-      if (d < 0.15) {
-        ex.step++;
-        if (ex.step >= waypoints.length) {
-          this.dispose(f);
-          this.exiting.splice(i, 1);
-          continue;
-        }
-      } else {
-        const dir = ex.step === 0 ? steerAround(f, target, this.obstacles) : { x: (target.x - f.x) / d, z: (target.z - f.z) / d };
-        const step = Math.min(d, MOVEMENT.guestSpeed * dt);
-        f.x += dir.x * step;
-        f.z += dir.z * step;
-        if (ex.step === 0) this.pushOut(f);
-        f.speed = MOVEMENT.guestSpeed;
-        f.heading += wrapAngle(Math.atan2(dir.x, dir.z) - f.heading) * Math.min(1, dt * 10);
+      const p = this.exiting[i];
+      const ex = p.exit!;
+      let allOut = true;
+      p.members.forEach((m, k) => {
+        // Members leave one after another, a little apart.
+        const step = Math.min(ex.step, waypoints.length - 1);
+        const target = waypoints[step];
+        const d = distance(m, target);
+        if (step === waypoints.length - 1 && d < 0.2) return;
+        allOut = false;
+        if (d < 0.15) return;
+        const lag = k * 0.35;
+        const dir = step === 0 ? steerAround(m, target, this.obstacles) : { x: (target.x - m.x) / d, z: (target.z - m.z) / d };
+        const move = Math.min(d, MOVEMENT.guestSpeed * dt * (1 - lag * 0.3));
+        m.x += dir.x * move;
+        m.z += dir.z * move;
+        if (step === 0) this.pushOut(m);
+        m.speed = MOVEMENT.guestSpeed;
+        m.heading += wrapAngle(Math.atan2(dir.x, dir.z) - m.heading) * Math.min(1, dt * 10);
+        m.person.root.position.set(m.x, 0, m.z);
+        m.person.root.rotation.y = m.heading;
+        animatePerson(m.person, { dt, speed: m.speed });
+      });
+      // Move everyone on to the next waypoint once the host reaches this one.
+      if (ex.step === 0 && distance(p.members[0], waypoints[0]) < 0.3) ex.step = 1;
+      if (allOut && ex.step === 1) {
+        this.dispose(p);
+        this.exiting.splice(i, 1);
       }
-      f.person.root.position.set(f.x, 0, f.z);
-      f.person.root.rotation.y = f.heading;
-      animatePerson(f.person, { dt, speed: f.speed });
     }
   }
 
-  private updateTableItems(f: Figure, g: Guest, shift: Shift): void {
+  private updateTableItems(p: Party, g: Guest, shift: Shift): void {
     const table = g.table ? this.tables.find((t) => t.spot.number === g.table) : undefined;
     if (!table) return;
-    if (g.hasDrink && !f.glass) {
-      f.glass = makeGlass(byId(shift.menu, g.order.drinkId).color);
-      f.glass.position.copy(table.glassPos);
-      this.scene.add(f.glass);
-    }
     const wantPlate = g.state === 'eating' || g.state === 'check';
     const eaten = g.state === 'check';
-    if (wantPlate && (!f.plate || f.plateEaten !== eaten)) {
-      if (f.plate) this.scene.remove(f.plate);
-      f.plate = makePlate(this.foodColour(g, shift), eaten);
-      f.plate.position.copy(table.platePos);
-      f.plateEaten = eaten;
-      this.scene.add(f.plate);
-    } else if (!wantPlate && f.plate) {
-      this.scene.remove(f.plate);
-      f.plate = null;
-    }
+    const dishes = this.dishColours(g, shift);
+    p.members.forEach((m, i) => {
+      const seat = table.seats[i];
+      if (g.hasDrink && !m.glass) {
+        const drinkId = g.order.drinkIds[i] ?? g.order.drinkIds[0];
+        m.glass = makeGlass(byId(shift.menu, drinkId).color);
+        m.glass.position.copy(seat.glass);
+        this.scene.add(m.glass);
+      }
+      if (wantPlate && (!m.plate || m.plateEaten !== eaten)) {
+        if (m.plate) this.scene.remove(m.plate);
+        m.plate = makePlate(dishes[i % dishes.length], eaten);
+        m.plate.position.copy(seat.plate);
+        m.plateEaten = eaten;
+        this.scene.add(m.plate);
+      } else if (!wantPlate && m.plate) {
+        this.scene.remove(m.plate);
+        m.plate = null;
+      }
+    });
   }
 
-  private foodColour(g: Guest, shift: Shift): string {
+  /** Colours of the main dishes on the guest's ticket (what the kitchen actually made). */
+  private dishColours(g: Guest, shift: Shift): string[] {
     const ids = g.ticket?.dishIds ?? g.order.dishIds;
-    const main = ids.map((id) => byId(shift.menu, id)).find((m) => m.category === 'main') ?? byId(shift.menu, ids[0]);
-    return main.color;
+    const items = ids.map((id) => byId(shift.menu, id));
+    const mains = items.filter((m) => m.category === 'main');
+    return (mains.length ? mains : items).map((m) => m.color);
   }
 
   private updatePass(shift: Shift, time: number, reducedMotion: boolean): void {
@@ -291,12 +339,16 @@ export class FloorView {
     const key = ready.map((g) => g.id).join();
     if (this.passPlates.userData.key !== key) {
       this.passPlates.clear();
-      ready.forEach((g, i) => {
-        const p = makePlate(this.foodColour(g, shift));
-        p.position.set(pass.center.x - 2 + i * 1.1, 1.12, pass.center.z + 0.2);
-        p.scale.setScalar(1.35);
-        this.passPlates.add(p);
-      });
+      let slot = 0;
+      for (const g of ready) {
+        for (const colour of this.dishColours(g, shift).slice(0, g.size)) {
+          const p = makePlate(colour);
+          p.position.set(pass.center.x - 2.3 + slot * 0.75, 1.12, pass.center.z + 0.2);
+          p.scale.setScalar(1.2);
+          this.passPlates.add(p);
+          slot++;
+        }
+      }
       this.passPlates.userData.key = key;
     }
     this.bell.visible = ready.length > 0;
@@ -305,27 +357,22 @@ export class FloorView {
 
   private updateTray(shift: Shift): void {
     const c = shift.carrying;
-    const key = c ? `${c.kind}:${c.guestId}:${c.kind === 'drink' ? c.drinkId : ''}` : '';
+    const key = c ? `${c.kind}:${c.guestId}:${c.kind === 'drink' ? c.drinkIds.join() : ''}` : '';
     if (key === this.trayKey) return;
     this.trayKey = key;
     this.tray.clear();
     if (!c) return;
     this.tray.add(makeTray());
     const g = shift.guest(c.guestId);
-    const item = c.kind === 'drink' ? makeGlass(byId(shift.menu, c.drinkId).color) : makePlate(g ? this.foodColour(g, shift) : '#d9822b');
-    item.position.y = c.kind === 'drink' ? 0.14 : 0.03;
-    this.tray.add(item);
-  }
-
-  /** Where a guest (or a guest walking out) is standing. */
-  positionOf(guestId: number): Point | undefined {
-    const f = this.figures.get(guestId) ?? this.exiting.find((x) => x.id === guestId);
-    return f ? { x: f.x, z: f.z } : undefined;
-  }
-
-  /** World position above a table, the door or a station, for the tutorial pointer. */
-  tablePoint(n: number): Point | undefined {
-    const t = this.tables.find((x) => x.spot.number === n);
-    return t ? { x: t.spot.x, z: t.spot.z } : undefined;
+    const colours = c.kind === 'drink' ? c.drinkIds.map((id) => byId(shift.menu, id).color) : g ? this.dishColours(g, shift).slice(0, g.size) : ['#d9822b'];
+    const n = colours.length;
+    colours.forEach((colour, i) => {
+      const item = c.kind === 'drink' ? makeGlass(colour) : makePlate(colour);
+      const a = (i / n) * Math.PI * 2;
+      const r = n > 1 ? (c.kind === 'drink' ? 0.14 : 0.16) : 0;
+      item.position.set(Math.cos(a) * r, c.kind === 'drink' ? 0.14 : 0.03 + i * 0.05, Math.sin(a) * r);
+      if (c.kind === 'food' && n > 1) item.scale.setScalar(0.7);
+      this.tray.add(item);
+    });
   }
 }

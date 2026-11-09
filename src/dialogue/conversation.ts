@@ -38,9 +38,13 @@ export function nodesForStage(stage: Stage, plan: OrderPlan): NodeName[] {
 /** Mood at or below this makes guests use their "impatient" lines. */
 export const IMPATIENT_MOOD = 2;
 
-/** Impatient lines win when the guest is fed up, then the persona's own lines, then polite. */
-export function selectPool(node: DialogueNode, persona: PersonaKind, mood: number): Pool {
+/**
+ * Groups always use their party lines. Otherwise impatient lines win when the
+ * guest is fed up, then the persona's own lines, then polite.
+ */
+export function selectPool(node: DialogueNode, persona: PersonaKind, mood: number, size = 1): Pool {
   const has = (p: Pool) => (node.lines[p]?.length ?? 0) > 0;
+  if (size > 1 && has('party')) return 'party';
   if (mood <= IMPATIENT_MOOD && has('impatient')) return 'impatient';
   if (has(persona)) return persona;
   return 'polite';

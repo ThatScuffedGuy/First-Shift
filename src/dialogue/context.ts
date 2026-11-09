@@ -4,8 +4,11 @@ import { joinList } from './fill';
 
 /** The facts about one guest's order that dialogue lines can mention. */
 export interface OrderFacts {
-  drinkId: string;
-  /** A different drink, used in a "you misheard" wrong reply. */
+  /** One drink per person at the table (all different). */
+  drinkIds: string[];
+  /** Group size; 1 for a guest on their own. */
+  size?: number;
+  /** A drink nobody ordered, used in a "you misheard" wrong reply. */
   otherDrinkId: string;
   dishIds: string[];
   recId?: string;
@@ -20,6 +23,8 @@ export const itemById = (menu: Menu, id: string): MenuItem => {
   return item;
 };
 
+const EN_NUMBERS: Record<number, string> = { 2: 'two', 3: 'three', 4: 'four' };
+
 /** Builds the token values ({drink}, {dishes}...) for a guest in a language. */
 export function buildContext(f: OrderFacts, pack: LanguagePack, menu: Menu): TokenContext {
   const form = (t: TokenName) => pack.tokenForms?.[t] ?? 'order';
@@ -33,25 +38,33 @@ export function buildContext(f: OrderFacts, pack: LanguagePack, menu: Menu): Tok
     const item = itemById(menu, id);
     return { text: name(item, pack.code, t), en: name(item, 'en', t), key: id };
   };
-  const dishes = f.dishIds.map((id) => itemById(menu, id));
+  const list = (t: TokenName, ids: string[]) => {
+    const items = ids.map((id) => itemById(menu, id));
+    return {
+      text: joinList(items.map((d) => name(d, pack.code, t)), pack.listAnd),
+      en: joinList(items.map((d) => name(d, 'en', t)), ' and '),
+      key: ids.join('+'),
+    };
+  };
   const drinks = menu.items.filter((m) => m.category === 'drink');
   const ctx: TokenContext = {
-    drink: one('drink', f.drinkId),
+    drink: list('drink', f.drinkIds),
     otherDrink: one('otherDrink', f.otherDrinkId),
     rec: one('rec', f.recId),
     safe: one('safe', f.safeId),
     conflict: one('conflict', f.conflictId),
-    dishes: {
-      text: joinList(dishes.map((d) => name(d, pack.code, 'dishes')), pack.listAnd),
-      en: joinList(dishes.map((d) => name(d, 'en', 'dishes')), ' and '),
-      key: f.dishIds.join('+'),
-    },
+    dishes: list('dishes', f.dishIds),
     drinkList: {
       text: joinList(drinks.map((d) => d.names[pack.code]?.plain ?? d.id), pack.listAnd),
       en: joinList(drinks.map((d) => d.names.en.plain), ' and '),
       key: menu.id,
     },
   };
+  const size = f.size ?? 1;
+  if (size > 1) {
+    const key = String(size) as '2' | '3' | '4';
+    ctx.party = { text: pack.partyWords?.[key] ?? key, en: EN_NUMBERS[size] ?? key, key };
+  }
   if (f.allergy) {
     const a = pack.allergens[f.allergy];
     ctx.allergy = { text: a.phrase, en: f.allergy, key: f.allergy.replace(' ', '-') };

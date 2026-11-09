@@ -2,7 +2,7 @@ import type { Allergen, Menu, MenuItem, Persona } from '../data/types';
 import { TIMING } from '../data/timing';
 import type { OrderFacts } from '../dialogue/context';
 import type { Conversation, OrderPlan, Stage } from '../dialogue/conversation';
-import { type Rng, pick } from './random';
+import { type Rng, pick, shuffle } from './random';
 
 /** Where a guest is in their visit, in order. */
 export type GuestState =
@@ -43,6 +43,8 @@ export type LogEntry =
 export interface Guest {
   id: number;
   persona: Persona;
+  /** People at the table: 1 on their own, up to 4 in a group. The host does the talking. */
+  size: number;
   /** Seed for their looks and voice. */
   look: number;
   order: OrderFacts;
@@ -75,20 +77,25 @@ export const drinks = (menu: Menu) => menu.items.filter((m) => m.category === 'd
 export const mains = (menu: Menu) => menu.items.filter((m) => m.category === 'main');
 export const starters = (menu: Menu) => menu.items.filter((m) => m.category === 'starter');
 
-/** Rolls up a new guest: what they'll drink and eat, and maybe an allergy. */
-export function createGuest(id: number, persona: Persona, menu: Menu, rng: Rng): Guest {
+/**
+ * Rolls up a new guest (or group): one different drink and main dish per
+ * person, maybe a shared starter, and maybe an allergy.
+ */
+export function createGuest(id: number, persona: Persona, menu: Menu, rng: Rng, size = 1): Guest {
   const drinkList = drinks(menu);
-  const drink = pick(rng, drinkList);
-  const other = pick(rng, drinkList.filter((d) => d !== drink));
-  const dishIds = [pick(rng, mains(menu)).id];
+  size = Math.max(1, Math.min(size, drinkList.length - 1, mains(menu).length));
+  const chosen = shuffle(rng, drinkList).slice(0, size);
+  const other = pick(rng, drinkList.filter((d) => !chosen.includes(d)));
+  const dishIds = shuffle(rng, mains(menu)).slice(0, size).map((m) => m.id);
   if (rng() < TIMING.starterChance && starters(menu).length) dishIds.unshift(pick(rng, starters(menu)).id);
   const present = [...new Set(foods(menu).flatMap((m) => m.allergens))];
   const allergy = present.length && rng() < TIMING.allergyChance ? pick(rng, present) : null;
   return {
     id,
     persona,
+    size,
     look: Math.floor(rng() * 1e9),
-    order: { drinkId: drink.id, otherDrinkId: other.id, dishIds, allergy },
+    order: { drinkIds: chosen.map((d) => d.id), otherDrinkId: other.id, dishIds, allergy, size },
     plan: null,
     mood: TIMING.startMood,
     state: 'door',
@@ -123,9 +130,12 @@ export function patienceLimit(phase: Phase, persona: Persona): number {
 export function planOrder(g: Guest, menu: Menu, rng: Rng): OrderPlan {
   const recommend = rng() < g.persona.asksRecommendation;
   if (recommend) {
-    const rec = pick(rng, mains(menu));
+    // The host takes the recommendation instead of their own main; others keep theirs.
+    const hostMain = g.order.dishIds.find((id) => byId(menu, id).category === 'main');
+    const others = g.order.dishIds.filter((id) => id !== hostMain);
+    const rec = pick(rng, mains(menu).filter((m) => !others.includes(m.id)));
     g.order.recId = rec.id;
-    g.order.dishIds = g.order.dishIds.filter((id) => byId(menu, id).category === 'starter').concat(rec.id);
+    g.order.dishIds = [...others, rec.id];
   }
   let conflict = false;
   const a = g.order.allergy;

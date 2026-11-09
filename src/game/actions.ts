@@ -30,11 +30,11 @@ export function chooseAction(shift: Shift, place: Place): ActionChoice | null {
     const n = place.table.number;
     const g = shift.guestAtTable(n);
     if (!g) {
-      if (following) return { label: `Seat the guest at Table ${n}`, act: { type: 'seat', guestId: following.id, table: n } };
+      if (following) return { label: `Seat ${following.size > 1 ? 'the group' : 'the guest'} at Table ${n}`, act: { type: 'seat', guestId: following.id, table: n } };
       return PLACE_HINTS.table(n);
     }
     if (carry && carriedFor === g) {
-      return { label: carry.kind === 'drink' ? `Serve Table ${n}'s drink` : `Serve Table ${n}'s food`, act: { type: 'serve' } };
+      return { label: carry.kind === 'drink' ? `Serve Table ${n}'s drink${g.size > 1 ? 's' : ''}` : `Serve Table ${n}'s food`, act: { type: 'serve' } };
     }
     if (carry) return { label: `Table ${n}`, hint: `You're carrying Table ${carriedFor?.table}'s ${carry.kind}` };
     switch (g.state) {
@@ -66,7 +66,7 @@ export function chooseAction(shift: Shift, place: Place): ActionChoice | null {
     if (!next) return PLACE_HINTS.station.door;
     if (following) return { label: 'Door', hint: 'Seat your current guest first' };
     if (carry) return { label: 'Door', hint: "Drop off what you're carrying first" };
-    return { label: 'Greet the guest at the door', act: { type: 'talk', guestId: next.id, stage: 'door' } };
+    return { label: next.size > 1 ? 'Greet the group at the door' : 'Greet the guest at the door', act: { type: 'talk', guestId: next.id, stage: 'door' } };
   }
   if (st.kind === 'bar') {
     if (carry) return { label: 'Drink station', hint: "Your hands are full" };

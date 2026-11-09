@@ -9,7 +9,7 @@ import { seeded } from '../src/game/random';
 const es = languageByCode('es');
 
 describe('token filling', () => {
-  const ctx = buildContext({ drinkId: 'lemonade', otherDrinkId: 'coffee', dishIds: ['bruschetta', 'grilled-salmon'], allergy: 'fish', conflictId: 'grilled-salmon', safeId: 'steak-frites', recId: 'grilled-salmon' }, es, HOUSE_MENU);
+  const ctx = buildContext({ drinkIds: ['lemonade'], otherDrinkId: 'coffee', dishIds: ['bruschetta', 'grilled-salmon'], allergy: 'fish', conflictId: 'grilled-salmon', safeId: 'steak-frites', recId: 'grilled-salmon' }, es, HOUSE_MENU);
 
   it('inserts Spanish names with articles', () => {
     expect(fill('Para mí, {drink}, por favor.', ctx, 'text')).toBe('Para mí, una limonada, por favor.');
@@ -46,7 +46,7 @@ describe('conversation flow', () => {
   });
 
   it('offers 1 right and 2 wrong options; wrong picks are crossed out and the turn stays', () => {
-    const ctx = buildContext({ drinkId: 'coffee', otherDrinkId: 'lemonade', dishIds: ['steak-frites'], allergy: null }, es, HOUSE_MENU);
+    const ctx = buildContext({ drinkIds: ['coffee'], otherDrinkId: 'lemonade', dishIds: ['steak-frites'], allergy: null }, es, HOUSE_MENU);
     const c = new Conversation({ stage: 'greet', nodes: nodesForStage('greet', { recommend: false, allergy: false, conflict: false }), pack: es, rng: seeded(1), context: () => ctx, pool: () => 'polite' });
     const turn = c.turn!;
     expect(turn.options).toHaveLength(3);

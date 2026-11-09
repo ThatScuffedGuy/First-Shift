@@ -4,6 +4,7 @@
   "speechLang": "es-ES",
   "listAnd": " y ",
   "testLine": "¡Buenas noches! Bienvenidos.",
+  "partyWords": {"2": "dos", "3": "tres", "4": "cuatro"},
   "allergens": {
     "gluten": { "phrase": "al gluten", "noun": "gluten" },
     "dairy": { "phrase": "a los lácteos", "noun": "lácteos" },
@@ -50,6 +51,10 @@
             "wrong": [{ "id": "door.impatient.1.wrong.1", "text": "De nada. Sígame, por favor.", "en": "You're welcome. Follow me, please.", "why": "“Por fin” (finally) is a complaint, not a thank-you. Apologize for the wait." }] },
           { "id": "door.impatient.2", "guest": "¿Me va a atender alguien o no?", "guestEn": "Is anyone going to help me or not?", "reply": "Perdone, ya estoy con usted. Sígame, por favor.", "replyEn": "Sorry, I'm with you now. Follow me, please.",
             "wrong": [{ "id": "door.impatient.2.wrong.1", "text": "No, lo siento.", "en": "No, sorry.", "why": "They're asking if anyone will help them. Say you're with them now and apologize." }] }
+        ],
+        "party": [
+          {"id": "door.party.1", "guest": "Buenas noches. ¿Tienen mesa para {party}?", "guestEn": "Good evening. Do you have a table for {party}?", "reply": "¡Buenas noches! Sí, mesa para {party}. Síganme, por favor.", "replyEn": "Good evening! Yes, a table for {party}. Follow me, please.", "wrong": [{"id": "door.party.1.wrong.1", "text": "¡Buenas noches! Sí, tenemos mesa. Sígame, por favor.", "en": "Good evening! Yes, we have a table. Follow me (one person), please.", "why": "“Sígame” is for one person. With a group, say “Síganme”."}]},
+          {"id": "door.party.2", "guest": "Hola, somos {party}. ¿Hay sitio?", "guestEn": "Hi, there are {party} of us. Is there room?", "reply": "Sí, claro. Pasen y síganme, por favor.", "replyEn": "Yes, of course. Come in and follow me, please.", "wrong": [{"id": "door.party.2.wrong.1", "text": "Lo siento, solo tenemos mesas para uno.", "en": "Sorry, we only have tables for one.", "why": "Your tables seat four. Don't turn a group away."}]}
         ]
       },
       "wrong": [
@@ -93,6 +98,10 @@
             "wrong": [{ "id": "hello.impatient.1.wrong.1", "text": "¡De nada! Me llamo Alex.", "en": "You're welcome! My name is Alex.", "why": "They're complaining about the wait, not thanking you. Apologize first." }] },
           { "id": "hello.impatient.2", "guest": "Por fin alguien.", "guestEn": "Finally, someone.", "reply": "Disculpe la espera. Me llamo Alex y esta noche le atiendo yo.", "replyEn": "Sorry for the wait. My name is Alex and I'll be looking after you tonight.",
             "wrong": [{ "id": "hello.impatient.2.wrong.1", "text": "¡Sí, aquí estoy! Me llamo Alex.", "en": "Yes, here I am! My name is Alex.", "why": "“Por fin” means they've been waiting too long. Apologize for the wait." }] }
+        ],
+        "party": [
+          {"id": "hello.party.1", "guest": "Gracias. ¡Qué mesa tan bonita!", "guestEn": "Thanks. What a lovely table!", "reply": "¡Me alegro de que les guste! Me llamo Alex y esta noche les atiendo yo.", "replyEn": "I'm glad you like it! My name is Alex and I'll be looking after you tonight.", "wrong": [{"id": "hello.party.1.wrong.1", "text": "¡Me alegro de que le guste! Me llamo Alex y esta noche le atiendo yo.", "en": "I'm glad you (one person) like it! My name is Alex and I'll look after you (one person).", "why": "“Le” is for one person. With a group, say “les guste” and “les atiendo”."}]},
+          {"id": "hello.party.2", "guest": "Muchas gracias. ¿Usted es nuestro camarero?", "guestEn": "Thank you. Are you our waiter?", "reply": "Sí, me llamo Alex y esta noche les atiendo yo.", "replyEn": "Yes, my name is Alex and I'll be looking after you tonight."}
         ]
       },
       "wrong": [
@@ -127,6 +136,10 @@
         ],
         "tourist": [
           { "id": "askDrink.tourist.1", "guest": "Mucho gusto. ¿Qué se bebe aquí normalmente?", "guestEn": "Nice to meet you. What do people usually drink here?", "reply": "Tenemos {drinkList}. ¿Qué le apetece probar?", "replyEn": "We have {drinkList}. What would you like to try?" }
+        ],
+        "party": [
+          {"id": "askDrink.party.1", "guest": "Encantados, Alex.", "guestEn": "Nice to meet you, Alex.", "reply": "Igualmente. ¿Qué les puedo traer de beber?", "replyEn": "Likewise. What can I bring you all to drink?", "wrong": [{"id": "askDrink.party.1.wrong.1", "text": "Igualmente. ¿Qué le puedo traer de beber?", "en": "Likewise. What can I bring you (one person) to drink?", "why": "“Le” is for one person. With a group, say “les”."}]},
+          {"id": "askDrink.party.2", "guest": "Perfecto. ¿Qué bebidas tienen?", "guestEn": "Perfect. What drinks do you have?", "reply": "Tenemos {drinkList}. ¿Qué les apetece?", "replyEn": "We have {drinkList}. What would you all like?"}
         ]
       },
       "wrong": [
@@ -157,6 +170,10 @@
         ],
         "tourist": [
           { "id": "drinkOrder.tourist.1", "guest": "Eh... ¿{drink}? ¿Se dice así?", "guestEn": "Uh... {drink}? Is that how you say it?", "reply": "¡Sí, perfecto! Ahora mismo le traigo {drink}.", "replyEn": "Yes, perfect! I'll bring you {drink} right away." }
+        ],
+        "party": [
+          {"id": "drinkOrder.party.1", "guest": "Para nosotros, {drink}, por favor.", "guestEn": "For us, {drink}, please.", "reply": "Muy bien: {drink}. Enseguida vuelvo.", "replyEn": "Very good: {drink}. I'll be right back."},
+          {"id": "drinkOrder.party.2", "guest": "Vamos a tomar {drink}.", "guestEn": "We'll have {drink}.", "reply": "Perfecto, ahora mismo les traigo {drink}.", "replyEn": "Perfect, I'll bring you {drink} right away."}
         ]
       },
       "wrong": [
@@ -189,6 +206,10 @@
         "impatient": [
           { "id": "drinkThanks.impatient.1", "guest": "Por fin. Pensaba que se había olvidado de mí.", "guestEn": "Finally. I thought you'd forgotten about me.", "reply": "Perdone la espera, no me había olvidado. ¿Ya sabe qué le gustaría comer?", "replyEn": "Sorry for the wait, I hadn't forgotten. Do you know what you'd like to eat?",
             "wrong": [{ "id": "drinkThanks.impatient.1.wrong.1", "text": "¡De nada! ¿Ya sabe qué le gustaría comer?", "en": "You're welcome! Do you know what you'd like to eat?", "why": "They're complaining about the wait, not thanking you. Apologize first." }] }
+        ],
+        "party": [
+          {"id": "drinkThanks.party.1", "guest": "Muchas gracias.", "guestEn": "Thank you very much.", "reply": "De nada. ¿Ya saben qué les gustaría comer?", "replyEn": "You're welcome. Do you all know what you'd like to eat?", "wrong": [{"id": "drinkThanks.party.1.wrong.1", "text": "De nada. ¿Ya sabe qué le gustaría comer?", "en": "You're welcome. Do you (one person) know what you'd like to eat?", "why": "“Sabe” and “le” are for one person. With a group, say “¿Ya saben qué les gustaría comer?”."}]},
+          {"id": "drinkThanks.party.2", "guest": "¡Qué rápido! Gracias.", "guestEn": "That was fast! Thanks.", "reply": "¡Para eso estamos! ¿Les tomo nota de la comida?", "replyEn": "That's what we're here for! Shall I take your food order?"}
         ]
       },
       "wrong": [
@@ -214,6 +235,10 @@
         ],
         "rude": [
           { "id": "orderDirect.rude.1", "guest": "Sí, hace rato. Quiero {dishes}.", "guestEn": "Yes, for a while now. I want {dishes}.", "reply": "Perdone la espera. Anoto {dishes}. ¿Alguna alergia?", "replyEn": "Sorry for the wait. I'm writing down {dishes}. Any allergies?" }
+        ],
+        "party": [
+          {"id": "orderDirect.party.1", "guest": "Sí. Para nosotros, {dishes}, por favor.", "guestEn": "Yes. For us, {dishes}, please.", "reply": "Excelente elección. ¿Alguno de ustedes tiene alguna alergia?", "replyEn": "Excellent choice. Do any of you have an allergy?"},
+          {"id": "orderDirect.party.2", "guest": "Sí, vamos a pedir {dishes}.", "guestEn": "Yes, we're going to order {dishes}.", "reply": "Muy bien, {dishes}. ¿Alguien tiene alguna alergia?", "replyEn": "Very good, {dishes}. Does anyone have an allergy?"}
         ]
       },
       "wrong": [
@@ -243,6 +268,10 @@
         "tourist": [
           { "id": "askRec.tourist.1", "guest": "Es mi primera vez aquí. ¿Qué me recomienda?", "guestEn": "It's my first time here. What do you recommend?", "reply": "¡Qué bien! Para una primera visita, le recomiendo {rec}.", "replyEn": "How nice! For a first visit, I recommend {rec}." },
           { "id": "askRec.tourist.2", "guest": "¿Qué es lo que más pide la gente aquí?", "guestEn": "What do people order most here?", "reply": "Lo que más se pide es {rec}. Se lo recomiendo.", "replyEn": "The most ordered dish is {rec}. I recommend it." }
+        ],
+        "party": [
+          {"id": "askRec.party.1", "guest": "Todavía no lo sabemos. ¿Qué nos recomienda?", "guestEn": "We don't know yet. What do you recommend for us?", "reply": "Les recomiendo {rec}. Es uno de nuestros platos más populares.", "replyEn": "I recommend {rec}. It's one of our most popular dishes."},
+          {"id": "askRec.party.2", "guest": "Uno de nosotros no sabe qué pedir. ¿Qué recomienda?", "guestEn": "One of us doesn't know what to order. What do you recommend?", "reply": "Le recomiendo {rec}. Es de lo más pedido.", "replyEn": "I recommend {rec}. It's one of our most ordered dishes."}
         ]
       },
       "wrong": [
@@ -268,6 +297,10 @@
         ],
         "tourist": [
           { "id": "acceptRec.tourist.1", "guest": "¡Vale! Quiero probar {dishes}.", "guestEn": "Okay! I want to try {dishes}.", "reply": "¡Perfecto! ¿Tiene alguna alergia que deba saber?", "replyEn": "Perfect! Do you have any allergies I should know about?" }
+        ],
+        "party": [
+          {"id": "acceptRec.party.1", "guest": "Perfecto. Entonces {dishes}.", "guestEn": "Perfect. Then {dishes}.", "reply": "Excelente elección. ¿Alguno de ustedes tiene alguna alergia?", "replyEn": "Excellent choice. Do any of you have an allergy?"},
+          {"id": "acceptRec.party.2", "guest": "Le hacemos caso: {dishes}, por favor.", "guestEn": "We'll take your advice: {dishes}, please.", "reply": "¡No se van a arrepentir! ¿Alguien tiene alguna alergia?", "replyEn": "You won't regret it! Does anyone have an allergy?"}
         ]
       },
       "wrong": [
@@ -291,6 +324,10 @@
         ],
         "rude": [
           { "id": "allergyNone.rude.1", "guest": "No. ¿Algo más?", "guestEn": "No. Anything else?", "reply": "Nada más, gracias. Su comida saldrá pronto.", "replyEn": "That's all, thanks. Your food will be out soon." }
+        ],
+        "party": [
+          {"id": "allergyNone.party.1", "guest": "No, ninguno.", "guestEn": "No, none of us.", "reply": "Perfecto. La comida estará lista en unos minutos.", "replyEn": "Perfect. The food will be ready in a few minutes."},
+          {"id": "allergyNone.party.2", "guest": "No, podemos comer de todo.", "guestEn": "No, we can eat anything.", "reply": "¡Qué bien! Paso el pedido a la cocina ahora mismo.", "replyEn": "Great! I'll send the order to the kitchen right now."}
         ]
       },
       "wrong": [
@@ -311,6 +348,9 @@
         ],
         "tourist": [
           { "id": "allergyYes.tourist.1", "guest": "Sí... ¿cómo se dice...? Alergia... {allergy}.", "guestEn": "Yes... how do you say it...? Allergic... to {allergy}.", "reply": "Entendido, alergia {allergy}. Se lo digo a la cocina.", "replyEn": "Understood, allergic to {allergy}. I'll tell the kitchen." }
+        ],
+        "party": [
+          {"id": "allergyYes.party.1", "guest": "Sí, uno de nosotros tiene alergia {allergy}.", "guestEn": "Yes, one of us is allergic to {allergy}.", "reply": "Entendido. Se lo digo a la cocina para que tengan cuidado.", "replyEn": "Understood. I'll tell the kitchen so they're careful."}
         ]
       },
       "wrong": [
@@ -332,6 +372,9 @@
         ],
         "tourist": [
           { "id": "allergyConflict.tourist.1", "guest": "Sí... ¿cómo se dice...? Alergia... {allergy}.", "guestEn": "Yes... how do you say it...? Allergic... to {allergy}.", "reply": "Entendido. Pero cuidado: en {conflict} hay {allergyNoun}. ¿Le traigo {safe}?", "replyEn": "Understood. But careful: there's {allergyNoun} in {conflict}. Shall I bring you {safe}?" }
+        ],
+        "party": [
+          {"id": "allergyConflict.party.1", "guest": "Sí, uno de nosotros tiene alergia {allergy}.", "guestEn": "Yes, one of us is allergic to {allergy}.", "reply": "Entendido. Ojo: en {conflict} hay {allergyNoun}. ¿Les traigo {safe} en su lugar?", "replyEn": "Understood. Careful: there's {allergyNoun} in {conflict}. Shall I bring {safe} instead?"}
         ]
       },
       "wrong": [
@@ -350,6 +393,9 @@
         ],
         "rude": [
           { "id": "conflictAccept.rude.1", "guest": "Menos mal que alguien presta atención. Sí, {safe}.", "guestEn": "Good thing someone's paying attention. Yes, {safe}.", "reply": "Para eso estoy. Aviso a la cocina de su alergia.", "replyEn": "That's what I'm here for. I'll tell the kitchen about your allergy." }
+        ],
+        "party": [
+          {"id": "conflictAccept.party.1", "guest": "¡Gracias por avisar! Sí, {safe}, por favor.", "guestEn": "Thanks for the warning! Yes, {safe}, please.", "reply": "Perfecto, {safe}. Aviso a la cocina de la alergia.", "replyEn": "Perfect, {safe}. I'll tell the kitchen about the allergy."}
         ]
       },
       "wrong": [
@@ -374,6 +420,10 @@
         ],
         "rude": [
           { "id": "checkin.rude.1", "guest": "Está bien. Nada especial.", "guestEn": "It's fine. Nothing special.", "reply": "Siento que no sea especial. ¿Le puedo traer algo más?", "replyEn": "I'm sorry it isn't special. Can I bring you anything else?" }
+        ],
+        "party": [
+          {"id": "checkin.party.1", "guest": "¡Está todo buenísimo!", "guestEn": "Everything is delicious!", "reply": "¡Me alegro mucho! Si necesitan algo más, aquí estoy.", "replyEn": "I'm so glad! If you need anything else, I'm here.", "wrong": [{"id": "checkin.party.1.wrong.1", "text": "¡Me alegro mucho! Si necesita algo más, aquí estoy.", "en": "I'm so glad! If you (one person) need anything else, I'm here.", "why": "“Necesita” is for one person. With a group, say “necesitan”."}]},
+          {"id": "checkin.party.2", "guest": "Muy rico, gracias.", "guestEn": "Very tasty, thanks.", "reply": "Gracias a ustedes. Avísenme si necesitan algo.", "replyEn": "Thank you. Let me know if you need anything."}
         ]
       },
       "wrong": [
@@ -401,6 +451,10 @@
         ],
         "impatient": [
           { "id": "check.impatient.1", "guest": "La cuenta. Y rápido, que llevo un rato esperando.", "guestEn": "The check. And quickly, I've been waiting a while.", "reply": "Disculpe la espera. Aquí tiene la cuenta.", "replyEn": "Sorry for the wait. Here's the check." }
+        ],
+        "party": [
+          {"id": "check.party.1", "guest": "La cuenta, por favor.", "guestEn": "The check, please.", "reply": "Por supuesto, aquí tienen. ¡Muchas gracias por venir!", "replyEn": "Of course, here you go. Thank you all for coming!"},
+          {"id": "check.party.2", "guest": "¿Nos trae la cuenta, por favor?", "guestEn": "Could you bring us the check, please?", "reply": "Claro, aquí tienen la cuenta.", "replyEn": "Sure, here's the check."}
         ]
       },
       "wrong": [
@@ -425,6 +479,10 @@
         ],
         "tourist": [
           { "id": "pay.tourist.1", "guest": "Gracias. Para decir “goodbye”... ¿“adiós”?", "guestEn": "Thanks. To say “goodbye”... “adiós”?", "reply": "¡Exacto, adiós! Gracias por venir.", "replyEn": "Exactly, adiós! Thanks for coming." }
+        ],
+        "party": [
+          {"id": "pay.party.1", "guest": "Aquí tiene. Muchas gracias por todo.", "guestEn": "Here you go. Thank you for everything.", "reply": "¡Gracias a ustedes! Que tengan muy buena noche.", "replyEn": "Thank you all! Have a very good night.", "wrong": [{"id": "pay.party.1.wrong.1", "text": "¡Gracias a usted! Que tenga muy buena noche.", "en": "Thank you (one person)! Have (one person) a very good night.", "why": "“Usted” and “tenga” are for one person. With a group, say “ustedes” and “tengan”."}]},
+          {"id": "pay.party.2", "guest": "Tome, quédese con el cambio.", "guestEn": "Here, keep the change.", "reply": "¡Muchas gracias, son muy amables! Vuelvan pronto.", "replyEn": "Thank you so much, that's very kind of you! Come back soon."}
         ]
       },
       "wrong": [

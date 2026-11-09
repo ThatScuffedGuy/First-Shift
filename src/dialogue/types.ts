@@ -23,6 +23,8 @@ export interface LanguagePack {
   tokenForms?: Partial<Record<TokenName, 'order' | 'plain'>>;
   /** How each allergy is said: after "I'm allergic" ("al gluten", "на глютен") and as a bare noun. */
   allergens: Record<Allergen, { phrase: string; noun: string }>;
+  /** How a group size is said in "a table for ___" ({party}): "2", "3" and "4". */
+  partyWords: Record<'2' | '3' | '4', string>;
   nodes: Record<NodeName, DialogueNode>;
 }
 
@@ -37,8 +39,10 @@ export interface DialogueNode {
 /**
  * "polite" is the default. Persona pools replace it for that persona.
  * "impatient" is used by anyone whose mood has dropped to 2 or below.
+ * "party" is used by groups of 2 to 4 (required in every node): the host
+ * speaks for the table, and replies address everyone (Spanish "ustedes").
  */
-export const POOLS = ['polite', 'warm', 'rushed', 'rude', 'indecisive', 'tourist', 'impatient'] as const;
+export const POOLS = ['polite', 'warm', 'rushed', 'rude', 'indecisive', 'tourist', 'impatient', 'party'] as const;
 export type Pool = (typeof POOLS)[number];
 
 export interface Variant {
@@ -67,7 +71,7 @@ export const NODES = [
 ] as const;
 export type NodeName = (typeof NODES)[number];
 
-export const TOKENS = ['drink', 'otherDrink', 'drinkList', 'dishes', 'rec', 'safe', 'conflict', 'allergy', 'allergyNoun'] as const;
+export const TOKENS = ['drink', 'otherDrink', 'drinkList', 'dishes', 'rec', 'safe', 'conflict', 'allergy', 'allergyNoun', 'party'] as const;
 export type TokenName = (typeof TOKENS)[number];
 
 /** A filled-in token: the target-language text, the English text, and a key used in audio file names. */

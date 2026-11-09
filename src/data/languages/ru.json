@@ -5,6 +5,7 @@
   "listAnd": " и ",
   "testLine": "Добрый вечер! Добро пожаловать.",
   "tokenForms": { "conflict": "plain" },
+  "partyWords": {"2": "двоих", "3": "троих", "4": "четверых"},
   "allergens": {
     "gluten": { "phrase": "на глютен", "noun": "глютен" },
     "dairy": { "phrase": "на молочные продукты", "noun": "молочные продукты" },
@@ -51,6 +52,10 @@
             "wrong": [{ "id": "door.impatient.1.wrong.1", "text": "Пожалуйста! Пройдёмте.", "en": "You're welcome! Come with me.", "why": "“Наконец-то” (finally) is a complaint, not a thank-you. Apologize for the wait." }] },
           { "id": "door.impatient.2", "guest": "Меня кто-нибудь обслужит или нет?", "guestEn": "Is anyone going to serve me or not?", "reply": "Извините, я уже здесь. Пройдёмте, пожалуйста.", "replyEn": "Sorry, I'm here now. Come with me, please.",
             "wrong": [{ "id": "door.impatient.2.wrong.1", "text": "Нет, извините.", "en": "No, sorry.", "why": "They're asking if anyone will help them. Say you're here now and apologize." }] }
+        ],
+        "party": [
+          {"id": "door.party.1", "guest": "Добрый вечер. У вас есть столик на {party}?", "guestEn": "Good evening. Do you have a table for {party}?", "reply": "Добрый вечер! Да, столик на {party} есть. Пройдёмте, пожалуйста.", "replyEn": "Good evening! Yes, we have a table for {party}. Come with me, please."},
+          {"id": "door.party.2", "guest": "Здравствуйте! Найдётся столик на {party}?", "guestEn": "Hello! Is there a table for {party}?", "reply": "Конечно! Пройдёмте, пожалуйста.", "replyEn": "Of course! Come with me, please.", "wrong": [{"id": "door.party.2.wrong.1", "text": "Извините, у нас столики только на одного.", "en": "Sorry, we only have tables for one.", "why": "Your tables seat four. Don't turn a group away."}]}
         ]
       },
       "wrong": [
@@ -94,6 +99,10 @@
             "wrong": [{ "id": "hello.impatient.1.wrong.1", "text": "Пожалуйста! Меня зовут Алекс.", "en": "You're welcome! My name is Alex.", "why": "They're complaining about the wait, not thanking you. Apologize first." }] },
           { "id": "hello.impatient.2", "guest": "Ну наконец-то кто-то пришёл.", "guestEn": "Well, finally someone came.", "reply": "Простите за ожидание. Меня зовут Алекс, сегодня я буду вас обслуживать.", "replyEn": "Sorry for the wait. My name is Alex, I'll be serving you tonight.",
             "wrong": [{ "id": "hello.impatient.2.wrong.1", "text": "Да, я здесь! Меня зовут Алекс.", "en": "Yes, I'm here! My name is Alex.", "why": "“Наконец-то” means they've been waiting too long. Apologize for the wait." }] }
+        ],
+        "party": [
+          {"id": "hello.party.1", "guest": "Спасибо. Какой хороший столик!", "guestEn": "Thanks. What a nice table!", "reply": "Очень приятно! Меня зовут Алекс, сегодня я буду вас обслуживать.", "replyEn": "So glad! My name is Alex, I'll be serving you tonight."},
+          {"id": "hello.party.2", "guest": "Спасибо. Вы наш официант?", "guestEn": "Thanks. Are you our waiter?", "reply": "Да, меня зовут Алекс. Сегодня я буду вас обслуживать.", "replyEn": "Yes, my name is Alex. I'll be serving you tonight."}
         ]
       },
       "wrong": [
@@ -128,6 +137,10 @@
         ],
         "tourist": [
           { "id": "askDrink.tourist.1", "guest": "Очень приятно. А что здесь обычно пьют?", "guestEn": "Nice to meet you. What do people usually drink here?", "reply": "У нас есть {drinkList}. Что хотите попробовать?", "replyEn": "We have {drinkList}. What would you like to try?" }
+        ],
+        "party": [
+          {"id": "askDrink.party.1", "guest": "Очень приятно, Алекс.", "guestEn": "Nice to meet you, Alex.", "reply": "Мне тоже. Что вам принести из напитков?", "replyEn": "Likewise. What can I bring you to drink?"},
+          {"id": "askDrink.party.2", "guest": "Хорошо. А какие у вас есть напитки?", "guestEn": "Okay. What drinks do you have?", "reply": "У нас есть {drinkList}. Что вам принести?", "replyEn": "We have {drinkList}. What can I bring you?"}
         ]
       },
       "wrong": [
@@ -158,6 +171,10 @@
         ],
         "tourist": [
           { "id": "drinkOrder.tourist.1", "guest": "Э-э... {drink}? Я правильно говорю?", "guestEn": "Uh... {drink}? Am I saying it right?", "reply": "Да, всё правильно! Сейчас принесу {drink}.", "replyEn": "Yes, that's right! I'll bring {drink} right away." }
+        ],
+        "party": [
+          {"id": "drinkOrder.party.1", "guest": "Нам, пожалуйста, {drink}.", "guestEn": "For us, {drink}, please.", "reply": "Хорошо, сейчас принесу {drink}.", "replyEn": "Okay, I'll bring {drink} right away."},
+          {"id": "drinkOrder.party.2", "guest": "Принесите нам, пожалуйста, {drink}.", "guestEn": "Please bring us {drink}.", "reply": "Отлично. Одну минуту, принесу {drink}.", "replyEn": "Great. One minute, I'll bring {drink}."}
         ]
       },
       "wrong": [
@@ -190,6 +207,10 @@
         "impatient": [
           { "id": "drinkThanks.impatient.1", "guest": "Наконец-то. Мне казалось, про меня забыли.", "guestEn": "Finally. It seemed like I'd been forgotten.", "reply": "Простите за ожидание, про вас никто не забыл. Вы уже выбрали, что будете есть?", "replyEn": "Sorry for the wait, nobody forgot you. Have you chosen what you'll eat?",
             "wrong": [{ "id": "drinkThanks.impatient.1.wrong.1", "text": "Пожалуйста! Вы уже выбрали, что будете есть?", "en": "You're welcome! Have you chosen what you'll eat?", "why": "They're complaining about the wait, not thanking you. Apologize first." }] }
+        ],
+        "party": [
+          {"id": "drinkThanks.party.1", "guest": "Большое спасибо.", "guestEn": "Thank you very much.", "reply": "Пожалуйста. Вы уже выбрали, что будете есть?", "replyEn": "You're welcome. Have you chosen what you'll eat?"},
+          {"id": "drinkThanks.party.2", "guest": "Спасибо, как быстро!", "guestEn": "Thanks, that was quick!", "reply": "Стараемся! Готовы сделать заказ?", "replyEn": "We do our best! Ready to order?"}
         ]
       },
       "wrong": [
@@ -215,6 +236,10 @@
         ],
         "rude": [
           { "id": "orderDirect.rude.1", "guest": "Да, уже давно. {Dishes}.", "guestEn": "Yes, for a while now. {Dishes}.", "reply": "Простите за ожидание. Записываю: {dishes}. Есть аллергии?", "replyEn": "Sorry for the wait. I'm writing it down: {dishes}. Any allergies?" }
+        ],
+        "party": [
+          {"id": "orderDirect.party.1", "guest": "Да. Нам, пожалуйста, {dishes}.", "guestEn": "Yes. For us, {dishes}, please.", "reply": "Отличный выбор. У кого-нибудь из вас есть аллергия?", "replyEn": "Excellent choice. Does any of you have an allergy?"},
+          {"id": "orderDirect.party.2", "guest": "Да, мы будем {dishes}.", "guestEn": "Yes, we'll have {dishes}.", "reply": "Записываю: {dishes}. У кого-нибудь есть аллергия?", "replyEn": "I'm writing it down: {dishes}. Does anyone have an allergy?"}
         ]
       },
       "wrong": [
@@ -244,6 +269,10 @@
         "tourist": [
           { "id": "askRec.tourist.1", "guest": "Я здесь в первый раз. Что вы посоветуете?", "guestEn": "It's my first time here. What do you recommend?", "reply": "Как здорово! Для первого раза советую {rec}.", "replyEn": "How great! For a first visit, I recommend {rec}." },
           { "id": "askRec.tourist.2", "guest": "Какое блюдо здесь самое популярное?", "guestEn": "Which dish is the most popular here?", "reply": "Чаще всего заказывают {rec}. Очень советую.", "replyEn": "People order {rec} most often. I really recommend it." }
+        ],
+        "party": [
+          {"id": "askRec.party.1", "guest": "Мы ещё не решили. Что вы посоветуете?", "guestEn": "We haven't decided yet. What do you recommend?", "reply": "Советую {rec}. Это одно из самых популярных блюд.", "replyEn": "I recommend {rec}. It's one of our most popular dishes."},
+          {"id": "askRec.party.2", "guest": "Один из нас не знает, что заказать. Что посоветуете?", "guestEn": "One of us doesn't know what to order. What do you recommend?", "reply": "Попробуйте {rec} — это одно из самых популярных блюд.", "replyEn": "Try {rec}, it's one of our most popular dishes."}
         ]
       },
       "wrong": [
@@ -269,6 +298,10 @@
         ],
         "tourist": [
           { "id": "acceptRec.tourist.1", "guest": "Хорошо! Хочу попробовать {dishes}.", "guestEn": "Okay! I want to try {dishes}.", "reply": "Отлично! У вас есть аллергия на что-нибудь?", "replyEn": "Great! Are you allergic to anything?" }
+        ],
+        "party": [
+          {"id": "acceptRec.party.1", "guest": "Отлично, тогда {dishes}.", "guestEn": "Great, then {dishes}.", "reply": "Отличный выбор. У кого-нибудь из вас есть аллергия?", "replyEn": "Excellent choice. Does any of you have an allergy?"},
+          {"id": "acceptRec.party.2", "guest": "Послушаемся вас: {dishes}, пожалуйста.", "guestEn": "We'll take your advice: {dishes}, please.", "reply": "Не пожалеете! У кого-нибудь есть аллергия?", "replyEn": "You won't regret it! Does anyone have an allergy?"}
         ]
       },
       "wrong": [
@@ -292,6 +325,10 @@
         ],
         "rude": [
           { "id": "allergyNone.rude.1", "guest": "Нет. Что-то ещё?", "guestEn": "No. Anything else?", "reply": "Нет, это всё, спасибо. Скоро всё будет готово.", "replyEn": "No, that's all, thanks. Everything will be ready soon." }
+        ],
+        "party": [
+          {"id": "allergyNone.party.1", "guest": "Нет, ни у кого.", "guestEn": "No, nobody does.", "reply": "Отлично. Заказ будет готов через несколько минут.", "replyEn": "Great. The order will be ready in a few minutes."},
+          {"id": "allergyNone.party.2", "guest": "Нет, мы едим всё.", "guestEn": "No, we eat everything.", "reply": "Повезло вам! Сейчас передам заказ на кухню.", "replyEn": "Lucky you! I'll pass the order to the kitchen now."}
         ]
       },
       "wrong": [
@@ -312,6 +349,9 @@
         ],
         "tourist": [
           { "id": "allergyYes.tourist.1", "guest": "Да... как это сказать... аллергия... {allergy}.", "guestEn": "Yes... how do you say it... allergic... to {allergy}.", "reply": "Понятно, аллергия {allergy}. Я предупрежу кухню.", "replyEn": "Understood, allergic to {allergy}. I'll warn the kitchen." }
+        ],
+        "party": [
+          {"id": "allergyYes.party.1", "guest": "Да, у одного из нас аллергия {allergy}.", "guestEn": "Yes, one of us is allergic to {allergy}.", "reply": "Понятно. Я предупрежу кухню, они будут осторожны.", "replyEn": "Understood. I'll warn the kitchen, they'll be careful."}
         ]
       },
       "wrong": [
@@ -333,6 +373,9 @@
         ],
         "tourist": [
           { "id": "allergyConflict.tourist.1", "guest": "Да... как это сказать... аллергия... {allergy}.", "guestEn": "Yes... how do you say it... allergic... to {allergy}.", "reply": "Понятно. Но осторожно: {conflict} — в этом блюде есть {allergyNoun}. Может, возьмёте {safe}?", "replyEn": "Understood. But careful: there's {allergyNoun} in {conflict}. Would you like {safe} instead?" }
+        ],
+        "party": [
+          {"id": "allergyConflict.party.1", "guest": "Да, у одного из нас аллергия {allergy}.", "guestEn": "Yes, one of us is allergic to {allergy}.", "reply": "Понятно. Осторожно: {conflict} — в этом блюде есть {allergyNoun}. Может, возьмёте {safe}?", "replyEn": "Understood. Careful: there's {allergyNoun} in {conflict}. Would you like {safe} instead?"}
         ]
       },
       "wrong": [
@@ -351,6 +394,9 @@
         ],
         "rude": [
           { "id": "conflictAccept.rude.1", "guest": "Хорошо, хоть кто-то внимателен. Да, {safe}.", "guestEn": "Good, at least someone's paying attention. Yes, {safe}.", "reply": "Это моя работа. Предупрежу кухню о вашей аллергии.", "replyEn": "That's my job. I'll warn the kitchen about your allergy." }
+        ],
+        "party": [
+          {"id": "conflictAccept.party.1", "guest": "Спасибо, что предупредили! Да, {safe}, пожалуйста.", "guestEn": "Thanks for the warning! Yes, {safe}, please.", "reply": "Хорошо, принесу {safe}. И предупрежу кухню об аллергии.", "replyEn": "Okay, I'll bring {safe}. And I'll warn the kitchen about the allergy."}
         ]
       },
       "wrong": [
@@ -375,6 +421,10 @@
         ],
         "rude": [
           { "id": "checkin.rude.1", "guest": "Нормально. Ничего особенного.", "guestEn": "It's okay. Nothing special.", "reply": "Жаль, что не очень понравилось. Принести вам что-нибудь ещё?", "replyEn": "Sorry you didn't love it. Can I bring you anything else?" }
+        ],
+        "party": [
+          {"id": "checkin.party.1", "guest": "Всё очень вкусно!", "guestEn": "Everything is very tasty!", "reply": "Очень приятно! Если что-то понадобится, я рядом.", "replyEn": "So glad! If you need anything, I'm nearby."},
+          {"id": "checkin.party.2", "guest": "Вкусно, спасибо.", "guestEn": "Tasty, thanks.", "reply": "Вам спасибо. Скажите, если что-нибудь понадобится.", "replyEn": "Thank you. Let me know if you need anything."}
         ]
       },
       "wrong": [
@@ -402,6 +452,10 @@
         ],
         "impatient": [
           { "id": "check.impatient.1", "guest": "Счёт. И побыстрее, я уже давно жду.", "guestEn": "The check. And quickly, I've been waiting a while.", "reply": "Простите за ожидание. Вот ваш счёт.", "replyEn": "Sorry for the wait. Here's your check." }
+        ],
+        "party": [
+          {"id": "check.party.1", "guest": "Счёт, пожалуйста.", "guestEn": "The check, please.", "reply": "Конечно, вот, пожалуйста. Спасибо, что пришли!", "replyEn": "Of course, here you go. Thanks for coming!"},
+          {"id": "check.party.2", "guest": "Принесите нам, пожалуйста, счёт.", "guestEn": "Please bring us the check.", "reply": "Конечно, вот ваш счёт.", "replyEn": "Of course, here's your check."}
         ]
       },
       "wrong": [
@@ -426,6 +480,10 @@
         ],
         "tourist": [
           { "id": "pay.tourist.1", "guest": "Спасибо. Как сказать “goodbye”? “До свидания”?", "guestEn": "Thanks. How do you say “goodbye”? “До свидания”?", "reply": "Да, точно: до свидания! Спасибо, что пришли.", "replyEn": "Yes, exactly: до свидания! Thanks for coming." }
+        ],
+        "party": [
+          {"id": "pay.party.1", "guest": "Вот, пожалуйста. Спасибо за всё.", "guestEn": "Here you go. Thanks for everything.", "reply": "Вам спасибо! Хорошего вечера.", "replyEn": "Thank you! Have a good evening."},
+          {"id": "pay.party.2", "guest": "Возьмите, сдачи не надо.", "guestEn": "Here, keep the change.", "reply": "Большое спасибо, вы очень добры! Приходите ещё.", "replyEn": "Thank you so much, that's very kind! Come again."}
         ]
       },
       "wrong": [

@@ -21,20 +21,23 @@ const byCat = (menu: Menu, cat: MenuItem['category']) => menu.items.filter((m) =
  * Every combination of order facts that changes how the given tokens read.
  * Used to check that every filled line works, and to list lines to record.
  */
-export function factsFor(used: Set<TokenName>, menu: Menu): OrderFacts[] {
+export function factsFor(used: Set<TokenName>, menu: Menu, group = false): OrderFacts[] {
   const drinks = byCat(menu, 'drink');
   const mains = byCat(menu, 'main');
   const starters = byCat(menu, 'starter');
   const foods = menu.items.filter((m) => m.category !== 'drink');
-  let list: OrderFacts[] = [{ drinkId: drinks[0].id, otherDrinkId: drinks[1].id, dishIds: [mains[0].id], allergy: null }];
+  let list: OrderFacts[] = [{ drinkIds: [drinks[0].id], otherDrinkId: drinks[1].id, dishIds: [mains[0].id], allergy: null }];
   const expand = (fn: (f: OrderFacts) => OrderFacts[]) => (list = list.flatMap(fn));
 
-  if (used.has('drink') || used.has('otherDrink')) {
+  if (group) {
+    // Groups of 2 to 4: one drink and main each. A few sample orders are enough to check the lines.
+    list = [2, 3, 4].map((n) => ({ drinkIds: drinks.slice(0, n).map((d) => d.id), otherDrinkId: drinks[n % drinks.length].id, dishIds: mains.slice(0, n).map((m) => m.id), allergy: null, size: n }));
+  } else if (used.has('drink') || used.has('otherDrink')) {
     expand((f) =>
-      drinks.flatMap((d) => (used.has('otherDrink') ? drinks.filter((o) => o !== d) : [drinks.find((o) => o !== d)!]).map((o) => ({ ...f, drinkId: d.id, otherDrinkId: o.id }))),
+      drinks.flatMap((d) => (used.has('otherDrink') ? drinks.filter((o) => o !== d) : [drinks.find((o) => o !== d)!]).map((o) => ({ ...f, drinkIds: [d.id], otherDrinkId: o.id }))),
     );
   }
-  if (used.has('dishes')) {
+  if (used.has('dishes') && !group) {
     const combos = [...mains.map((m) => [m.id]), ...starters.flatMap((s) => mains.map((m) => [s.id, m.id]))];
     expand((f) => combos.map((dishIds) => ({ ...f, dishIds })));
   }
@@ -96,7 +99,10 @@ export function recordableLines(pack: LanguagePack, menu: Menu): RecordableLine[
       const template = role === 'guest' ? ref.variant.guest : ref.variant.reply;
       const templateEn = role === 'guest' ? ref.variant.guestEn : ref.variant.replyEn;
       const used = new Set(usedTokens(template));
-      for (const facts of factsFor(used, menu)) {
+      const group = ref.pool === 'party';
+      // Group orders have too many drink and dish combinations to record; the device voice reads those.
+      if (group && (used.has('drink') || used.has('dishes'))) continue;
+      for (const facts of factsFor(used, menu, group)) {
         const ctx = buildContext(facts, pack, menu);
         const id = clipId(pack, ref.variant.id, role, template, ctx);
         if (!out.has(id)) out.set(id, { clipId: id, node: ref.node, pool: ref.pool, role, text: fill(template, ctx, 'text'), en: fill(templateEn, ctx, 'en'), fixed: used.size === 0 });

@@ -2,8 +2,8 @@
 
 Save recordings in `public/audio/ru/` using the file name in the table (mp3, m4a, ogg, wav or webm all work, just keep the name before the dot exactly the same). Then run `npm run audio` to tick them off here. Lines without a recording are read by the device's speech voice, so you can record as many or as few as you like.
 
-**Part 1, fixed lines:** 0 of 157 recorded. These never change, so one recording covers every shift. Start here.
-**Part 2, lines with dish and drink names:** 0 of 662 recorded. One recording per menu combination. Optional: the device voice reads any you skip.
+**Part 1, fixed lines:** 0 of 191 recorded. These never change, so one recording covers every shift. Start here.
+**Part 2, lines with dish and drink names:** 0 of 762 recorded. One recording per menu combination. Optional: the device voice reads any you skip.
 
 Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kind of guest is talking, so you can act the mood.
 
@@ -21,6 +21,7 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 | ☐ | `door.indecisive.1.reply.mp3` | Waiter (Alex) | Конечно, можно. Пройдёмте, пожалуйста. | Of course it's possible. Come with me, please. |
 | ☐ | `door.indecisive.2.guest.mp3` | Indecisive guest: hesitant, lots of “um” | Добрый вечер. Столик на одного? Или лучше подождать? Не знаю... | Good evening. A table for one? Or should I wait? I don't know... |
 | ☐ | `door.indecisive.2.reply.mp3` | Waiter (Alex) | Ждать не нужно, столик свободен. Пройдёмте, пожалуйста. | No need to wait, a table is free. Come with me, please. |
+| ☐ | `door.party.2.reply.mp3` | Waiter (Alex) | Конечно! Пройдёмте, пожалуйста. | Of course! Come with me, please. |
 | ☐ | `door.polite.1.guest.mp3` | Polite, everyday guest | Добрый вечер. У вас есть столик на одного? | Good evening. Do you have a table for one? |
 | ☐ | `door.polite.1.reply.mp3` | Waiter (Alex) | Добрый вечер! Да, есть. Пройдёмте, пожалуйста. | Good evening! Yes, we do. Come with me, please. |
 | ☐ | `door.polite.2.guest.mp3` | Polite, everyday guest | Здравствуйте. Столик на одного, пожалуйста. | Hello. A table for one, please. |
@@ -54,6 +55,10 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 | ☐ | `hello.impatient.2.reply.mp3` | Waiter (Alex) | Простите за ожидание. Меня зовут Алекс, сегодня я буду вас обслуживать. | Sorry for the wait. My name is Alex, I'll be serving you tonight. |
 | ☐ | `hello.indecisive.1.guest.mp3` | Indecisive guest: hesitant, lots of “um” | Спасибо... или лучше сесть на другой стул? Нет, здесь хорошо. | Thanks... or should I sit in the other chair? No, here is fine. |
 | ☐ | `hello.indecisive.1.reply.mp3` | Waiter (Alex) | Здесь отлично. Меня зовут Алекс, сегодня я буду вас обслуживать. | Here is great. My name is Alex, I'll be serving you tonight. |
+| ☐ | `hello.party.1.guest.mp3` | party | Спасибо. Какой хороший столик! | Thanks. What a nice table! |
+| ☐ | `hello.party.1.reply.mp3` | Waiter (Alex) | Очень приятно! Меня зовут Алекс, сегодня я буду вас обслуживать. | So glad! My name is Alex, I'll be serving you tonight. |
+| ☐ | `hello.party.2.guest.mp3` | party | Спасибо. Вы наш официант? | Thanks. Are you our waiter? |
+| ☐ | `hello.party.2.reply.mp3` | Waiter (Alex) | Да, меня зовут Алекс. Сегодня я буду вас обслуживать. | Yes, my name is Alex. I'll be serving you tonight. |
 | ☐ | `hello.polite.1.guest.mp3` | Polite, everyday guest | Спасибо. Какой красивый ресторан! | Thanks. What a beautiful restaurant! |
 | ☐ | `hello.polite.1.reply.mp3` | Waiter (Alex) | Спасибо, очень приятно! Меня зовут Алекс, сегодня я буду вас обслуживать. | Thank you, that's very kind! My name is Alex, I'll be serving you tonight. |
 | ☐ | `hello.polite.2.guest.mp3` | Polite, everyday guest | Большое спасибо. | Thank you very much. |
@@ -82,6 +87,9 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
 | ☐ | `askDrink.indecisive.1.guest.mp3` | Indecisive guest: hesitant, lots of “um” | Очень приятно... Так, а какие напитки у вас есть? | Nice to meet you... So, what drinks do you have? |
+| ☐ | `askDrink.party.1.guest.mp3` | party | Очень приятно, Алекс. | Nice to meet you, Alex. |
+| ☐ | `askDrink.party.1.reply.mp3` | Waiter (Alex) | Мне тоже. Что вам принести из напитков? | Likewise. What can I bring you to drink? |
+| ☐ | `askDrink.party.2.guest.mp3` | party | Хорошо. А какие у вас есть напитки? | Okay. What drinks do you have? |
 | ☐ | `askDrink.polite.1.guest.mp3` | Polite, everyday guest | Очень приятно, Алекс. | Nice to meet you, Alex. |
 | ☐ | `askDrink.polite.1.reply.mp3` | Waiter (Alex) | Мне тоже. Что вам принести из напитков? | Likewise. What can I bring you to drink? |
 | ☐ | `askDrink.polite.2.guest.mp3` | Polite, everyday guest | Отлично, спасибо. | Great, thanks. |
@@ -103,6 +111,10 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 | --- | --- | --- | --- | --- |
 | ☐ | `drinkThanks.impatient.1.guest.mp3` | Guest who has waited too long: annoyed | Наконец-то. Мне казалось, про меня забыли. | Finally. It seemed like I'd been forgotten. |
 | ☐ | `drinkThanks.impatient.1.reply.mp3` | Waiter (Alex) | Простите за ожидание, про вас никто не забыл. Вы уже выбрали, что будете есть? | Sorry for the wait, nobody forgot you. Have you chosen what you'll eat? |
+| ☐ | `drinkThanks.party.1.guest.mp3` | party | Большое спасибо. | Thank you very much. |
+| ☐ | `drinkThanks.party.1.reply.mp3` | Waiter (Alex) | Пожалуйста. Вы уже выбрали, что будете есть? | You're welcome. Have you chosen what you'll eat? |
+| ☐ | `drinkThanks.party.2.guest.mp3` | party | Спасибо, как быстро! | Thanks, that was quick! |
+| ☐ | `drinkThanks.party.2.reply.mp3` | Waiter (Alex) | Стараемся! Готовы сделать заказ? | We do our best! Ready to order? |
 | ☐ | `drinkThanks.polite.1.guest.mp3` | Polite, everyday guest | Большое спасибо. | Thank you very much. |
 | ☐ | `drinkThanks.polite.1.reply.mp3` | Waiter (Alex) | Пожалуйста. Вы уже выбрали, что будете есть? | You're welcome. Have you chosen what you'll eat? |
 | ☐ | `drinkThanks.polite.2.guest.mp3` | Polite, everyday guest | Спасибо, как быстро! | Thanks, that was quick! |
@@ -122,6 +134,7 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
+| ☐ | `orderDirect.party.1.reply.mp3` | Waiter (Alex) | Отличный выбор. У кого-нибудь из вас есть аллергия? | Excellent choice. Does any of you have an allergy? |
 | ☐ | `orderDirect.polite.1.reply.mp3` | Waiter (Alex) | Отличный выбор. У вас есть аллергия на что-нибудь? | Excellent choice. Are you allergic to anything? |
 | ☐ | `orderDirect.polite.3.reply.mp3` | Waiter (Alex) | Отлично. Скажите, у вас есть аллергии? | Great. Tell me, do you have any allergies? |
 | ☐ | `orderDirect.rushed.1.reply.mp3` | Waiter (Alex) | Передам на кухню. Но сначала: у вас есть аллергия на что-нибудь? | I'll pass it to the kitchen. But first: are you allergic to anything? |
@@ -133,6 +146,8 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 | --- | --- | --- | --- | --- |
 | ☐ | `askRec.indecisive.1.guest.mp3` | Indecisive guest: hesitant, lots of “um” | Ой, всё так вкусно выглядит. Не могу выбрать. Что посоветуете? | Oh, everything looks so good. I can't choose. What do you recommend? |
 | ☐ | `askRec.indecisive.2.guest.mp3` | Indecisive guest: hesitant, lots of “um” | Сомневаюсь... А что бы вы взяли? | I can't decide... What would you get? |
+| ☐ | `askRec.party.1.guest.mp3` | party | Мы ещё не решили. Что вы посоветуете? | We haven't decided yet. What do you recommend? |
+| ☐ | `askRec.party.2.guest.mp3` | party | Один из нас не знает, что заказать. Что посоветуете? | One of us doesn't know what to order. What do you recommend? |
 | ☐ | `askRec.polite.1.guest.mp3` | Polite, everyday guest | Ещё не знаю. Что вы посоветуете? | I don't know yet. What do you recommend? |
 | ☐ | `askRec.polite.2.guest.mp3` | Polite, everyday guest | А какое у вас любимое блюдо? | And what's your favorite dish? |
 | ☐ | `askRec.rude.1.guest.mp3` | Grumpy, sarcastic guest (never abusive) | Не знаю. Что тут у вас наименее ужасное? | I don't know. What's the least awful thing you have? |
@@ -145,6 +160,8 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
 | ☐ | `acceptRec.indecisive.1.reply.mp3` | Waiter (Alex) | Это правда очень хороший выбор. Есть аллергии? | It really is a very good choice. Any allergies? |
+| ☐ | `acceptRec.party.1.reply.mp3` | Waiter (Alex) | Отличный выбор. У кого-нибудь из вас есть аллергия? | Excellent choice. Does any of you have an allergy? |
+| ☐ | `acceptRec.party.2.reply.mp3` | Waiter (Alex) | Не пожалеете! У кого-нибудь есть аллергия? | You won't regret it! Does anyone have an allergy? |
 | ☐ | `acceptRec.polite.1.reply.mp3` | Waiter (Alex) | Отличный выбор. У вас есть аллергия на что-нибудь? | Excellent choice. Are you allergic to anything? |
 | ☐ | `acceptRec.polite.3.reply.mp3` | Waiter (Alex) | Не пожалеете! У вас есть аллергия на что-нибудь? | You won't regret it! Are you allergic to anything? |
 | ☐ | `acceptRec.rude.1.reply.mp3` | Waiter (Alex) | Вам понравится. Перед тем как передать заказ: у вас есть аллергии? | You'll like it. Before I put the order in: do you have any allergies? |
@@ -154,6 +171,10 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
+| ☐ | `allergyNone.party.1.guest.mp3` | party | Нет, ни у кого. | No, nobody does. |
+| ☐ | `allergyNone.party.1.reply.mp3` | Waiter (Alex) | Отлично. Заказ будет готов через несколько минут. | Great. The order will be ready in a few minutes. |
+| ☐ | `allergyNone.party.2.guest.mp3` | party | Нет, мы едим всё. | No, we eat everything. |
+| ☐ | `allergyNone.party.2.reply.mp3` | Waiter (Alex) | Повезло вам! Сейчас передам заказ на кухню. | Lucky you! I'll pass the order to the kitchen now. |
 | ☐ | `allergyNone.polite.1.guest.mp3` | Polite, everyday guest | Нет, никакой. | No, none. |
 | ☐ | `allergyNone.polite.1.reply.mp3` | Waiter (Alex) | Отлично. Ваш заказ будет готов через несколько минут. | Great. Your order will be ready in a few minutes. |
 | ☐ | `allergyNone.polite.2.guest.mp3` | Polite, everyday guest | Нет, аллергии нет. Спасибо, что спросили. | No, no allergies. Thanks for asking. |
@@ -169,6 +190,7 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
+| ☐ | `allergyYes.party.1.reply.mp3` | Waiter (Alex) | Понятно. Я предупрежу кухню, они будут осторожны. | Understood. I'll warn the kitchen, they'll be careful. |
 | ☐ | `allergyYes.polite.1.reply.mp3` | Waiter (Alex) | Понятно. Я предупрежу кухню, они будут осторожны. | Understood. I'll warn the kitchen, they'll be careful. |
 | ☐ | `allergyYes.polite.2.reply.mp3` | Waiter (Alex) | Спасибо, что сказали. Я запишу и предупрежу кухню. | Thanks for telling me. I'll note it and warn the kitchen. |
 | ☐ | `allergyYes.rude.1.reply.mp3` | Waiter (Alex) | Конечно. Сейчас же предупрежу кухню. | Of course. I'll warn the kitchen right now. |
@@ -184,6 +206,10 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
+| ☐ | `checkin.party.1.guest.mp3` | party | Всё очень вкусно! | Everything is very tasty! |
+| ☐ | `checkin.party.1.reply.mp3` | Waiter (Alex) | Очень приятно! Если что-то понадобится, я рядом. | So glad! If you need anything, I'm nearby. |
+| ☐ | `checkin.party.2.guest.mp3` | party | Вкусно, спасибо. | Tasty, thanks. |
+| ☐ | `checkin.party.2.reply.mp3` | Waiter (Alex) | Вам спасибо. Скажите, если что-нибудь понадобится. | Thank you. Let me know if you need anything. |
 | ☐ | `checkin.polite.1.guest.mp3` | Polite, everyday guest | Всё очень вкусно! | Everything is very tasty! |
 | ☐ | `checkin.polite.1.reply.mp3` | Waiter (Alex) | Очень приятно! Если что-то понадобится, я рядом. | So glad! If you need anything, I'm nearby. |
 | ☐ | `checkin.polite.2.guest.mp3` | Polite, everyday guest | Вкусно, спасибо. | Tasty, thanks. |
@@ -203,6 +229,10 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 | --- | --- | --- | --- | --- |
 | ☐ | `check.impatient.1.guest.mp3` | Guest who has waited too long: annoyed | Счёт. И побыстрее, я уже давно жду. | The check. And quickly, I've been waiting a while. |
 | ☐ | `check.impatient.1.reply.mp3` | Waiter (Alex) | Простите за ожидание. Вот ваш счёт. | Sorry for the wait. Here's your check. |
+| ☐ | `check.party.1.guest.mp3` | party | Счёт, пожалуйста. | The check, please. |
+| ☐ | `check.party.1.reply.mp3` | Waiter (Alex) | Конечно, вот, пожалуйста. Спасибо, что пришли! | Of course, here you go. Thanks for coming! |
+| ☐ | `check.party.2.guest.mp3` | party | Принесите нам, пожалуйста, счёт. | Please bring us the check. |
+| ☐ | `check.party.2.reply.mp3` | Waiter (Alex) | Конечно, вот ваш счёт. | Of course, here's your check. |
 | ☐ | `check.polite.1.guest.mp3` | Polite, everyday guest | Счёт, пожалуйста. | The check, please. |
 | ☐ | `check.polite.1.reply.mp3` | Waiter (Alex) | Конечно, вот, пожалуйста. Спасибо, что пришли! | Of course, here you go. Thanks for coming! |
 | ☐ | `check.polite.2.guest.mp3` | Polite, everyday guest | Принесите, пожалуйста, счёт. | Please bring the check. |
@@ -220,6 +250,10 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
+| ☐ | `pay.party.1.guest.mp3` | party | Вот, пожалуйста. Спасибо за всё. | Here you go. Thanks for everything. |
+| ☐ | `pay.party.1.reply.mp3` | Waiter (Alex) | Вам спасибо! Хорошего вечера. | Thank you! Have a good evening. |
+| ☐ | `pay.party.2.guest.mp3` | party | Возьмите, сдачи не надо. | Here, keep the change. |
+| ☐ | `pay.party.2.reply.mp3` | Waiter (Alex) | Большое спасибо, вы очень добры! Приходите ещё. | Thank you so much, that's very kind! Come again. |
 | ☐ | `pay.polite.1.guest.mp3` | Polite, everyday guest | Вот, пожалуйста. Спасибо за всё. | Here you go. Thanks for everything. |
 | ☐ | `pay.polite.1.reply.mp3` | Waiter (Alex) | Вам спасибо! Хорошего вечера. | Thank you! Have a good evening. |
 | ☐ | `pay.polite.2.guest.mp3` | Polite, everyday guest | Возьмите, сдачи не надо. | Here, keep the change. |
@@ -233,11 +267,26 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 ## Part 2: lines with dish and drink names
 
+### door
+
+| Done | File | Who | Line | English |
+| --- | --- | --- | --- | --- |
+| ☐ | `door.party.1.guest~party-2.mp3` | party | Добрый вечер. У вас есть столик на двоих? | Good evening. Do you have a table for two? |
+| ☐ | `door.party.1.guest~party-3.mp3` | party | Добрый вечер. У вас есть столик на троих? | Good evening. Do you have a table for three? |
+| ☐ | `door.party.1.guest~party-4.mp3` | party | Добрый вечер. У вас есть столик на четверых? | Good evening. Do you have a table for four? |
+| ☐ | `door.party.1.reply~party-2.mp3` | Waiter (Alex) | Добрый вечер! Да, столик на двоих есть. Пройдёмте, пожалуйста. | Good evening! Yes, we have a table for two. Come with me, please. |
+| ☐ | `door.party.1.reply~party-3.mp3` | Waiter (Alex) | Добрый вечер! Да, столик на троих есть. Пройдёмте, пожалуйста. | Good evening! Yes, we have a table for three. Come with me, please. |
+| ☐ | `door.party.1.reply~party-4.mp3` | Waiter (Alex) | Добрый вечер! Да, столик на четверых есть. Пройдёмте, пожалуйста. | Good evening! Yes, we have a table for four. Come with me, please. |
+| ☐ | `door.party.2.guest~party-2.mp3` | party | Здравствуйте! Найдётся столик на двоих? | Hello! Is there a table for two? |
+| ☐ | `door.party.2.guest~party-3.mp3` | party | Здравствуйте! Найдётся столик на троих? | Hello! Is there a table for three? |
+| ☐ | `door.party.2.guest~party-4.mp3` | party | Здравствуйте! Найдётся столик на четверых? | Hello! Is there a table for four? |
+
 ### askDrink
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
 | ☐ | `askDrink.indecisive.1.reply~drinkList-house.mp3` | Waiter (Alex) | У нас есть лимонад, холодный чай, газированная вода, кофе и апельсиновый сок. Что вам принести? | We have lemonade, iced tea, sparkling water, coffee and orange juice. What can I bring you? |
+| ☐ | `askDrink.party.2.reply~drinkList-house.mp3` | Waiter (Alex) | У нас есть лимонад, холодный чай, газированная вода, кофе и апельсиновый сок. Что вам принести? | We have lemonade, iced tea, sparkling water, coffee and orange juice. What can I bring you? |
 | ☐ | `askDrink.polite.3.reply~drinkList-house.mp3` | Waiter (Alex) | У нас есть лимонад, холодный чай, газированная вода, кофе и апельсиновый сок. Что вам принести? | We have lemonade, iced tea, sparkling water, coffee and orange juice. What can I bring you? |
 | ☐ | `askDrink.tourist.1.reply~drinkList-house.mp3` | Waiter (Alex) | У нас есть лимонад, холодный чай, газированная вода, кофе и апельсиновый сок. Что хотите попробовать? | We have lemonade, iced tea, sparkling water, coffee and orange juice. What would you like to try? |
 
@@ -475,6 +524,16 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 | ☐ | `askRec.indecisive.2.reply~rec-mushroom-risotto.mp3` | Waiter (Alex) | Возьмите ризотто с грибами, не пожалеете. | Get the mushroom risotto, you won't regret it. |
 | ☐ | `askRec.indecisive.2.reply~rec-shrimp-tacos.mp3` | Waiter (Alex) | Возьмите тако с креветками, не пожалеете. | Get the shrimp tacos, you won't regret it. |
 | ☐ | `askRec.indecisive.2.reply~rec-steak-frites.mp3` | Waiter (Alex) | Возьмите стейк с картофелем фри, не пожалеете. | Get the steak frites, you won't regret it. |
+| ☐ | `askRec.party.1.reply~rec-chicken-pad-thai.mp3` | Waiter (Alex) | Советую пад-тай с курицей. Это одно из самых популярных блюд. | I recommend the chicken pad thai. It's one of our most popular dishes. |
+| ☐ | `askRec.party.1.reply~rec-grilled-salmon.mp3` | Waiter (Alex) | Советую лосося на гриле. Это одно из самых популярных блюд. | I recommend the grilled salmon. It's one of our most popular dishes. |
+| ☐ | `askRec.party.1.reply~rec-mushroom-risotto.mp3` | Waiter (Alex) | Советую ризотто с грибами. Это одно из самых популярных блюд. | I recommend the mushroom risotto. It's one of our most popular dishes. |
+| ☐ | `askRec.party.1.reply~rec-shrimp-tacos.mp3` | Waiter (Alex) | Советую тако с креветками. Это одно из самых популярных блюд. | I recommend the shrimp tacos. It's one of our most popular dishes. |
+| ☐ | `askRec.party.1.reply~rec-steak-frites.mp3` | Waiter (Alex) | Советую стейк с картофелем фри. Это одно из самых популярных блюд. | I recommend the steak frites. It's one of our most popular dishes. |
+| ☐ | `askRec.party.2.reply~rec-chicken-pad-thai.mp3` | Waiter (Alex) | Попробуйте пад-тай с курицей — это одно из самых популярных блюд. | Try the chicken pad thai, it's one of our most popular dishes. |
+| ☐ | `askRec.party.2.reply~rec-grilled-salmon.mp3` | Waiter (Alex) | Попробуйте лосося на гриле — это одно из самых популярных блюд. | Try the grilled salmon, it's one of our most popular dishes. |
+| ☐ | `askRec.party.2.reply~rec-mushroom-risotto.mp3` | Waiter (Alex) | Попробуйте ризотто с грибами — это одно из самых популярных блюд. | Try the mushroom risotto, it's one of our most popular dishes. |
+| ☐ | `askRec.party.2.reply~rec-shrimp-tacos.mp3` | Waiter (Alex) | Попробуйте тако с креветками — это одно из самых популярных блюд. | Try the shrimp tacos, it's one of our most popular dishes. |
+| ☐ | `askRec.party.2.reply~rec-steak-frites.mp3` | Waiter (Alex) | Попробуйте стейк с картофелем фри — это одно из самых популярных блюд. | Try the steak frites, it's one of our most popular dishes. |
 | ☐ | `askRec.polite.1.reply~rec-chicken-pad-thai.mp3` | Waiter (Alex) | Советую пад-тай с курицей. Это одно из самых популярных блюд. | I recommend the chicken pad thai. It's one of our most popular dishes. |
 | ☐ | `askRec.polite.1.reply~rec-grilled-salmon.mp3` | Waiter (Alex) | Советую лосося на гриле. Это одно из самых популярных блюд. | I recommend the grilled salmon. It's one of our most popular dishes. |
 | ☐ | `askRec.polite.1.reply~rec-mushroom-risotto.mp3` | Waiter (Alex) | Советую ризотто с грибами. Это одно из самых популярных блюд. | I recommend the mushroom risotto. It's one of our most popular dishes. |
@@ -620,6 +679,14 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
+| ☐ | `allergyYes.party.1.guest~allergy-dairy.mp3` | party | Да, у одного из нас аллергия на молочные продукты. | Yes, one of us is allergic to dairy. |
+| ☐ | `allergyYes.party.1.guest~allergy-eggs.mp3` | party | Да, у одного из нас аллергия на яйца. | Yes, one of us is allergic to eggs. |
+| ☐ | `allergyYes.party.1.guest~allergy-fish.mp3` | party | Да, у одного из нас аллергия на рыбу. | Yes, one of us is allergic to fish. |
+| ☐ | `allergyYes.party.1.guest~allergy-gluten.mp3` | party | Да, у одного из нас аллергия на глютен. | Yes, one of us is allergic to gluten. |
+| ☐ | `allergyYes.party.1.guest~allergy-peanuts.mp3` | party | Да, у одного из нас аллергия на арахис. | Yes, one of us is allergic to peanuts. |
+| ☐ | `allergyYes.party.1.guest~allergy-shellfish.mp3` | party | Да, у одного из нас аллергия на морепродукты. | Yes, one of us is allergic to shellfish. |
+| ☐ | `allergyYes.party.1.guest~allergy-soy.mp3` | party | Да, у одного из нас аллергия на сою. | Yes, one of us is allergic to soy. |
+| ☐ | `allergyYes.party.1.guest~allergy-tree-nuts.mp3` | party | Да, у одного из нас аллергия на орехи. | Yes, one of us is allergic to tree nuts. |
 | ☐ | `allergyYes.polite.1.guest~allergy-dairy.mp3` | Polite, everyday guest | Да, у меня аллергия на молочные продукты. | Yes, I'm allergic to dairy. |
 | ☐ | `allergyYes.polite.1.guest~allergy-eggs.mp3` | Polite, everyday guest | Да, у меня аллергия на яйца. | Yes, I'm allergic to eggs. |
 | ☐ | `allergyYes.polite.1.guest~allergy-fish.mp3` | Polite, everyday guest | Да, у меня аллергия на рыбу. | Yes, I'm allergic to fish. |
@@ -665,6 +732,66 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
+| ☐ | `allergyConflict.party.1.guest~allergy-dairy.mp3` | party | Да, у одного из нас аллергия на молочные продукты. | Yes, one of us is allergic to dairy. |
+| ☐ | `allergyConflict.party.1.guest~allergy-eggs.mp3` | party | Да, у одного из нас аллергия на яйца. | Yes, one of us is allergic to eggs. |
+| ☐ | `allergyConflict.party.1.guest~allergy-fish.mp3` | party | Да, у одного из нас аллергия на рыбу. | Yes, one of us is allergic to fish. |
+| ☐ | `allergyConflict.party.1.guest~allergy-gluten.mp3` | party | Да, у одного из нас аллергия на глютен. | Yes, one of us is allergic to gluten. |
+| ☐ | `allergyConflict.party.1.guest~allergy-peanuts.mp3` | party | Да, у одного из нас аллергия на арахис. | Yes, one of us is allergic to peanuts. |
+| ☐ | `allergyConflict.party.1.guest~allergy-shellfish.mp3` | party | Да, у одного из нас аллергия на морепродукты. | Yes, one of us is allergic to shellfish. |
+| ☐ | `allergyConflict.party.1.guest~allergy-soy.mp3` | party | Да, у одного из нас аллергия на сою. | Yes, one of us is allergic to soy. |
+| ☐ | `allergyConflict.party.1.guest~allergy-tree-nuts.mp3` | party | Да, у одного из нас аллергия на орехи. | Yes, one of us is allergic to tree nuts. |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-caesar-salad~safe-bruschetta.mp3` | Waiter (Alex) | Понятно. Осторожно: салат «Цезарь» — в этом блюде есть молочные продукты. Может, возьмёте брускетту? | Understood. Careful: there's dairy in the Caesar salad. Would you like the bruschetta instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-chocolate-torte~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Понятно. Осторожно: шоколадный торт — в этом блюде есть молочные продукты. Может, возьмёте пад-тай с курицей? | Understood. Careful: there's dairy in the chocolate torte. Would you like the chicken pad thai instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-chocolate-torte~safe-grilled-salmon.mp3` | Waiter (Alex) | Понятно. Осторожно: шоколадный торт — в этом блюде есть молочные продукты. Может, возьмёте лосося на гриле? | Understood. Careful: there's dairy in the chocolate torte. Would you like the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-mushroom-risotto~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Понятно. Осторожно: ризотто с грибами — в этом блюде есть молочные продукты. Может, возьмёте пад-тай с курицей? | Understood. Careful: there's dairy in the mushroom risotto. Would you like the chicken pad thai instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-mushroom-risotto~safe-grilled-salmon.mp3` | Waiter (Alex) | Понятно. Осторожно: ризотто с грибами — в этом блюде есть молочные продукты. Может, возьмёте лосося на гриле? | Understood. Careful: there's dairy in the mushroom risotto. Would you like the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-shrimp-tacos~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Понятно. Осторожно: тако с креветками — в этом блюде есть молочные продукты. Может, возьмёте пад-тай с курицей? | Understood. Careful: there's dairy in the shrimp tacos. Would you like the chicken pad thai instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-shrimp-tacos~safe-grilled-salmon.mp3` | Waiter (Alex) | Понятно. Осторожно: тако с креветками — в этом блюде есть молочные продукты. Может, возьмёте лосося на гриле? | Understood. Careful: there's dairy in the shrimp tacos. Would you like the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-steak-frites~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Понятно. Осторожно: стейк с картофелем фри — в этом блюде есть молочные продукты. Может, возьмёте пад-тай с курицей? | Understood. Careful: there's dairy in the steak frites. Would you like the chicken pad thai instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-dairy~conflict-steak-frites~safe-grilled-salmon.mp3` | Waiter (Alex) | Понятно. Осторожно: стейк с картофелем фри — в этом блюде есть молочные продукты. Может, возьмёте лосося на гриле? | Understood. Careful: there's dairy in the steak frites. Would you like the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-caesar-salad~safe-bruschetta.mp3` | Waiter (Alex) | Понятно. Осторожно: салат «Цезарь» — в этом блюде есть яйца. Может, возьмёте брускетту? | Understood. Careful: there's eggs in the Caesar salad. Would you like the bruschetta instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-chicken-pad-thai~safe-grilled-salmon.mp3` | Waiter (Alex) | Понятно. Осторожно: пад-тай с курицей — в этом блюде есть яйца. Может, возьмёте лосося на гриле? | Understood. Careful: there's eggs in the chicken pad thai. Would you like the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-chicken-pad-thai~safe-mushroom-risotto.mp3` | Waiter (Alex) | Понятно. Осторожно: пад-тай с курицей — в этом блюде есть яйца. Может, возьмёте ризотто с грибами? | Understood. Careful: there's eggs in the chicken pad thai. Would you like the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-chicken-pad-thai~safe-shrimp-tacos.mp3` | Waiter (Alex) | Понятно. Осторожно: пад-тай с курицей — в этом блюде есть яйца. Может, возьмёте тако с креветками? | Understood. Careful: there's eggs in the chicken pad thai. Would you like the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-chicken-pad-thai~safe-steak-frites.mp3` | Waiter (Alex) | Понятно. Осторожно: пад-тай с курицей — в этом блюде есть яйца. Может, возьмёте стейк с картофелем фри? | Understood. Careful: there's eggs in the chicken pad thai. Would you like the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-chocolate-torte~safe-grilled-salmon.mp3` | Waiter (Alex) | Понятно. Осторожно: шоколадный торт — в этом блюде есть яйца. Может, возьмёте лосося на гриле? | Understood. Careful: there's eggs in the chocolate torte. Would you like the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-chocolate-torte~safe-mushroom-risotto.mp3` | Waiter (Alex) | Понятно. Осторожно: шоколадный торт — в этом блюде есть яйца. Может, возьмёте ризотто с грибами? | Understood. Careful: there's eggs in the chocolate torte. Would you like the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-chocolate-torte~safe-shrimp-tacos.mp3` | Waiter (Alex) | Понятно. Осторожно: шоколадный торт — в этом блюде есть яйца. Может, возьмёте тако с креветками? | Understood. Careful: there's eggs in the chocolate torte. Would you like the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-eggs~conflict-chocolate-torte~safe-steak-frites.mp3` | Waiter (Alex) | Понятно. Осторожно: шоколадный торт — в этом блюде есть яйца. Может, возьмёте стейк с картофелем фри? | Understood. Careful: there's eggs in the chocolate torte. Would you like the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-fish~conflict-caesar-salad~safe-bruschetta.mp3` | Waiter (Alex) | Понятно. Осторожно: салат «Цезарь» — в этом блюде есть рыба. Может, возьмёте брускетту? | Understood. Careful: there's fish in the Caesar salad. Would you like the bruschetta instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-fish~conflict-chicken-pad-thai~safe-mushroom-risotto.mp3` | Waiter (Alex) | Понятно. Осторожно: пад-тай с курицей — в этом блюде есть рыба. Может, возьмёте ризотто с грибами? | Understood. Careful: there's fish in the chicken pad thai. Would you like the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-fish~conflict-chicken-pad-thai~safe-shrimp-tacos.mp3` | Waiter (Alex) | Понятно. Осторожно: пад-тай с курицей — в этом блюде есть рыба. Может, возьмёте тако с креветками? | Understood. Careful: there's fish in the chicken pad thai. Would you like the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-fish~conflict-chicken-pad-thai~safe-steak-frites.mp3` | Waiter (Alex) | Понятно. Осторожно: пад-тай с курицей — в этом блюде есть рыба. Может, возьмёте стейк с картофелем фри? | Understood. Careful: there's fish in the chicken pad thai. Would you like the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-fish~conflict-grilled-salmon~safe-mushroom-risotto.mp3` | Waiter (Alex) | Понятно. Осторожно: лосось на гриле — в этом блюде есть рыба. Может, возьмёте ризотто с грибами? | Understood. Careful: there's fish in the grilled salmon. Would you like the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-fish~conflict-grilled-salmon~safe-shrimp-tacos.mp3` | Waiter (Alex) | Понятно. Осторожно: лосось на гриле — в этом блюде есть рыба. Может, возьмёте тако с креветками? | Understood. Careful: there's fish in the grilled salmon. Would you like the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-fish~conflict-grilled-salmon~safe-steak-frites.mp3` | Waiter (Alex) | Понятно. Осторожно: лосось на гриле — в этом блюде есть рыба. Может, возьмёте стейк с картофелем фри? | Understood. Careful: there's fish in the grilled salmon. Would you like the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-bruschetta~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Понятно. Осторожно: брускетта — в этом блюде есть глютен. Может, возьмёте пад-тай с курицей? | Understood. Careful: there's gluten in the bruschetta. Would you like the chicken pad thai instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-bruschetta~safe-grilled-salmon.mp3` | Waiter (Alex) | Понятно. Осторожно: брускетта — в этом блюде есть глютен. Может, возьмёте лосося на гриле? | Understood. Careful: there's gluten in the bruschetta. Would you like the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-bruschetta~safe-mushroom-risotto.mp3` | Waiter (Alex) | Понятно. Осторожно: брускетта — в этом блюде есть глютен. Может, возьмёте ризотто с грибами? | Understood. Careful: there's gluten in the bruschetta. Would you like the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-bruschetta~safe-shrimp-tacos.mp3` | Waiter (Alex) | Понятно. Осторожно: брускетта — в этом блюде есть глютен. Может, возьмёте тако с креветками? | Understood. Careful: there's gluten in the bruschetta. Would you like the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-bruschetta~safe-steak-frites.mp3` | Waiter (Alex) | Понятно. Осторожно: брускетта — в этом блюде есть глютен. Может, возьмёте стейк с картофелем фри? | Understood. Careful: there's gluten in the bruschetta. Would you like the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-caesar-salad~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Понятно. Осторожно: салат «Цезарь» — в этом блюде есть глютен. Может, возьмёте пад-тай с курицей? | Understood. Careful: there's gluten in the Caesar salad. Would you like the chicken pad thai instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-caesar-salad~safe-grilled-salmon.mp3` | Waiter (Alex) | Понятно. Осторожно: салат «Цезарь» — в этом блюде есть глютен. Может, возьмёте лосося на гриле? | Understood. Careful: there's gluten in the Caesar salad. Would you like the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-caesar-salad~safe-mushroom-risotto.mp3` | Waiter (Alex) | Понятно. Осторожно: салат «Цезарь» — в этом блюде есть глютен. Может, возьмёте ризотто с грибами? | Understood. Careful: there's gluten in the Caesar salad. Would you like the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-caesar-salad~safe-shrimp-tacos.mp3` | Waiter (Alex) | Понятно. Осторожно: салат «Цезарь» — в этом блюде есть глютен. Может, возьмёте тако с креветками? | Understood. Careful: there's gluten in the Caesar salad. Would you like the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-gluten~conflict-caesar-salad~safe-steak-frites.mp3` | Waiter (Alex) | Понятно. Осторожно: салат «Цезарь» — в этом блюде есть глютен. Может, возьмёте стейк с картофелем фри? | Understood. Careful: there's gluten in the Caesar salad. Would you like the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-peanuts~conflict-chicken-pad-thai~safe-grilled-salmon.mp3` | Waiter (Alex) | Понятно. Осторожно: пад-тай с курицей — в этом блюде есть арахис. Может, возьмёте лосося на гриле? | Understood. Careful: there's peanuts in the chicken pad thai. Would you like the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-peanuts~conflict-chicken-pad-thai~safe-mushroom-risotto.mp3` | Waiter (Alex) | Понятно. Осторожно: пад-тай с курицей — в этом блюде есть арахис. Может, возьмёте ризотто с грибами? | Understood. Careful: there's peanuts in the chicken pad thai. Would you like the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-peanuts~conflict-chicken-pad-thai~safe-shrimp-tacos.mp3` | Waiter (Alex) | Понятно. Осторожно: пад-тай с курицей — в этом блюде есть арахис. Может, возьмёте тако с креветками? | Understood. Careful: there's peanuts in the chicken pad thai. Would you like the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-peanuts~conflict-chicken-pad-thai~safe-steak-frites.mp3` | Waiter (Alex) | Понятно. Осторожно: пад-тай с курицей — в этом блюде есть арахис. Может, возьмёте стейк с картофелем фри? | Understood. Careful: there's peanuts in the chicken pad thai. Would you like the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-shellfish~conflict-shrimp-tacos~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Понятно. Осторожно: тако с креветками — в этом блюде есть морепродукты. Может, возьмёте пад-тай с курицей? | Understood. Careful: there's shellfish in the shrimp tacos. Would you like the chicken pad thai instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-shellfish~conflict-shrimp-tacos~safe-grilled-salmon.mp3` | Waiter (Alex) | Понятно. Осторожно: тако с креветками — в этом блюде есть морепродукты. Может, возьмёте лосося на гриле? | Understood. Careful: there's shellfish in the shrimp tacos. Would you like the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-shellfish~conflict-shrimp-tacos~safe-mushroom-risotto.mp3` | Waiter (Alex) | Понятно. Осторожно: тако с креветками — в этом блюде есть морепродукты. Может, возьмёте ризотто с грибами? | Understood. Careful: there's shellfish in the shrimp tacos. Would you like the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-shellfish~conflict-shrimp-tacos~safe-steak-frites.mp3` | Waiter (Alex) | Понятно. Осторожно: тако с креветками — в этом блюде есть морепродукты. Может, возьмёте стейк с картофелем фри? | Understood. Careful: there's shellfish in the shrimp tacos. Would you like the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-soy~conflict-chicken-pad-thai~safe-grilled-salmon.mp3` | Waiter (Alex) | Понятно. Осторожно: пад-тай с курицей — в этом блюде есть соя. Может, возьмёте лосося на гриле? | Understood. Careful: there's soy in the chicken pad thai. Would you like the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-soy~conflict-chicken-pad-thai~safe-mushroom-risotto.mp3` | Waiter (Alex) | Понятно. Осторожно: пад-тай с курицей — в этом блюде есть соя. Может, возьмёте ризотто с грибами? | Understood. Careful: there's soy in the chicken pad thai. Would you like the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-soy~conflict-chicken-pad-thai~safe-shrimp-tacos.mp3` | Waiter (Alex) | Понятно. Осторожно: пад-тай с курицей — в этом блюде есть соя. Может, возьмёте тако с креветками? | Understood. Careful: there's soy in the chicken pad thai. Would you like the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-soy~conflict-chicken-pad-thai~safe-steak-frites.mp3` | Waiter (Alex) | Понятно. Осторожно: пад-тай с курицей — в этом блюде есть соя. Может, возьмёте стейк с картофелем фри? | Understood. Careful: there's soy in the chicken pad thai. Would you like the steak frites instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-tree-nuts~conflict-chocolate-torte~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Понятно. Осторожно: шоколадный торт — в этом блюде есть орехи. Может, возьмёте пад-тай с курицей? | Understood. Careful: there's tree nuts in the chocolate torte. Would you like the chicken pad thai instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-tree-nuts~conflict-chocolate-torte~safe-grilled-salmon.mp3` | Waiter (Alex) | Понятно. Осторожно: шоколадный торт — в этом блюде есть орехи. Может, возьмёте лосося на гриле? | Understood. Careful: there's tree nuts in the chocolate torte. Would you like the grilled salmon instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-tree-nuts~conflict-chocolate-torte~safe-mushroom-risotto.mp3` | Waiter (Alex) | Понятно. Осторожно: шоколадный торт — в этом блюде есть орехи. Может, возьмёте ризотто с грибами? | Understood. Careful: there's tree nuts in the chocolate torte. Would you like the mushroom risotto instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-tree-nuts~conflict-chocolate-torte~safe-shrimp-tacos.mp3` | Waiter (Alex) | Понятно. Осторожно: шоколадный торт — в этом блюде есть орехи. Может, возьмёте тако с креветками? | Understood. Careful: there's tree nuts in the chocolate torte. Would you like the shrimp tacos instead? |
+| ☐ | `allergyConflict.party.1.reply~allergyNoun-tree-nuts~conflict-chocolate-torte~safe-steak-frites.mp3` | Waiter (Alex) | Понятно. Осторожно: шоколадный торт — в этом блюде есть орехи. Может, возьмёте стейк с картофелем фри? | Understood. Careful: there's tree nuts in the chocolate torte. Would you like the steak frites instead? |
 | ☐ | `allergyConflict.polite.1.guest~allergy-dairy.mp3` | Polite, everyday guest | Да, у меня аллергия на молочные продукты. | Yes, I'm allergic to dairy. |
 | ☐ | `allergyConflict.polite.1.guest~allergy-eggs.mp3` | Polite, everyday guest | Да, у меня аллергия на яйца. | Yes, I'm allergic to eggs. |
 | ☐ | `allergyConflict.polite.1.guest~allergy-fish.mp3` | Polite, everyday guest | Да, у меня аллергия на рыбу. | Yes, I'm allergic to fish. |
@@ -910,6 +1037,18 @@ Speaker notes: "Waiter (Alex)" lines are your replies. Guest lines say which kin
 
 | Done | File | Who | Line | English |
 | --- | --- | --- | --- | --- |
+| ☐ | `conflictAccept.party.1.guest~safe-bruschetta.mp3` | party | Спасибо, что предупредили! Да, брускетту, пожалуйста. | Thanks for the warning! Yes, the bruschetta, please. |
+| ☐ | `conflictAccept.party.1.guest~safe-chicken-pad-thai.mp3` | party | Спасибо, что предупредили! Да, пад-тай с курицей, пожалуйста. | Thanks for the warning! Yes, the chicken pad thai, please. |
+| ☐ | `conflictAccept.party.1.guest~safe-grilled-salmon.mp3` | party | Спасибо, что предупредили! Да, лосося на гриле, пожалуйста. | Thanks for the warning! Yes, the grilled salmon, please. |
+| ☐ | `conflictAccept.party.1.guest~safe-mushroom-risotto.mp3` | party | Спасибо, что предупредили! Да, ризотто с грибами, пожалуйста. | Thanks for the warning! Yes, the mushroom risotto, please. |
+| ☐ | `conflictAccept.party.1.guest~safe-shrimp-tacos.mp3` | party | Спасибо, что предупредили! Да, тако с креветками, пожалуйста. | Thanks for the warning! Yes, the shrimp tacos, please. |
+| ☐ | `conflictAccept.party.1.guest~safe-steak-frites.mp3` | party | Спасибо, что предупредили! Да, стейк с картофелем фри, пожалуйста. | Thanks for the warning! Yes, the steak frites, please. |
+| ☐ | `conflictAccept.party.1.reply~safe-bruschetta.mp3` | Waiter (Alex) | Хорошо, принесу брускетту. И предупрежу кухню об аллергии. | Okay, I'll bring the bruschetta. And I'll warn the kitchen about the allergy. |
+| ☐ | `conflictAccept.party.1.reply~safe-chicken-pad-thai.mp3` | Waiter (Alex) | Хорошо, принесу пад-тай с курицей. И предупрежу кухню об аллергии. | Okay, I'll bring the chicken pad thai. And I'll warn the kitchen about the allergy. |
+| ☐ | `conflictAccept.party.1.reply~safe-grilled-salmon.mp3` | Waiter (Alex) | Хорошо, принесу лосося на гриле. И предупрежу кухню об аллергии. | Okay, I'll bring the grilled salmon. And I'll warn the kitchen about the allergy. |
+| ☐ | `conflictAccept.party.1.reply~safe-mushroom-risotto.mp3` | Waiter (Alex) | Хорошо, принесу ризотто с грибами. И предупрежу кухню об аллергии. | Okay, I'll bring the mushroom risotto. And I'll warn the kitchen about the allergy. |
+| ☐ | `conflictAccept.party.1.reply~safe-shrimp-tacos.mp3` | Waiter (Alex) | Хорошо, принесу тако с креветками. И предупрежу кухню об аллергии. | Okay, I'll bring the shrimp tacos. And I'll warn the kitchen about the allergy. |
+| ☐ | `conflictAccept.party.1.reply~safe-steak-frites.mp3` | Waiter (Alex) | Хорошо, принесу стейк с картофелем фри. И предупрежу кухню об аллергии. | Okay, I'll bring the steak frites. And I'll warn the kitchen about the allergy. |
 | ☐ | `conflictAccept.polite.1.guest~safe-bruschetta.mp3` | Polite, everyday guest | Ой, спасибо, что предупредили! Да, брускетту, пожалуйста. | Oh, thanks for the warning! Yes, the bruschetta, please. |
 | ☐ | `conflictAccept.polite.1.guest~safe-chicken-pad-thai.mp3` | Polite, everyday guest | Ой, спасибо, что предупредили! Да, пад-тай с курицей, пожалуйста. | Oh, thanks for the warning! Yes, the chicken pad thai, please. |
 | ☐ | `conflictAccept.polite.1.guest~safe-grilled-salmon.mp3` | Polite, everyday guest | Ой, спасибо, что предупредили! Да, лосося на гриле, пожалуйста. | Oh, thanks for the warning! Yes, the grilled salmon, please. |

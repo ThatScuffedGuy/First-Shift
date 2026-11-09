@@ -45,7 +45,7 @@ describe('a guest visit', () => {
 
     talkThrough(s, g, 'greet');
     expect(g.state).toBe('drinks');
-    s.pour(g, g.order.drinkId);
+    s.pour(g, g.order.drinkIds);
     expect(s.serve()).toBe(true); // opens the order conversation next
     expect(g.state).toBe('ordering');
 
@@ -79,7 +79,7 @@ describe('a guest visit', () => {
       talkThrough(s, g, 'door');
       s.seat(g, 1);
       talkThrough(s, g, 'greet');
-      s.pour(g, g.order.drinkId);
+      s.pour(g, g.order.drinkIds);
       s.serve();
       talkThrough(s, g, 'order');
       if (!g.plan?.conflict) continue;
@@ -106,7 +106,7 @@ describe('mistakes', () => {
   it('a wrong drink costs mood', () => {
     const { s, g } = toDrinks();
     const before = g.mood;
-    s.pour(g, g.order.otherDrinkId);
+    s.pour(g, [g.order.otherDrinkId]);
     s.serve();
     expect(g.mood).toBe(before - TIMING.wrongDrinkPenalty);
     expect(s.stats.wrongDrinks).toBe(1);
@@ -114,7 +114,7 @@ describe('mistakes', () => {
 
   it('a wrong line costs 1 mood and is saved for practice', () => {
     const { s, g } = toDrinks();
-    s.pour(g, g.order.drinkId);
+    s.pour(g, g.order.drinkIds);
     s.serve();
     const talk = s.talk(g, 'order');
     const before = g.mood;
@@ -126,7 +126,7 @@ describe('mistakes', () => {
 
   it('an unflagged allergy in the food causes a reaction and no tip', () => {
     const { s, g } = toDrinks();
-    s.pour(g, g.order.drinkId);
+    s.pour(g, g.order.drinkIds);
     s.serve();
     talkThrough(s, g, 'order');
     // Put a dish with an allergen on the ticket and give the guest that allergy.
@@ -167,5 +167,48 @@ describe('the shift', () => {
     waitFor(s, () => s.over, 20000);
     expect(over).toBe(true);
     expect(s.records).toHaveLength(2);
+  });
+});
+
+describe('groups', () => {
+  it('serves a group of 2 to 4 from the door to the check', () => {
+    for (let seed = 1; seed < 300; seed++) {
+      const s = new Shift({ pack: languageByCode('es'), menu: HOUSE_MENU, tables: [1, 2, 3, 4], rng: seeded(seed), guests: 1, groups: true });
+      const g = firstGuest(s);
+      if (g.size < 2) continue;
+      expect(new Set(g.order.drinkIds).size).toBe(g.size);
+      talkThrough(s, g, 'door');
+      s.seat(g, 2);
+      talkThrough(s, g, 'greet');
+      // Only some of the drinks: wrong.
+      s.pour(g, g.order.drinkIds.slice(1));
+      const before = g.mood;
+      s.serve();
+      expect(g.mood).toBe(before - TIMING.wrongDrinkPenalty);
+      talkThrough(s, g, 'order');
+      expect(g.order.dishIds.filter((id) => byId(HOUSE_MENU, id).category === 'main').length).toBe(g.size);
+      s.sendTicket(g, g.order.dishIds, g.order.allergy ? [g.order.allergy] : []);
+      waitFor(s, () => g.state === 'ready');
+      s.pickUp(g);
+      s.serve();
+      waitFor(s, () => g.state === 'check');
+      const bill = s.bill(g);
+      talkThrough(s, g, 'check');
+      expect(s.records[0].outcome).toBe('served');
+      expect(s.records[0].bill).toBe(bill);
+      expect(bill).toBeGreaterThan(30); // several mains and drinks
+      return;
+    }
+    throw new Error('No group arrived in 300 seeds');
+  });
+
+  it('uses the group lines in conversation', () => {
+    for (let seed = 1; seed < 300; seed++) {
+      const s = new Shift({ pack: languageByCode('es'), menu: HOUSE_MENU, tables: [1, 2, 3, 4], rng: seeded(seed), guests: 1, groups: true });
+      const g = firstGuest(s);
+      if (g.size < 2) continue;
+      expect(s.talk(g, 'door').turn!.pool).toBe('party');
+      return;
+    }
   });
 });
