@@ -5,6 +5,7 @@ import { languageByCode } from '../data/languages';
 import { TIMING } from '../data/timing';
 import { ACCIDENTS } from '../data/events';
 import { MOODS } from '../data/hints';
+import { difficultyById, lengthById } from '../data/difficulty';
 import type { Point } from '../data/types';
 import { settings, onSettingsChange, updateSettings } from '../settings';
 import { createRenderer } from '../scene/renderer';
@@ -40,7 +41,8 @@ import { TalkPanel, type TalkView } from '../ui/talkPanel';
 import { BarPanel, MenuPanel, TicketPanel } from '../ui/stationPanels';
 import { QuickReaction } from '../ui/qte';
 import { SummaryPanel } from '../ui/summary';
-import { StartScreen } from '../ui/startScreen';
+import { ShiftSetup } from '../ui/shiftSetup';
+import { ChoiceMenu, HowToPanel } from '../ui/menus';
 import { SettingsPanel } from '../ui/settingsPanel';
 import { Coachmark } from '../ui/coachmark';
 
@@ -95,7 +97,10 @@ export class Game {
   private menuPanel = new MenuPanel(this.panels);
   private qte = new QuickReaction();
   private summary = new SummaryPanel(this.panels);
-  private start: StartScreen;
+  private setup: ShiftSetup;
+  private mainMenu: ChoiceMenu;
+  private pauseMenu: ChoiceMenu;
+  private howTo: HowToPanel;
   private settingsPanel: SettingsPanel;
   private coachmark: Coachmark;
   private keyboard: Keyboard;
@@ -117,18 +122,24 @@ export class Game {
       play: (i) => this.replay(i),
       reveal: (i) => this.reveal(i),
     });
-    this.start = new StartScreen(this.panels, {
+    this.setup = new ShiftSetup(this.panels, {
       start: () => this.startShift(),
+      back: () => {
+        this.setup.close();
+        this.openMainMenu();
+      },
       testSound: (report) => this.testSound(report),
       voiceStatus: () => this.voiceStatus(),
-      openSettings: () => this.settingsPanel.open(() => this.start.sync()),
     });
+    this.howTo = new HowToPanel(this.panels);
+    this.mainMenu = new ChoiceMenu(this.panels, 'First Shift', (id) => this.onMainMenu(id), { big: true });
+    this.pauseMenu = new ChoiceMenu(this.panels, 'Paused', (id) => this.onPauseMenu(id), { onEscape: () => this.resume() });
     this.settingsPanel = new SettingsPanel(this.panels, this.theme, (report) => this.testSound(report));
     this.coachmark = new Coachmark(() => {
       this.tutorial.on = false;
       updateSettings({ tutorial: false });
     });
-    this.speech.onVoicesChanged(() => this.start.sync());
+    this.speech.onVoicesChanged(() => this.setup.isOpen && this.setup.sync());
 
     // Theme and settings
     const syncScene = () => {
@@ -155,22 +166,19 @@ export class Game {
       updateSettings({ voice: !on, sfx: !on });
     });
     $('menuBtn').addEventListener('click', () => this.menuPanel.open(this.shift?.menu ?? HOUSE_MENU, settings.lang));
-    $('settingsBtn').addEventListener('click', () => this.settingsPanel.open());
+    $('pauseBtn').addEventListener('click', () => this.pause());
 
     // Input
     const unlock = () => this.sfx.unlock();
     document.addEventListener('pointerdown', unlock, { capture: true });
     document.addEventListener('keydown', unlock, { capture: true });
     this.keyboard = new Keyboard(() => this.canMove(), () => this.action.press());
-    // Escape pauses into Settings. Checked in the capture phase, before any open
-    // panel handles Escape itself, so closing a panel doesn't also open Settings.
+    // Escape pauses. Checked in the capture phase, before any open panel
+    // handles Escape itself, so closing a panel doesn't also open the pause menu.
     window.addEventListener(
       'keydown',
       (e) => {
-        if (e.key === 'Escape' && !this.panels.anyOpen && this.shift && !this.shift.over && !this.qte.active) {
-          e.preventDefault();
-          this.settingsPanel.open();
-        }
+        if (e.key === 'Escape' && !this.panels.anyOpen && !this.qte.active && this.pause()) e.preventDefault();
       },
       { capture: true },
     );
@@ -192,7 +200,7 @@ export class Game {
     new ResizeObserver(resize).observe(this.hud.element);
     resize();
 
-    this.start.open();
+    this.openMainMenu();
     const timer = new THREE.Timer();
     this.renderer.setAnimationLoop((time) => {
       timer.update(time);
@@ -222,6 +230,7 @@ export class Game {
       this.waiter.moving = false;
     }
 
+    $('pauseBtn').hidden = !shift || shift.over;
     // Action button, side list, top bar
     const act = shift && this.canMove() ? chooseAction(shift, placeAt(this.waiter, LAYOUT)) : null;
     this.action.show(act ? { label: act.label, hint: act.hint, run: act.act ? () => this.perform(act.act!) : undefined } : null);
@@ -265,16 +274,79 @@ export class Game {
 
   // ------------------------------------------------------------------ Shift
 
+  // ------------------------------------------------------------------ Menus
+
+  private openMainMenu(): void {
+    this.mainMenu.open(
+      [
+        { id: 'play', label: 'Start a shift', primary: true },
+        { id: 'howto', label: 'How to play' },
+        { id: 'settings', label: 'Settings' },
+      ],
+      'Learn a language by working a dinner shift.',
+    );
+  }
+
+  private onMainMenu(id: string): void {
+    this.mainMenu.close();
+    if (id === 'play') this.setup.open();
+    else if (id === 'howto') this.howTo.open(() => this.openMainMenu());
+    else if (id === 'settings') this.settingsPanel.open(() => this.openMainMenu());
+  }
+
+  /** Opens the pause menu if a shift is running. Returns true if it did. */
+  private pause(): boolean {
+    if (!this.shift || this.shift.over || this.panels.anyOpen || this.qte.active) return false;
+    this.voice.stop();
+    this.pauseMenu.open(
+      [
+        { id: 'resume', label: 'Resume', primary: true },
+        { id: 'howto', label: 'How to play' },
+        { id: 'settings', label: 'Settings' },
+        { id: 'restart', label: 'Restart shift', confirm: 'Restart? This shift will be lost' },
+        { id: 'quit', label: 'Quit to main menu', confirm: 'Quit? This shift will be lost' },
+      ],
+      `${formatClock(this.shift.time, TIMING.shiftStartHour)} · ${this.shift.records.length} of ${this.shift.total} guests done`,
+    );
+    return true;
+  }
+
+  private resume(): void {
+    this.pauseMenu.close();
+  }
+
+  private onPauseMenu(id: string): void {
+    this.pauseMenu.close();
+    if (id === 'howto') this.howTo.open(() => this.pause());
+    else if (id === 'settings') this.settingsPanel.open(() => this.pause());
+    else if (id === 'restart') this.startShift();
+    else if (id === 'quit') this.endShift();
+  }
+
+  /** Leaves the current shift without a summary and goes back to the main menu. */
+  private endShift(): void {
+    this.voice.stop();
+    this.closeTalkPanel();
+    this.shift = null;
+    this.floor.reset();
+    this.toasts.clear();
+    this.guestList.render(null);
+    this.placeWaiterAtStart();
+    this.hud.setGuests(0, 0);
+    this.hud.setTips(0);
+    this.openMainMenu();
+  }
+
   private startShift(): void {
     const pack = languageByCode(settings.lang);
-    this.start.close();
+    this.setup.close();
     this.summary.close();
     this.floor.reset();
     this.toasts.clear();
     this.placeWaiterAtStart();
     this.talking = null;
     this.tutorial = { on: settings.tutorial, guestId: null };
-    const shift = new Shift({ pack, menu: HOUSE_MENU, tables: LAYOUT.tables.map((t) => t.number) });
+    const shift = new Shift({ pack, menu: HOUSE_MENU, tables: LAYOUT.tables.map((t) => t.number), difficulty: difficultyById(settings.difficulty), guests: lengthById(settings.shiftLength).guests });
     shift.on((e) => this.onShiftEvent(e));
     this.shift = shift;
     this.hud.setLanguage(pack.label);
@@ -344,7 +416,11 @@ export class Game {
         this.shift = null;
         this.floor.reset();
         this.guestList.render(null);
-        this.start.open();
+        this.setup.open();
+      },
+      () => {
+        this.summary.close();
+        this.endShift();
       },
       (text) => this.voice.say([{ text, who: 'you', voiceSeed: 0 }], this.voiceOptions()),
     );
@@ -396,13 +472,13 @@ export class Game {
 
   private openTicket(g: Guest): void {
     const shift = this.shift!;
-    this.ticket.open(g.table!, shift.menu, shift.pack.code, (dishIds, flags) => shift.sendTicket(g, dishIds, flags));
+    this.ticket.open(g.table!, shift.menu, shift.pack.code, shift.difficulty.ticketAllergens, (dishIds, flags) => shift.sendTicket(g, dishIds, flags));
   }
 
   private startAccident(): void {
     this.sfx.play('alert');
     this.waiter.target = null;
-    this.qte.start(pick(Math.random, ACCIDENTS), TIMING.accident.reactSeconds, (saved) => this.shift?.accident(saved));
+    this.qte.start(pick(Math.random, ACCIDENTS), this.shift?.difficulty.reactSeconds ?? TIMING.accident.reactSeconds, (saved) => this.shift?.accident(saved));
   }
 
   // ------------------------------------------------------------------ Talking
@@ -490,7 +566,7 @@ export class Game {
 
   private voiceOptions() {
     const pack = this.shift?.pack ?? languageByCode(settings.lang);
-    return { tag: pack.speechLang, enabled: settings.voice, volume: settings.voiceVolume, slow: settings.slow };
+    return { tag: pack.speechLang, label: pack.label, enabled: settings.voice, volume: settings.voiceVolume, slow: settings.slow };
   }
 
   private say(lines: SpokenLine[]): void {
@@ -514,14 +590,15 @@ export class Game {
     void this.speech
       .speak(pack.testLine, { tag: pack.speechLang, voiceIndex: 1, pitch: 1, rate: settings.slow ? 0.8 : 1, volume: settings.voiceVolume, onStart: () => (started = true) })
       .then((res) => {
-        if (res === 'error') report(`The browser blocked speech (${this.speech.lastError || 'unknown error'}). Try Chrome, Edge or Safari, or open the game in its own tab.`, false);
+        if (res === 'novoice') report(this.voiceStatus().text, false);
+        else if (res === 'error') report(`The browser blocked speech (${this.speech.lastError || 'unknown error'}). Try Chrome, Edge or Safari, or open the game in its own tab.`, false);
         else if (started) {
           const s = this.voiceStatus();
           report(s.ok ? 'Sound works. You should have heard a greeting.' : `Sound works, but: ${s.text}`, s.ok);
         }
       });
     setTimeout(() => {
-      if (!started) report('No speech started. Check your volume and your phone’s silent switch, then try again. If it still fails, open the game in Chrome, Edge or Safari.', false);
+      if (!started && this.speech.voicesFor(pack.speechLang).length) report('No speech started. Check your volume and your phone’s silent switch, then try again. If it still fails, open the game in Chrome, Edge or Safari.', false);
     }, 3500);
   }
 }

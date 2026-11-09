@@ -55,7 +55,7 @@ export class Speech {
     if (!this.synth) return { ok: false, text: "This browser can't read lines aloud, so lines are text only unless they have a recording." };
     const n = this.voicesFor(tag).length;
     if (n) return { ok: true, text: `Lines without a recording are read by your device's ${label} voice${n > 1 ? 's' : ''}.` };
-    return { ok: false, text: `No ${label} voice found on this device. Lines without a recording may play in the wrong accent or stay silent. You can add a ${label} voice in your system's language or speech settings.` };
+    return { ok: false, text: `No ${label} voice found on this device. Lines without a recording will be shown but not read aloud. You can add a ${label} voice in your system's language or speech settings.` };
   }
 
   prime(): void {
@@ -70,6 +70,16 @@ export class Speech {
     }
   }
 
+  private waitForVoices(ms: number): Promise<void> {
+    return new Promise((resolve) => {
+      const timer = setTimeout(resolve, ms);
+      this.onVoicesChanged(() => {
+        clearTimeout(timer);
+        resolve();
+      });
+    });
+  }
+
   cancel(): void {
     if (!this.synth) return;
     if (this.synth.speaking || this.synth.pending) {
@@ -79,10 +89,16 @@ export class Speech {
   }
 
   /** Speaks one line. Resolves when it ends, fails, or times out. Rejects only if speech is unavailable. */
-  async speak(text: string, opts: { tag: string; voiceIndex: number; pitch: number; rate: number; volume: number; onStart?: () => void }): Promise<'ended' | 'error'> {
+  async speak(text: string, opts: { tag: string; voiceIndex: number; pitch: number; rate: number; volume: number; onStart?: () => void }): Promise<'ended' | 'error' | 'novoice'> {
     const synth = this.synth;
     if (!synth) return 'error';
     this.prime();
+    // Chrome loads voices late; give them a moment the first time.
+    if (!this.voices.length) await this.waitForVoices(1500);
+    // Never read a line with another language's voice (a Russian line in a
+    // Spanish voice sounds like Spanish). If the device lists voices but none
+    // for this language, stay silent and let the caller explain.
+    if (this.voices.length && !this.voicesFor(opts.tag).length) return 'novoice';
     const sinceCancel = performance.now() - this.lastCancel;
     if (sinceCancel < 250) await new Promise((r) => setTimeout(r, 250 - sinceCancel));
     try {

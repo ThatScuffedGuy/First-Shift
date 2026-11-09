@@ -93,12 +93,12 @@ export class TicketPanel {
     });
   }
 
-  open(table: number, menu: Menu, lang: string, onSend: (dishIds: string[], flags: Allergen[]) => void): void {
+  open(table: number, menu: Menu, lang: string, showAllergens: boolean, onSend: (dishIds: string[], flags: Allergen[]) => void): void {
     this.onSend = onSend;
     this.titleEl.textContent = `Ticket for Table ${table}`;
     this.itemsEl.innerHTML = menu.items
       .filter((m) => m.category !== 'drink')
-      .map((m) => `<label class="item"><input type="checkbox" value="${esc(m.id)}">${itemLabel(m, lang).replace('</small>', ` · ${esc(m.allergens.join(', ') || 'no listed allergens')}</small>`)}</label>`)
+      .map((m) => `<label class="item"><input type="checkbox" value="${esc(m.id)}">${showAllergens ? itemLabel(m, lang).replace('</small>', ` · ${esc(m.allergens.join(', ') || 'no listed allergens')}</small>`) : itemLabel(m, lang)}</label>`)
       .join('');
     this.flagsEl.innerHTML = ALLERGENS.map((a) => `<button class="chip" type="button" data-a="${a}" aria-pressed="false">${a}</button>`).join('');
     this.sendBtn.disabled = true;

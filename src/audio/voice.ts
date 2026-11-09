@@ -15,6 +15,8 @@ export interface SpokenLine {
 
 export interface VoiceOptions {
   tag: string;
+  /** Language name for messages, e.g. "Russian". */
+  label: string;
   enabled: boolean;
   volume: number;
   slow: boolean;
@@ -29,6 +31,7 @@ export class VoicePlayer {
   private generation = 0;
   private audio: HTMLAudioElement | null = null;
   private warned = false;
+  private noVoiceWarned = '';
 
   constructor(private speech: Speech, private onProblem: (message: string) => void) {}
 
@@ -58,6 +61,10 @@ export class VoicePlayer {
           rate: opts.slow ? 0.8 : 1,
           volume: opts.volume,
         });
+        if (res === 'novoice' && this.noVoiceWarned !== opts.tag) {
+          this.noVoiceWarned = opts.tag;
+          this.onProblem(`This device has no ${opts.label} voice, so unrecorded lines are shown but not read aloud. You can add a ${opts.label} voice in your system's speech settings.`);
+        }
         if (res === 'error' && !this.warned) {
           this.warned = true;
           this.onProblem(this.speech.supported ? 'A line didn’t play. Try “Test sound” in Settings.' : "This browser can't play speech, so lines are text only.");

@@ -7,6 +7,7 @@ export class SummaryPanel {
   private overlay: HTMLElement;
   private body: HTMLElement;
   private onAgain: () => void = () => {};
+  private onMenu: () => void = () => {};
   private onPlay: (text: string) => void = () => {};
 
   constructor(private panels: Panels) {
@@ -14,18 +15,20 @@ export class SummaryPanel {
     this.overlay = overlay;
     pad.append(
       el(`<div class="scroll"><h1 id="${titleId}">Shift’s over</h1><div data-body></div></div>`),
-      el('<div class="foot"><span></span><button class="ink" type="button" data-again>Start another shift</button></div>'),
+      el('<div class="foot"><button class="ghost" type="button" data-menu>Main menu</button><button class="ink" type="button" data-again>Start another shift</button></div>'),
     );
     this.body = pad.querySelector('[data-body]')!;
     pad.querySelector('[data-again]')!.addEventListener('click', () => this.onAgain());
+    pad.querySelector('[data-menu]')!.addEventListener('click', () => this.onMenu());
     this.body.addEventListener('click', (e) => {
       const b = (e.target as HTMLElement).closest<HTMLElement>('[data-say]');
       if (b) this.onPlay(b.dataset.say!);
     });
   }
 
-  open(shift: Shift, clock: string, onAgain: () => void, onPlay: (text: string) => void): void {
+  open(shift: Shift, clock: string, onAgain: () => void, onMenu: () => void, onPlay: (text: string) => void): void {
     this.onAgain = onAgain;
+    this.onMenu = onMenu;
     this.onPlay = onPlay;
     const s = shift.stats;
     const served = shift.records.filter((r) => r.outcome === 'served');

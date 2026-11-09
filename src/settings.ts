@@ -15,11 +15,17 @@ export interface Settings {
   sfxVolume: number;
   /** Step-by-step hints for the first guest of a shift. */
   tutorial: boolean;
+  /** Difficulty level id (see src/data/difficulty.ts). */
+  difficulty: string;
+  /** Shift length id (see src/data/difficulty.ts). */
+  shiftLength: string;
+  /** Whether groups of 2 to 4 can arrive. */
+  groups: boolean;
 }
 
 const KEY = 'first-shift.settings';
 
-const DEFAULTS: Settings = { lang: 'es', slow: true, showEnglish: true, voice: true, voiceVolume: 1, sfx: true, sfxVolume: 0.6, tutorial: true };
+const DEFAULTS: Settings = { lang: 'es', slow: true, showEnglish: true, voice: true, voiceVolume: 1, sfx: true, sfxVolume: 0.6, tutorial: true, difficulty: 'normal', shiftLength: 'short', groups: true };
 
 function load(): Settings {
   try {

@@ -1,6 +1,7 @@
 import type { Allergen, Menu } from '../data/types';
 import { PERSONAS } from '../data/personas';
 import { TIMING } from '../data/timing';
+import { DIFFICULTIES, type Difficulty } from '../data/difficulty';
 import { buildContext } from '../dialogue/context';
 import { Conversation, nodesForStage, selectPool, type ChooseResult, type Stage } from '../dialogue/conversation';
 import type { LanguagePack } from '../dialogue/types';
@@ -66,6 +67,7 @@ export interface ShiftOptions {
   tables: number[];
   rng?: Rng;
   guests?: number;
+  difficulty?: Difficulty;
 }
 
 const where = (g: Guest) => (g.table ? `Table ${g.table}` : 'The guest at the door');
@@ -79,6 +81,7 @@ export class Shift {
   readonly menu: Menu;
   readonly total: number;
   readonly tables: number[];
+  readonly difficulty: Difficulty;
   private rng: Rng;
   private listeners: ((e: ShiftEvent) => void)[] = [];
   private nextId = 1;
@@ -104,6 +107,7 @@ export class Shift {
     this.tables = opts.tables;
     this.rng = opts.rng ?? Math.random;
     this.total = opts.guests ?? TIMING.guestsPerShift;
+    this.difficulty = opts.difficulty ?? DIFFICULTIES[1];
   }
 
   on(fn: (e: ShiftEvent) => void): void {
@@ -160,7 +164,7 @@ export class Shift {
       while (g.phase && g.waited >= g.nextDropAt && this.guests.includes(g)) {
         g.drops++;
         g.prevDropAt = g.nextDropAt;
-        g.nextDropAt += between(this.rng, TIMING.repeatDrop) * (g.phase === 'food' ? 1 : g.persona.patience);
+        g.nextDropAt += between(this.rng, TIMING.repeatDrop) * (g.phase === 'food' ? 1 : g.persona.patience) * this.difficulty.patience;
         this.changeMood(g, -1);
         this.emit({ type: 'moodDrop', guest: g });
       }
@@ -169,7 +173,7 @@ export class Shift {
     if (this.spawned < this.total && this.time >= this.nextArrival) {
       if (this.doorQueue.length < 3) {
         this.arrive();
-        this.nextArrival = this.time + between(this.rng, TIMING.arrivalGap);
+        this.nextArrival = this.time + between(this.rng, TIMING.arrivalGap) * this.difficulty.arrivalGap;
       } else {
         this.nextArrival = this.time + TIMING.queueFullRetry;
       }
@@ -184,6 +188,7 @@ export class Shift {
 
   private arrive(): void {
     const g = createGuest(this.nextId++, weighted(this.rng, PERSONAS), this.menu, this.rng);
+    g.nextDropAt *= this.difficulty.patience;
     this.guests.push(g);
     this.spawned++;
     this.toast('A guest just walked in. Greet them at the door.');
@@ -197,7 +202,7 @@ export class Shift {
       g.waited = 0;
       g.drops = 0;
       g.prevDropAt = 0;
-      g.nextDropAt = phase ? patienceLimit(phase, g.persona) : 0;
+      g.nextDropAt = phase ? patienceLimit(phase, g.persona) * this.difficulty.patience : 0;
       g.reassured = false;
     }
     g.state = state;
@@ -227,6 +232,7 @@ export class Shift {
       rng: this.rng,
       context: () => buildContext(g.order, this.pack, this.menu),
       pool: (node) => selectPool(node, g.persona.kind, g.mood),
+      wrongCount: this.difficulty.wrongOptions,
       beforeNode: (node) => {
         if (node === 'conflictAccept' && g.order.conflictId && g.order.safeId) {
           g.order.dishIds = g.order.dishIds.map((id) => (id === g.order.conflictId ? g.order.safeId! : id));
@@ -407,7 +413,7 @@ export class Shift {
     c.walked += metres;
     if (c.walked < TIMING.accident.afterWalking) return false;
     c.rolled = true;
-    return this.rng() < TIMING.accident.chance;
+    return this.rng() < this.difficulty.accidentChance;
   }
 
   /** Outcome of the quick reaction prompt. */
