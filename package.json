@@ -9,9 +9,14 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "check": "npm run typecheck && npm test && vite build",
-    "build:file": "vite build --config vite.single.config.ts && node scripts/rename-single.mjs"
+    "build:file": "npm run audio:manifest && vite build --config vite.single.config.ts && node scripts/rename-single.mjs",
+    "audio": "tsx scripts/audio-script.ts",
+    "audio:manifest": "tsx scripts/audio-script.ts --manifest",
+    "predev": "npm run audio:manifest",
+    "prebuild": "npm run audio:manifest"
   },
   "devDependencies": {
+    "@types/node": "^26.6.6",
     "@types/three": "^0.187.0",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",
