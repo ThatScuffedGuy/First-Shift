@@ -162,9 +162,18 @@ export class Game {
     document.addEventListener('pointerdown', unlock, { capture: true });
     document.addEventListener('keydown', unlock, { capture: true });
     this.keyboard = new Keyboard(() => this.canMove(), () => this.action.press());
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !this.panels.anyOpen && this.shift && !this.qte.active) this.settingsPanel.open();
-    });
+    // Escape pauses into Settings. Checked in the capture phase, before any open
+    // panel handles Escape itself, so closing a panel doesn't also open Settings.
+    window.addEventListener(
+      'keydown',
+      (e) => {
+        if (e.key === 'Escape' && !this.panels.anyOpen && this.shift && !this.shift.over && !this.qte.active) {
+          e.preventDefault();
+          this.settingsPanel.open();
+        }
+      },
+      { capture: true },
+    );
     onFloorTap(canvas, this.rig.camera, () => this.canMove(), (tap) => {
       this.waiter.target = tapDestination(tap, this.waiter, LAYOUT);
       this.marker.show(this.waiter.target.x, this.waiter.target.z);

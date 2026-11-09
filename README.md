@@ -4,7 +4,13 @@ A stylized 3D game that trains aspiring waiters for real restaurant work while t
 
 ## Playing it (no setup)
 
-Open the `play` folder and double-click **First-Shift.html**. It opens in your web browser (Chrome, Edge, Firefox or Safari). Nothing to install. This file is rebuilt with `npm run build:file` whenever the game changes.
+Open the `play` folder and double-click **First-Shift.html**. It opens in your web browser (Chrome, Edge, Firefox or Safari). Nothing to install. This file is rebuilt with `npm run build:file` whenever the game changes. Keep the `audio` folder next to it if you add recordings.
+
+## How a shift works
+
+Five guests arrive between 6 and about 7:30 PM. For each one: greet them at the door, seat them at a free table, greet them there and take a drink order, pour the drink from memory at the drink station, serve it, take the food order (watch for allergies!), write the ticket from memory, pick up the plate when the bell rings, serve it, optionally check on them, then bring the check.
+
+In every conversation, pick the reply that answers exactly what the guest said. A wrong pick is crossed out, explains why, and costs a little mood. Guests get impatient if they wait too long, and leave at mood 0. Happy guests tip more. The summary at the end lists what went wrong and the phrases to practice.
 
 ## Running it as a developer
 
