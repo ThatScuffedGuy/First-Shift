@@ -65,3 +65,57 @@ export interface RestaurantLayout {
   plants: (Point & { clearance: number })[];
   signText: string;
 }
+
+// ---------------------------------------------------------------- Menus
+
+export const ALLERGENS = ['gluten', 'dairy', 'eggs', 'tree nuts', 'peanuts', 'shellfish', 'fish', 'soy', 'sesame'] as const;
+export type Allergen = (typeof ALLERGENS)[number];
+
+export type Category = 'starter' | 'main' | 'dessert' | 'drink';
+
+/** How one item is named in one language. */
+export interface ItemName {
+  /**
+   * The form used inside sentences when ordering or recommending.
+   * Spanish: with the article ("el salmón a la parrilla", "una limonada").
+   * Russian: accusative case ("лосося на гриле"). English: "the grilled salmon", "a lemonade".
+   */
+  order: string;
+  /** Plain dictionary form, no article (Russian nominative). Used in lists and on the menu. */
+  plain: string;
+}
+
+export interface MenuItem {
+  id: string;
+  category: Category;
+  price: number;
+  allergens: Allergen[];
+  /** Short English description of the main ingredients. */
+  description: string;
+  /** Names per language code, plus "en". */
+  names: Record<string, ItemName>;
+  /** Colour of the food or drink in 3D (hex string like "#f3e27a"). */
+  color: string;
+}
+
+export interface Menu {
+  id: string;
+  name: string;
+  items: MenuItem[];
+}
+
+// ---------------------------------------------------------------- Guests
+
+export type PersonaKind = 'warm' | 'rushed' | 'rude' | 'indecisive' | 'tourist';
+
+export interface Persona {
+  kind: PersonaKind;
+  /** Shown in the guest list, e.g. "In a hurry". */
+  label: string;
+  /** How often this persona turns up, relative to the others. */
+  weight: number;
+  /** Multiplies every patience limit except the food wait. Below 1 = less patient. */
+  patience: number;
+  /** Chance (0 to 1) they ask for a recommendation instead of ordering directly. */
+  asksRecommendation: number;
+}
