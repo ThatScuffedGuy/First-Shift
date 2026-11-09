@@ -2,7 +2,11 @@
 
 A stylized 3D game that trains aspiring waiters for real restaurant work while teaching a foreign language (Spanish and Russian to start).
 
-## Running it
+## Playing it (no setup)
+
+Open the `play` folder and double-click **First-Shift.html**. It opens in your web browser (Chrome, Edge, Firefox or Safari). Nothing to install. This file is rebuilt with `npm run build:file` whenever the game changes.
+
+## Running it as a developer
 
 You need [Node.js](https://nodejs.org) 20 or newer.
 
@@ -21,6 +25,7 @@ Then open the link it prints (usually http://localhost:5173). To try it on your 
 | `npm test` | Runs the automated tests. |
 | `npm run check` | Type check, tests and a production build. Run before committing. |
 | `npm run build` | Makes the finished game in `dist/`. |
+| `npm run build:file` | Makes the double-click version in `play/First-Shift.html`. |
 | `npm run preview` | Serves the built `dist/` folder so you can test it. |
 
 ## How the code is organised
