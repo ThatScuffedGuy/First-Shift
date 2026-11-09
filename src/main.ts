@@ -9,12 +9,13 @@ import { addLights } from './scene/lights';
 import { buildRestaurant } from './scene/restaurant';
 import { makeWaiter } from './scene/characters';
 import { SCENE_BG } from './scene/palette';
+import { CameraRig } from './scene/camera';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#scene')!;
 const renderer = createRenderer(canvas);
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(SCENE_BG.light);
-const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 200);
+const rig = new CameraRig(HOUSE_LAYOUT);
 
 addLights(scene, HOUSE_LAYOUT);
 const restaurant = buildRestaurant(scene, HOUSE_LAYOUT);
@@ -24,16 +25,22 @@ const waiter = makeWaiter();
 waiter.root.position.set(HOUSE_LAYOUT.waiterStart.x, 0, HOUSE_LAYOUT.waiterStart.z);
 scene.add(waiter.root);
 
-// Temporary camera from the prototype; replaced by the screen-fitting camera next.
+// Space the HUD covers; measured from the real HUD in a later step.
+const insets = { top: 60, bottom: 0, left: 0, right: 0 };
+
 function resize(): void {
   const w = window.innerWidth, h = window.innerHeight;
   renderer.setSize(w, h, false);
-  camera.aspect = w / h;
-  const k = Math.min(3, Math.max(1, 1.55 / camera.aspect));
-  camera.position.set(0, 15.5 * k, 13.5 * k);
-  camera.lookAt(0, 0, 0.3);
-  camera.updateProjectionMatrix();
+  rig.resize(w, h, insets);
+  rig.update(0, waiter.root.position.x, true);
 }
 window.addEventListener('resize', resize);
 resize();
-renderer.setAnimationLoop(() => renderer.render(scene, camera));
+
+const clock = new THREE.Timer();
+renderer.setAnimationLoop((time) => {
+  clock.update(time);
+  const dt = Math.min(0.05, clock.getDelta());
+  rig.update(dt, waiter.root.position.x);
+  renderer.render(scene, rig.camera);
+});
